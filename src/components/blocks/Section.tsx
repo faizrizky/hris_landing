@@ -32,7 +32,7 @@ export function SectionBlock({ block, ctx }: { block: Block; ctx: BlockContext }
       {items.length > 0 && (
         <ul className={cn("grid gap-5", COLUMN_CLASS[block.columns ?? "3"])}>
           {items.map((item, index) => (
-            <li key={item.id ?? item.title}>
+            <li key={item.id ?? index}>
               <AccentCard
                 index={index}
                 title={item.title}

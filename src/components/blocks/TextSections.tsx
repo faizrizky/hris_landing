@@ -5,7 +5,9 @@ import type { BlockContext } from "./types";
 type Block = Extract<Page["layout"][number], { blockType: "textSections" }>;
 
 /** Isi teks: baris kosong memisah paragraf, baris berawalan "- " menjadi daftar. */
-function renderBody(body: string) {
+function renderBody(body: unknown) {
+  if (typeof body !== "string") return null;
+
   return body
     .split(/\n{2,}/)
     .map((chunk) => chunk.trim())
@@ -32,8 +34,8 @@ export function TextSectionsBlock({ block }: { block: Block; ctx: BlockContext }
   return (
     <article className="container pb-20">
       <div className="legal-text rounded-3xl bg-white p-6 shadow-[0_24px_60px_-30px_rgba(60,60,140,0.35)] md:p-10">
-        {(block.sections ?? []).map((section) => (
-          <div key={section.id ?? section.heading ?? section.body.slice(0, 20)}>
+        {(block.sections ?? []).map((section, index) => (
+          <div key={section.id ?? index}>
             {section.heading && <h2>{section.heading}</h2>}
             {renderBody(section.body)}
           </div>

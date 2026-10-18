@@ -13,7 +13,7 @@ export function WorkflowBlock({ block }: { block: Block; ctx: BlockContext }) {
     <PageSection title={block.header.title} description={block.header.description ?? undefined} tag={tagFor(block.tag)}>
       <ol className="grid gap-5 md:grid-cols-3">
         {(block.steps ?? []).map((step, index) => (
-          <li key={step.id ?? step.title}>
+          <li key={step.id ?? index}>
             <AccentCard index={index} title={`${index + 1}. ${step.title}`} description={step.description ?? undefined} />
           </li>
         ))}

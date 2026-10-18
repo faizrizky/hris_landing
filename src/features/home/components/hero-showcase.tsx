@@ -99,8 +99,8 @@ export const HeroShowcase: React.FC<HeroShowcaseProps> = ({ mockup }) => {
             <Check className="h-9 w-9 text-accent-teal" strokeWidth={3} />
           </div>
           <ul className="mt-4 flex flex-col items-center gap-1.5">
-            {phoneChips.slice(0, 2).map((chip) => (
-              <li key={chip.id ?? chip.text} className="rounded-full bg-tint-cyan px-2.5 py-0.5 text-[9px] font-medium">
+            {phoneChips.slice(0, 2).map((chip, index) => (
+              <li key={chip.id ?? index} className="rounded-full bg-tint-cyan px-2.5 py-0.5 text-[9px] font-medium">
                 {chip.text}
               </li>
             ))}

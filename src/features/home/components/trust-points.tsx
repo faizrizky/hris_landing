@@ -24,7 +24,7 @@ export const TrustPoints: React.FC<TrustPointsProps> = ({ points }) => (
 
       return (
         <li
-          key={point.id ?? point.title}
+          key={point.id ?? index}
           data-hero-fade
           className="flex gap-4 rounded-2xl border border-black/5 bg-white p-5 shadow-[0_10px_30px_-18px_rgba(20,20,60,0.3)]"
         >

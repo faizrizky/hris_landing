@@ -25,8 +25,8 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({ settings, footer }) => {
           {footer?.description && <p className="mt-4 max-w-xs text-sm text-white/75">{footer.description}</p>}
         </div>
 
-        {columns.map((column) => (
-          <nav key={column.id ?? column.title} aria-label={column.title}>
+        {columns.map((column, index) => (
+          <nav key={column.id ?? index} aria-label={column.title}>
             <p className="text-xs font-bold tracking-wider">{column.title.toUpperCase()}</p>
             <ul className="mt-4 space-y-2 text-sm text-white/80">
               {(column.links ?? []).map((link) => (

@@ -443,7 +443,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
         sections: list(
           "Sections",
           "Bagian",
-          { heading: text("Heading", "Judul"), body: textarea("Body (blank line = new paragraph, '- ' = list)", "Isi (baris kosong = paragraf baru, '- ' = daftar)") },
+          { heading: text("Heading", "Judul"), body: { type: "textarea", label: L("Body (blank line = new paragraph, '- ' = list)", "Isi (baris kosong = paragraf baru, '- ' = daftar)") } },
           "heading",
           { heading: L("Heading", "Judul"), body: "" },
           40,

@@ -84,7 +84,7 @@ export function FeatureBenefitsSection({
     >
       <ul className="grid gap-5 md:grid-cols-3">
         {benefits.map((benefit, index) => (
-          <li key={benefit.id ?? benefit.title}>
+          <li key={benefit.id ?? index}>
             <AccentCard index={index} title={benefit.title} description={benefit.description} />
           </li>
         ))}
@@ -104,7 +104,7 @@ export function FeatureBlocksSection({
     <>
       {blocks.map((block, index) => (
         <PageSection
-          key={block.id ?? block.title}
+          key={block.id ?? index}
           title={block.title}
           description={block.description}
           bandClassName={index % 2 === 0 ? "bg-tint-sky" : undefined}
@@ -123,8 +123,8 @@ export function FeatureBlocksSection({
           }
         >
           <ul className="grid gap-3 md:grid-cols-2">
-            {(block.points ?? []).map((point) => (
-              <li key={point.id ?? point.text} data-reveal className="flex items-start gap-2 text-sm">
+            {(block.points ?? []).map((point, index) => (
+              <li key={point.id ?? index} data-reveal className="flex items-start gap-2 text-sm">
                 <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent-teal" />
                 {point.text}
               </li>

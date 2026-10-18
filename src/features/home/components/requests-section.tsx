@@ -76,7 +76,7 @@ export const RequestsSection: React.FC<RequestsSectionProps> = ({
           <div data-parallax={BOARD_PARALLAX_SPEED} className="rounded-2xl bg-tint-peach p-5 md:p-6">
             <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
               {cards.map((card, index) => (
-                <div key={card.id ?? card.title} data-gsap-reveal>
+                <div key={card.id ?? index} data-gsap-reveal>
                   <UiCard
                     accent={getAccentByIndex(index)}
                     title={card.title}
@@ -105,8 +105,8 @@ export const RequestsSection: React.FC<RequestsSectionProps> = ({
             </p>
           )}
           <ul className="flex flex-wrap items-center gap-x-10 gap-y-3">
-            {stripItems.map((item) => (
-              <li key={item.id ?? item.text} data-gsap-reveal className="text-lg font-bold tracking-tight text-ink-muted/80">
+            {stripItems.map((item, index) => (
+              <li key={item.id ?? index} data-gsap-reveal className="text-lg font-bold tracking-tight text-ink-muted/80">
                 {item.text}
               </li>
             ))}

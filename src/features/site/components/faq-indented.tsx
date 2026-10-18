@@ -23,7 +23,7 @@ export const FaqIndented: React.FC<FaqIndentedProps> = ({ heading, items }) => (
       <div className="border-t border-ink">
         {items.map((item, index) => (
           <details
-            key={item.id ?? item.question}
+            key={item.id ?? index}
             data-reveal
             style={{ '--i': Math.min(index, 4) } as React.CSSProperties}
             className="group border-b border-line py-1"

@@ -68,8 +68,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
 
           {points && points.length > 0 && (
             <ul className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-x-8 gap-y-2 text-sm">
-              {points.map((point) => (
-                <li key={point.id ?? point.text} className="flex items-center gap-2">
+              {points.map((point, index) => (
+                <li key={point.id ?? index} className="flex items-center gap-2">
                   <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-teal/25">
                     <Check aria-hidden className="h-3 w-3" />
                   </span>

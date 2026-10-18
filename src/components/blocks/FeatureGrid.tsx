@@ -25,7 +25,7 @@ export function FeatureGridBlock({ block }: { block: Block; ctx: BlockContext })
     >
       <ul className={cn("grid gap-5", COLUMN_CLASS[block.columns ?? "3"])}>
         {(block.items ?? []).map((item, index) => (
-          <li key={item.id ?? item.title}>
+          <li key={item.id ?? index}>
             <AccentCard
               index={index}
               title={item.title}

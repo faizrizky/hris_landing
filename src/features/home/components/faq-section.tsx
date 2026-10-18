@@ -32,8 +32,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ anchor, tag, title, item
           </div>
 
           <div className="mt-10 divide-y divide-black/10 rounded-2xl border border-black/5 bg-white shadow-[0_14px_34px_-24px_rgba(20,20,60,0.35)]">
-            {items.map((faq) => (
-              <details key={faq.id ?? faq.question} data-gsap-reveal className="group px-6 py-5">
+            {items.map((faq, index) => (
+              <details key={faq.id ?? index} data-gsap-reveal className="group px-6 py-5">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-bold [&::-webkit-details-marker]:hidden">
                   {faq.question}
                   <ChevronDown

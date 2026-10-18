@@ -61,7 +61,7 @@ export function SolutionPainsSection({ pains }: { pains: Pains }) {
     >
       <ul className="grid gap-5 md:grid-cols-3">
         {pains.map((pain, index) => (
-          <li key={pain.id ?? pain.title}>
+          <li key={pain.id ?? index}>
             <AccentCard index={index} title={pain.title} description={pain.description} />
           </li>
         ))}
@@ -86,7 +86,7 @@ export function SolutionHelpSection({ name, points }: { name: string; points: Po
           const feature = typeof point.feature === "object" ? (point.feature as Feature | null) : null;
 
           return (
-            <li key={point.id ?? point.title}>
+            <li key={point.id ?? index}>
               <AccentCard index={index} title={point.title} description={point.description}>
                 {feature && (
                   <Link

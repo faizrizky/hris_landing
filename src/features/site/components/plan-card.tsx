@@ -46,8 +46,8 @@ export const PlanCard: React.FC<PlanCardProps> = ({ plan, maxFeatures }) => {
 
       <ul className="mt-6 flex-1 space-y-2.5 border-t border-black/5 pt-6 text-sm">
         {plan.inheritsFrom && <li className="font-semibold">{plan.inheritsFrom}</li>}
-        {shownFeatures.map((feature) => (
-          <li key={feature.id ?? feature.text} className={cn('flex items-start gap-2.5', feature.isSoon && 'text-ink-muted')}>
+        {shownFeatures.map((feature, index) => (
+          <li key={feature.id ?? index} className={cn('flex items-start gap-2.5', feature.isSoon && 'text-ink-muted')}>
             {feature.isSoon ? (
               <Clock aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent-yellow" />
             ) : (

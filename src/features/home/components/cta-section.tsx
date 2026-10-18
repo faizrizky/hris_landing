@@ -60,9 +60,9 @@ export const CtaSection: React.FC<CtaSectionProps> = ({ title, description, acti
           )}
           {guarantees.length > 0 && (
             <ul className="mx-auto mt-12 grid max-w-xl gap-3 text-left sm:grid-cols-2">
-              {guarantees.map((item) => (
+              {guarantees.map((item, index) => (
                 <li
-                  key={item.id ?? item.text}
+                  key={item.id ?? index}
                   data-gsap-reveal
                   className="flex items-start gap-3 rounded-xl bg-white/5 p-4 text-xs leading-relaxed text-white/90"
                 >
