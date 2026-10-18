@@ -5,7 +5,7 @@ const DEFAULT_CMS_URL = 'http://localhost:3001'
 
 export const getServerSideURL = () => {
   return (
-    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.SITE_URL ||
     (process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
       : DEFAULT_SITE_URL)
@@ -25,7 +25,7 @@ export const getClientSideURL = () => {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   }
 
-  return process.env.NEXT_PUBLIC_SITE_URL || ''
+  return process.env.SITE_URL || ''
 }
 
 /** Alamat hris-cms. Dipakai untuk API dan untuk URL media yang relatif. */

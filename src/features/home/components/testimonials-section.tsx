@@ -2,10 +2,9 @@
 
 import React, { useRef } from 'react'
 
-import type { Testimonial } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
-import { type SectionTags, getInitials } from '../content/tones'
+import { getInitials, type SectionTagContent } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { useTestimonialCards } from '../hooks/use-testimonial-cards'
 import { SectionTag } from './section-tag'
@@ -13,32 +12,46 @@ import { SectionTag } from './section-tag'
 const STAR_COUNT = 5
 const MAX_TESTIMONIALS = 3
 
-const TESTIMONIAL_TONE_CLASS: Record<Testimonial['tone'], string> = {
+type TestimonialTone = 'yellow' | 'cyan' | 'pink'
+
+const TESTIMONIAL_TONE_CLASS: Record<TestimonialTone, string> = {
   yellow: 'bg-card-yellow',
   cyan: 'bg-card-cyan',
   pink: 'bg-card-pink',
 }
 
-interface TestimonialsSectionProps {
-  tags: SectionTags
-  title: string
-  testimonials: Testimonial[]
+export interface TestimonialItem {
+  id?: string | null
+  quote: string
+  name: string
+  role: string
+  tone?: TestimonialTone | null
+  rotationDeg?: number | null
 }
 
-/** Testimoni asli: kartu pastel miring yang jatuh bertahap. Tidak dirender bila belum ada. */
-export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ tags, title, testimonials }) => {
+interface TestimonialsSectionProps {
+  anchor?: string | null
+  tag?: SectionTagContent | null
+  title: string
+  testimonials: TestimonialItem[]
+}
+
+/** Testimoni asli: kartu pastel miring yang jatuh bertahap. */
+export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ anchor, tag, title, testimonials }) => {
   const rootRef = useRef<HTMLElement>(null)
 
   useRevealOnScroll(rootRef)
   useTestimonialCards(rootRef)
 
   return (
-    <section ref={rootRef} id="testimoni" className="bg-white py-16 md:py-28">
+    <section ref={rootRef} id={anchor ?? undefined} className="bg-white py-16 md:py-28">
       <div className="container grid items-center gap-12 md:grid-cols-[0.6fr_1.4fr]">
         <div>
-          <div data-gsap-reveal>
-            <SectionTag label={tags.testimonials.label} tone={tags.testimonials.tone} />
-          </div>
+          {tag && (
+            <div data-gsap-reveal>
+              <SectionTag label={tag.label} tone={tag.tone} />
+            </div>
+          )}
           <h2 data-gsap-reveal className="mt-4 text-3xl font-extrabold leading-snug md:text-4xl">
             {title}
           </h2>
@@ -47,12 +60,12 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ tags, 
         <ul className="grid gap-6 md:grid-cols-3">
           {testimonials.slice(0, MAX_TESTIMONIALS).map((testimonial) => (
             <li
-              key={testimonial.id}
+              key={testimonial.id ?? testimonial.name}
               data-testimonial
               style={{ rotate: `${testimonial.rotationDeg ?? 0}deg` }}
               className={cn(
                 'rounded-2xl p-6 shadow-[0_14px_30px_-16px_rgba(20,20,60,0.3)]',
-                TESTIMONIAL_TONE_CLASS[testimonial.tone],
+                TESTIMONIAL_TONE_CLASS[testimonial.tone ?? 'yellow'],
               )}
             >
               <p aria-label={`${STAR_COUNT} dari ${STAR_COUNT} bintang`} className="text-sm tracking-widest">

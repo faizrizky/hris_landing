@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url'
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const DEFAULT_CMS_URL = 'http://localhost:3001'
-const cmsUrl = new URL(process.env.NEXT_PUBLIC_CMS_URL ?? DEFAULT_CMS_URL)
+const cmsUrl = new URL(process.env.CMS_PUBLIC_URL ?? DEFAULT_CMS_URL)
 
 const nextConfig: NextConfig = {
   images: {

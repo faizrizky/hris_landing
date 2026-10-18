@@ -1,33 +1,44 @@
 'use client'
 
-import Link from 'next/link'
 import React, { useRef } from 'react'
 
 import { DEMO_HREF } from '@/features/site/content/labels'
-import type { Home } from '@/payload-types'
 
 import { useHeroIntro } from '../hooks/use-hero-intro'
 import { useHeroShowcase } from '../hooks/use-hero-showcase'
 import { useParallax } from '../hooks/use-parallax'
-import { HeroShowcase } from './hero-showcase'
+import { HeroShowcase, type HeroMockup } from './hero-showcase'
 import { PillLink } from './pill-link'
 import { TrustPoints } from './trust-points'
 
 const SHOWCASE_PARALLAX_SPEED = 0.1
 
 interface HeroSectionProps {
-  home: Home
+  titleLineOne?: string | null
+  titleLineTwo?: string | null
+  description?: string | null
+  buttons?: { label: string; href: string; style?: 'fill' | 'stroke' | null }[] | null
+  mockup?: HeroMockup | null
+  trustPoints?: { id?: string | null; title: string; description?: string | null }[] | null
 }
 
 const splitWords = (line: string) => line.split(' ').filter(Boolean)
 
-/** Hero: judul dan CTA di kiri, mockup isometrik di kanan, empat kartu keunggulan di bawahnya. */
-export const HeroSection: React.FC<HeroSectionProps> = ({ home }) => {
+/** Hero beranda: judul dan CTA di kiri, mockup isometrik di kanan, empat kartu keunggulan di bawahnya. */
+export const HeroSection: React.FC<HeroSectionProps> = ({
+  titleLineOne,
+  titleLineTwo,
+  description,
+  buttons,
+  mockup,
+  trustPoints,
+}) => {
   const rootRef = useRef<HTMLElement>(null)
   const titleLines = [
-    { text: home.heroLineOne, isAccent: false },
-    { text: home.heroLineTwo, isAccent: true },
-  ]
+    { text: titleLineOne ?? '', isAccent: false },
+    { text: titleLineTwo ?? '', isAccent: true },
+  ].filter((line) => line.text)
+  const actions = buttons && buttons.length > 0 ? buttons : [{ label: 'Minta demo', href: DEMO_HREF, style: 'fill' as const }]
 
   useHeroIntro(rootRef)
   useParallax(rootRef)
@@ -59,30 +70,38 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ home }) => {
               </span>
             ))}
           </h1>
-          <p data-hero-fade className="mt-6 max-w-md text-base leading-relaxed text-ink-muted">
-            {home.heroDescription}
-          </p>
+          {description && (
+            <p data-hero-fade className="mt-6 max-w-md text-base leading-relaxed text-ink-muted">
+              {description}
+            </p>
+          )}
           <div data-hero-fade className="mt-8 flex flex-wrap items-center gap-6">
-            <PillLink href={DEMO_HREF} className="px-8 py-3.5">
-              {home.heroPrimaryAction}
-            </PillLink>
-            <Link
-              href={home.heroSecondaryHref}
-              className="text-sm font-semibold underline underline-offset-4 transition-colors hover:text-brand"
-            >
-              {home.heroSecondaryAction}
-            </Link>
+            {actions.map((button, index) =>
+              index === 0 ? (
+                <PillLink key={button.label} href={button.href} className="px-8 py-3.5">
+                  {button.label}
+                </PillLink>
+              ) : (
+                <PillLink key={button.label} href={button.href} variant="outline" className="px-6 py-3">
+                  {button.label}
+                </PillLink>
+              ),
+            )}
           </div>
         </div>
 
-        <div data-parallax={SHOWCASE_PARALLAX_SPEED}>
-          <HeroShowcase home={home} />
-        </div>
+        {mockup && (
+          <div data-parallax={SHOWCASE_PARALLAX_SPEED}>
+            <HeroShowcase mockup={mockup} />
+          </div>
+        )}
       </div>
 
-      <div className="container relative mt-10 md:mt-6">
-        <TrustPoints points={home.trustPoints ?? []} />
-      </div>
+      {trustPoints && trustPoints.length > 0 && (
+        <div className="container relative mt-10 md:mt-6">
+          <TrustPoints points={trustPoints} />
+        </div>
+      )}
     </section>
   )
 }

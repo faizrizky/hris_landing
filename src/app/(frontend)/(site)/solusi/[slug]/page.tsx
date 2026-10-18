@@ -1,122 +1,37 @@
-import { getPageCopy } from '@/features/cms/loaders'
-import { buildSectionTags } from '@/features/home/content/tones'
-import { CalendarBadge } from '@/features/site/visuals/badge-sets'
-import { PhoneVisual } from '@/features/site/visuals/phone-visual'
-import { TiltedCardsVisual } from '@/features/site/visuals/tilted-cards-visual'
-import { PageVisual } from '@/features/site/components/page-visual'
-import { PageSection } from '@/features/site/components/page-section'
-import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import React from 'react'
 
-import { getSolutionBySlug, getSolutionSummaries } from '@/features/cms/loaders'
-import { ContentUnavailable } from '@/features/site/components/content-unavailable'
-import { FaqIndented } from '@/features/site/components/faq-indented'
-import { PageIntro } from '@/features/site/components/page-intro'
-import { DEMO_HREF } from '@/features/site/content/labels'
+import { SolutionDetail } from '@/components/blocks/SolutionDetail'
+import { getSolution, getSolutions } from '@/lib/cms/queries'
+import { mediaUrl } from '@/lib/cms/media'
+import { defaultLocale } from '@/lib/i18n/config'
 
 type Args = { params: Promise<{ slug: string }> }
 
 export async function generateStaticParams() {
-  const result = await getSolutionSummaries()
+  const solutions = await getSolutions(defaultLocale)
 
-  return result.isOk ? result.data.map((solution) => ({ slug: solution.slug })) : []
+  return solutions.map((solution) => ({ slug: solution.slug }))
 }
 
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
-  const { slug } = await params
-  const result = await getSolutionBySlug(slug)
+  const solution = await getSolution((await params).slug, defaultLocale)
 
-  if (!result.isOk || !result.data) return {}
+  if (!solution) return {}
 
-  return { title: `HRIS untuk ${result.data.name}`, description: result.data.heroDescription }
+  const image = mediaUrl(solution.meta?.image)
+
+  return {
+    title: solution.meta?.title || `HRIS untuk ${solution.name}`,
+    description: solution.meta?.description || solution.tagline,
+    openGraph: image ? { images: [image] } : undefined,
+  }
 }
 
 export default async function SolutionPage({ params }: Args) {
-  const { slug } = await params
-  const result = await getSolutionBySlug(slug)
+  const solution = await getSolution((await params).slug, defaultLocale)
 
-  if (!result.isOk) return <ContentUnavailable message={result.message} />
-  if (!result.data) return notFound()
+  if (!solution) notFound()
 
-  const solution = result.data
-  const pains = solution.pains ?? []
-  const points = solution.points ?? []
-
-  const copyResult = await getPageCopy()
-
-  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
-
-  const copy = copyResult.data
-  const tags = buildSectionTags(copy)
-
-  return (
-    <>
-      <PageIntro
-        visual={
-          <PageVisual
-            title={solution.name}
-            rows={[...pains, ...points].map((item) => ({ title: item.title, detail: item.description }))}
-          />
-        }
-        title={solution.heroTitle}
-        tag={tags.industries}
-        sentence={solution.heroDescription}
-        action={{ label: 'Minta demo', href: DEMO_HREF }}
-      />
-
-      {pains.length > 0 && (
-        <PageSection
-          title={copy.painsTitle}
-          bandClassName="bg-tint-peach"
-          visual={<TiltedCardsVisual cards={pains.map((pain) => ({ title: pain.title, description: pain.description }))} />}
-        >
-          <ul className="grid gap-5 md:grid-cols-3">
-            {pains.map((pain, index) => (
-              <li key={pain.id ?? pain.title}>
-                <AccentCard index={index} title={pain.title} description={pain.description} />
-              </li>
-            ))}
-          </ul>
-        </PageSection>
-      )}
-
-      {points.length > 0 && (
-        <PageSection
-          title={copy.helpTitle}
-          visualSide="left"
-          visual={
-            <PhoneVisual
-              tone="lavender"
-              title={solution.name}
-              accessory={<CalendarBadge />}
-              rows={points.map((point) => ({ title: point.title }))}
-            />
-          }
-        >
-          <ul className="grid gap-5 md:grid-cols-2">
-            {points.map((point, index) => {
-              const feature = typeof point.feature === 'object' ? point.feature : null
-
-              return (
-                <li key={point.id ?? point.title}>
-                  <AccentCard index={index} title={point.title} description={point.description}>
-                    {feature && (
-                      <Link href={`/fitur/${feature.slug}`} className="relative mt-3 inline-block text-xs font-semibold underline underline-offset-4 hover:text-brand">
-                        Lihat fitur {feature.name}
-                      </Link>
-                    )}
-                  </AccentCard>
-                </li>
-              )
-            })}
-          </ul>
-        </PageSection>
-      )}
-
-      <FaqIndented heading={copy.faqTitle} items={solution.faqs ?? []} />
-    </>
-  )
+  return <SolutionDetail solution={solution} />
 }

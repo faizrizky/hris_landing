@@ -3,12 +3,11 @@
 import Link from 'next/link'
 import React, { useCallback, useRef, useState } from 'react'
 
-import type { FeatureSummary, SolutionSummary } from '@/features/cms/loaders'
+import type { Feature, Solution } from '@/types/cms'
 import { MegaPanel } from './mega-panel'
 import { BrandLogo } from '@/features/home/components/decorations'
 
 import {
-  DEMO_HREF,
   FEATURE_CATEGORY_DESCRIPTION,
   FEATURE_CATEGORY_LABEL,
   FEATURE_CATEGORY_ORDER,
@@ -33,10 +32,12 @@ interface NavLink {
 
 interface SiteHeaderProps {
   brandName: string
-  actionLabel: string
+  action: { label: string; href: string }
+  featuresLabel: string
+  solutionsLabel: string
   navLinks: NavLink[]
-  features: FeatureSummary[]
-  solutions: SolutionSummary[]
+  features: Feature[]
+  solutions: Solution[]
 }
 
 const MENU_BUTTON_CLASS =
@@ -50,7 +51,9 @@ const SOLUTION_TYPES: SolutionTypeId[] = [SOLUTION_TYPE.INDUSTRY, SOLUTION_TYPE.
  */
 export const SiteHeader: React.FC<SiteHeaderProps> = ({
   brandName,
-  actionLabel,
+  action,
+  featuresLabel,
+  solutionsLabel,
   navLinks,
   features,
   solutions,
@@ -93,7 +96,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             aria-controls="menu-fitur"
             onClick={() => handleToggleMenu(MENU_ID.FEATURES)}
           >
-            Fitur
+            {featuresLabel}
           </button>
           <button
             type="button"
@@ -102,15 +105,15 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             aria-controls="menu-solusi"
             onClick={() => handleToggleMenu(MENU_ID.SOLUTIONS)}
           >
-            Solusi
+            {solutionsLabel}
           </button>
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} onClick={closeAll} className="py-2 transition-colors hover:text-ink">
               {link.label}
             </Link>
           ))}
-          <Link href={DEMO_HREF} onClick={closeAll} className="btn min-h-0 px-5 py-2 text-xs">
-            {actionLabel}
+          <Link href={action.href} onClick={closeAll} className="btn min-h-0 px-5 py-2 text-xs">
+            {action.label}
           </Link>
         </nav>
 
@@ -152,9 +155,9 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                     <Link href={`/fitur/${feature.slug}`} onClick={closeAll} className="group block">
                       <span className="block font-semibold group-hover:text-accent-deep">{feature.name}</span>
                       <span className="mt-0.5 block text-ink-soft">{feature.shortDescription}</span>
-                      {feature.status !== FEATURE_STATUS.AVAILABLE && (
+                      {feature.availability !== FEATURE_STATUS.AVAILABLE && (
                         <span className="mt-0.5 block font-semibold text-ink-soft">
-                          {FEATURE_STATUS_LABEL[feature.status]}
+                          {FEATURE_STATUS_LABEL[feature.availability]}
                         </span>
                       )}
                     </Link>
@@ -211,7 +214,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
         <div id="menu-sheet" className="fixed inset-0 z-40 overflow-y-auto bg-paper pt-20 lg:hidden">
           <div className="container space-y-10 pb-16">
             <div>
-              <p className="font-semibold text-ink-soft">Fitur</p>
+              <p className="font-semibold text-ink-soft">{featuresLabel}</p>
               <ul className="mt-3 space-y-2">
                 {features.map((feature) => (
                   <li key={feature.id}>
@@ -223,7 +226,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               </ul>
             </div>
             <div>
-              <p className="font-semibold text-ink-soft">Solusi</p>
+              <p className="font-semibold text-ink-soft">{solutionsLabel}</p>
               <ul className="mt-3 space-y-2">
                 {solutions.map((solution) => (
                   <li key={solution.id}>
@@ -243,8 +246,8 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                 </li>
               ))}
             </ul>
-            <Link href={DEMO_HREF} onClick={closeAll} className="btn w-full">
-              {actionLabel}
+            <Link href={action.href} onClick={closeAll} className="btn w-full">
+              {action.label}
             </Link>
           </div>
         </div>

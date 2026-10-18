@@ -1,8 +1,6 @@
 import { Check } from 'lucide-react'
 import React from 'react'
 
-import type { Home } from '@/payload-types'
-
 import { getAccentByIndex, getInitials, type AccentColor } from '../content/tones'
 import { StatusPill } from './status-pill'
 
@@ -25,18 +23,30 @@ const getLayerStyle = (zPx: number) => ({ '--z': `${zPx}px` }) as React.CSSPrope
  */
 const LAYER_CLASS = 'md:[transform:translateZ(calc(var(--z)_+_var(--lift,0px)_+_var(--float,0px)))]'
 
+export interface HeroMockup {
+  approvalsTitle?: string | null
+  approvals?: { id?: string | null; person: string; detail: string; status: string }[] | null
+  doneLabel?: string | null
+  attendanceTitle?: string | null
+  attendanceFigure?: string | null
+  attendanceDetail?: string | null
+  payslipTitle?: string | null
+  payslipDetail?: string | null
+  phoneChips?: { id?: string | null; text: string }[] | null
+}
+
 interface HeroShowcaseProps {
-  home: Home
+  mockup: HeroMockup
 }
 
 /** Mockup produk isometrik: antrean persetujuan, HP absen, dan dua kartu notifikasi yang melayang. */
-export const HeroShowcase: React.FC<HeroShowcaseProps> = ({ home }) => {
-  const approvals = home.showcaseApprovals ?? []
-  const phoneChips = home.faceChips ?? []
+export const HeroShowcase: React.FC<HeroShowcaseProps> = ({ mockup }) => {
+  const approvals = mockup.approvals ?? []
+  const phoneChips = mockup.phoneChips ?? []
 
   const floatingCards = [
-    { id: 'attendance', accent: 'teal', title: home.showcaseAttendanceTitle, subtitle: home.showcaseAttendanceDetail },
-    { id: 'payslip', accent: 'purple', title: home.showcasePayslipTitle, subtitle: home.showcasePayslipDetail },
+    { id: 'attendance', accent: 'teal', title: mockup.attendanceTitle, subtitle: mockup.attendanceDetail },
+    { id: 'payslip', accent: 'purple', title: mockup.payslipTitle, subtitle: mockup.payslipDetail },
   ] as const
 
   return (
@@ -54,7 +64,7 @@ export const HeroShowcase: React.FC<HeroShowcaseProps> = ({ home }) => {
             <span className="h-2 w-2 rounded-full bg-accent-orange" />
             <span className="h-2 w-2 rounded-full bg-accent-yellow" />
             <span className="h-2 w-2 rounded-full bg-accent-teal" />
-            <p className="ml-2 text-[11px] font-bold">{home.showcaseApprovalsTitle}</p>
+            <p className="ml-2 text-[11px] font-bold">{mockup.approvalsTitle}</p>
           </div>
 
           <ul className="mt-3 space-y-2">
@@ -69,7 +79,7 @@ export const HeroShowcase: React.FC<HeroShowcaseProps> = ({ home }) => {
                 </span>
                 <StatusPill
                   label={row.status}
-                  isDone={row.status === home.approvalDoneLabel}
+                  isDone={row.status === mockup.doneLabel}
                   className="text-[10px]"
                 />
                 <span className={`h-1.5 w-1.5 rounded-full ${TONE_BG_CLASS[getAccentByIndex(index)]}`} />
@@ -83,8 +93,8 @@ export const HeroShowcase: React.FC<HeroShowcaseProps> = ({ home }) => {
           style={getLayerStyle(LAYER_Z_PX.phone)}
           className={`${LAYER_CLASS} hidden h-[290px] w-[150px] rounded-[1.6rem] border-[6px] border-phone-lavender bg-white p-3 text-center shadow-[0_30px_50px_-20px_rgba(60,60,160,0.45)] md:absolute md:left-[400px] md:top-[-18px] md:block`}
         >
-          <p className="mt-4 text-[10px] font-bold">{home.showcaseAttendanceTitle}</p>
-          <p className="text-[8px] text-ink-muted">{home.showcaseAttendanceFigure}</p>
+          <p className="mt-4 text-[10px] font-bold">{mockup.attendanceTitle}</p>
+          <p className="text-[8px] text-ink-muted">{mockup.attendanceFigure}</p>
           <div className="mx-auto mt-4 grid h-20 w-20 place-items-center rounded-full border-4 border-accent-teal">
             <Check className="h-9 w-9 text-accent-teal" strokeWidth={3} />
           </div>

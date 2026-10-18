@@ -371,3 +371,26 @@ main:has(.home-cta) + footer .footer-invitation {
   border-radius: var(--ui-radius);
 }
 
+
+/* ---------- bingkai elemen editor visual ---------- */
+.hris-el {
+  padding: 12px 0;
+}
+
+.hris-el__inner {
+  display: flex;
+  flex-direction: column;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+
+.hris-col .hris-el {
+  padding: 0;
+}
+
+.hris-col .hris-el__inner {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}

@@ -2,12 +2,14 @@ import { Check, Clock } from 'lucide-react'
 import React from 'react'
 
 import { PillLink } from '@/features/home/components/pill-link'
-import type { PricingPage } from '@/payload-types'
+import type { Page } from '@/types/cms'
 import { cn } from '@/utilities/ui'
 
 import { DEMO_HREF } from '../content/labels'
 
-export type PricingPlan = NonNullable<PricingPage['plans']>[number]
+type PricingBlockData = Extract<Page['layout'][number], { blockType: 'pricing' }>
+
+export type PricingPlan = NonNullable<PricingBlockData['plans']>[number]
 
 interface PlanCardProps {
   plan: PricingPlan
@@ -62,7 +64,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({ plan, maxFeatures }) => {
       </ul>
 
       <div className="mt-8">
-        <PillLink href={DEMO_HREF} variant={plan.isFeatured ? 'dark' : 'outline'} className="w-full">
+        <PillLink href={plan.actionHref || DEMO_HREF} variant={plan.isFeatured ? 'dark' : 'outline'} className="w-full">
           {plan.actionLabel}
         </PillLink>
       </div>

@@ -3,8 +3,6 @@ import React from 'react'
 
 import { cn } from '@/utilities/ui'
 
-import type { Home } from '@/payload-types'
-
 const TRUST_ICONS: readonly LucideIcon[] = [ScanFace, WifiOff, Database, BadgeCheck]
 
 const TRUST_ICON_TINT_CLASSES = [
@@ -15,7 +13,7 @@ const TRUST_ICON_TINT_CLASSES = [
 ] as const
 
 interface TrustPointsProps {
-  points: NonNullable<Home['trustPoints']>
+  points: { id?: string | null; title: string; description?: string | null }[]
 }
 
 /** Empat keunggulan di dasar hero. Kemunculannya diatur animasi intro hero lewat `data-hero-fade`. */

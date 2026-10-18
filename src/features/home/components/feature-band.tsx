@@ -2,7 +2,6 @@
 
 import React, { useRef } from 'react'
 
-import { DEMO_HREF } from '@/features/site/content/labels'
 import { cn } from '@/utilities/ui'
 
 import type { SectionTagContent } from '../content/tones'
@@ -18,11 +17,11 @@ import { SectionTag } from './section-tag'
 const PHONE_PARALLAX_SPEED = 0.18
 
 interface FeatureBandProps {
-  id: string
-  tag: SectionTagContent
+  id?: string | null
+  tag?: SectionTagContent | null
   title: string
-  description: string
-  action: string
+  description?: string | null
+  action?: { label: string; href: string } | null
   tintClassName: string
   /** Objek melayang di sudut HP. */
   accessory: React.ReactNode
@@ -50,7 +49,7 @@ export const FeatureBand: React.FC<FeatureBandProps> = ({
   useFloat(rootRef)
 
   return (
-    <section ref={rootRef} id={id} className="bg-white py-10 md:py-16">
+    <section ref={rootRef} id={id ?? undefined} className="bg-white py-10 md:py-16">
       <div className={cn('relative overflow-hidden', tintClassName)}>
         <div className="container grid items-center gap-8 md:h-[460px] md:grid-cols-2">
           <div className="relative order-2 h-[360px] md:order-1 md:h-full">
@@ -69,18 +68,24 @@ export const FeatureBand: React.FC<FeatureBandProps> = ({
           </div>
 
           <div className="order-1 py-10 md:order-2 md:py-0">
-            <div data-gsap-reveal>
-              <SectionTag label={tag.label} tone={tag.tone} />
-            </div>
+            {tag && (
+              <div data-gsap-reveal>
+                <SectionTag label={tag.label} tone={tag.tone} />
+              </div>
+            )}
             <h2 data-gsap-reveal className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
               {title}
             </h2>
-            <p data-gsap-reveal className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted">
-              {description}
-            </p>
-            <div data-gsap-reveal className="mt-8">
-              <PillLink href={DEMO_HREF}>{action}</PillLink>
-            </div>
+            {description && (
+              <p data-gsap-reveal className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted">
+                {description}
+              </p>
+            )}
+            {action && (
+              <div data-gsap-reveal className="mt-8">
+                <PillLink href={action.href}>{action.label}</PillLink>
+              </div>
+            )}
           </div>
         </div>
       </div>

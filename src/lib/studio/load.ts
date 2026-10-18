@@ -1,0 +1,107 @@
+import "server-only";
+
+import type { StudioEditorProps } from "@/components/studio/studio-editor";
+import { getFooter, getNavigation, getSiteData } from "@/lib/cms/queries";
+import { env } from "@/lib/env";
+import { fontVariables } from "@/lib/fonts";
+import { defaultLocale, type Locale } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n/dictionaries";
+import { cmsPublicUrl } from "@/lib/studio/auth";
+import type { StudioLang } from "@/lib/studio/strings";
+import type { Navigation, Page, User } from "@/types/cms";
+
+/** Pilihan link berkelompok untuk kolom link di editor. */
+export type LinkGroup = { label: string; options: { label: string; href: string }[] };
+
+export async function buildLinkGroups(
+  authorization: string,
+  locale: Locale,
+  uiLang: StudioLang,
+  data: { features: { name: string; slug: string }[]; solutions: { name: string; slug: string }[] },
+  navigation: Navigation | null,
+): Promise<LinkGroup[]> {
+  const url = new URL("/api/pages", env.CMS_URL);
+  url.search = new URLSearchParams({
+    limit: "100",
+    depth: "0",
+    draft: "true",
+    sort: "title",
+    locale,
+    "fallback-locale": defaultLocale,
+    "select[title]": "true",
+    "select[slug]": "true",
+  }).toString();
+  const res = await fetch(url, { headers: { authorization }, cache: "no-store" }).catch(() => null);
+  const pages = res?.ok ? ((await res.json()) as { docs: Pick<Page, "title" | "slug">[] }).docs : [];
+  const L = (en: string, id: string) => (uiLang === "id" ? id : en);
+  const groups: LinkGroup[] = [
+    {
+      label: L("Pages", "Halaman"),
+      options: pages.map((p) => ({ label: p.title, href: p.slug === "home" ? "/" : `/${p.slug}` })),
+    },
+    {
+      label: L("Solutions", "Solusi"),
+      options: data.solutions.map((s) => ({ label: s.name, href: `/solusi/${s.slug}` })),
+    },
+    {
+      label: L("Features", "Fitur"),
+      options: data.features.map((f) => ({ label: f.name, href: `/fitur/${f.slug}` })),
+    },
+    // "Link per halaman" dari CMS (Settings → Navigation).
+    ...(navigation?.linkLibrary ?? []).map((g) => ({
+      label: g.group,
+      options: (g.links ?? []).map((l) => ({ label: l.label, href: l.target })),
+    })),
+  ];
+  return groups.filter((g) => g.options.length);
+}
+
+export type StudioLoadResult =
+  { status: "ok"; props: StudioEditorProps } | { status: "login" } | { status: "notFound" };
+
+/** Semua yang dibutuhkan editor untuk satu halaman, diambil dengan sesi editor sendiri. */
+export async function loadStudio({
+  pageId,
+  locale,
+  uiLang,
+  embedded,
+  authorization,
+  user,
+}: {
+  pageId: number;
+  locale: Locale;
+  uiLang: StudioLang;
+  embedded: boolean;
+  authorization: string;
+  user: User;
+}): Promise<StudioLoadResult> {
+  if (!Number.isInteger(pageId) || pageId <= 0 || !env.CMS_URL) return { status: "notFound" };
+
+  // Draf terbaru, diambil dengan sesi editor sendiri supaya aturan akses CMS berlaku.
+  const url = new URL(`/api/pages/${pageId}`, env.CMS_URL);
+  url.search = new URLSearchParams({ draft: "true", depth: "2", locale, "fallback-locale": defaultLocale }).toString();
+  const res = await fetch(url, { headers: { authorization }, cache: "no-store" });
+  if (res.status === 401 || res.status === 403) return { status: "login" };
+  if (!res.ok) return { status: "notFound" };
+  const page = (await res.json()) as Page;
+
+  const [siteData, navigation, footer] = await Promise.all([getSiteData(locale), getNavigation(locale), getFooter(locale)]);
+  const linkGroups = await buildLinkGroups(authorization, locale, uiLang, siteData, navigation);
+
+  return {
+    status: "ok",
+    props: {
+      page: { id: page.id, title: page.title, slug: page.slug, layout: page.layout, _status: page._status },
+      locale,
+      uiLang,
+      embedded,
+      user: { email: user.email, name: user.name },
+      cmsUrl: cmsPublicUrl(),
+      siteData,
+      chrome: { navigation, footer },
+      dictionary: getDictionary(locale),
+      fontClass: fontVariables,
+      linkGroups,
+    },
+  };
+}

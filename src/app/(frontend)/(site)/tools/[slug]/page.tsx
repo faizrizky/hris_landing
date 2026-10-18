@@ -1,16 +1,16 @@
-import { getPageCopy } from '@/features/cms/loaders'
-import { buildSectionTags } from '@/features/home/content/tones'
-import { ContentUnavailable } from '@/features/site/components/content-unavailable'
-import { CalculatorVisual } from '@/features/site/visuals/calculator-visual'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import React from 'react'
 
+import { tagFor } from '@/features/home/content/tones'
 import { PageIntro } from '@/features/site/components/page-intro'
+import { CalculatorVisual } from '@/features/site/visuals/calculator-visual'
 import { CalculatorForm } from '@/features/tools/calculator-form'
 import { CALCULATORS, getCalculatorBySlug } from '@/features/tools/registry'
 
 type Args = { params: Promise<{ slug: string }> }
+
+const TOOLS_TAG = 'KALKULATOR'
 
 export function generateStaticParams() {
   return CALCULATORS.map((calculator) => ({ slug: calculator.slug }))
@@ -29,23 +29,19 @@ export default async function CalculatorPage({ params }: Args) {
 
   if (!calculator) return notFound()
 
-  const copyResult = await getPageCopy()
-
-  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
-
-  const copy = copyResult.data
-  const tags = buildSectionTags(copy)
-
   return (
     <>
       <PageIntro
+        title={calculator.title}
+        tag={tagFor(TOOLS_TAG)}
+        sentence={calculator.summary}
         visual={
           <CalculatorVisual
             title={calculator.title}
             tabs={CALCULATORS.filter((item) => item.slug !== calculator.slug).map((item) => item.title)}
           />
         }
-        title={calculator.title} tag={tags.modules} sentence={calculator.summary} />
+      />
       <section className="pb-20" aria-label="Kalkulator">
         <div className="container">
           <CalculatorForm slug={calculator.slug} />

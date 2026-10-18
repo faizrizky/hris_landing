@@ -3,30 +3,29 @@
 import { ChevronDown } from 'lucide-react'
 import React, { useRef } from 'react'
 
-import type { Home } from '@/payload-types'
-
-import type { SectionTags } from '../content/tones'
+import type { SectionTagContent } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { SectionTag } from './section-tag'
 
 interface FaqSectionProps {
-  tags: SectionTags
+  anchor?: string | null
+  tag?: SectionTagContent | null
   title: string
-  items: NonNullable<Home['faqItems']>
+  items: { id?: string | null; question: string; answer: string }[]
 }
 
 /** FAQ memakai elemen <details> bawaan sehingga bisa dibuka dengan keyboard tanpa JavaScript. */
-export const FaqSection: React.FC<FaqSectionProps> = ({ tags, title, items }) => {
+export const FaqSection: React.FC<FaqSectionProps> = ({ anchor, tag, title, items }) => {
   const rootRef = useRef<HTMLElement>(null)
 
   useRevealOnScroll(rootRef)
 
   return (
-    <section ref={rootRef} id="faq" className="bg-white py-16 md:py-24">
+    <section ref={rootRef} id={anchor ?? undefined} className="bg-white py-16 md:py-24">
       <div className="container">
         <div className="mx-auto max-w-3xl">
           <div data-gsap-reveal className="text-center">
-            <SectionTag label={tags.faq.label} tone={tags.faq.tone} />
+            {tag && <SectionTag label={tag.label} tone={tag.tone} />}
             <h2 className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
               {title}
             </h2>

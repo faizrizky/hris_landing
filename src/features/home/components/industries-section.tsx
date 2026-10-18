@@ -3,10 +3,10 @@
 import Link from 'next/link'
 import React, { useRef } from 'react'
 
-import type { Home, Solution } from '@/payload-types'
+import type { Solution } from '@/types/cms'
 import { cn } from '@/utilities/ui'
 
-import { type SectionTags, getAccentByIndex, type AccentColor } from '../content/tones'
+import { getAccentByIndex, type AccentColor, type SectionTagContent } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { SectionTag } from './section-tag'
 
@@ -19,30 +19,36 @@ const ACCENT_BAR_CLASS: Record<AccentColor, string> = {
 }
 
 interface IndustriesSectionProps {
-  tags: SectionTags
-  home: Home
+  anchor?: string | null
+  tag?: SectionTagContent | null
+  title: string
+  description?: string | null
   solutions: Solution[]
 }
 
 /** Solusi per industri: kartu ringkas yang menaut ke halaman solusinya. */
-export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ tags, home, solutions }) => {
+export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ anchor, tag, title, description, solutions }) => {
   const rootRef = useRef<HTMLElement>(null)
 
   useRevealOnScroll(rootRef)
 
   return (
-    <section ref={rootRef} id="solusi" className="bg-white py-16 md:py-24">
+    <section ref={rootRef} id={anchor ?? undefined} className="bg-white py-16 md:py-24">
       <div className="container">
         <div className="max-w-2xl">
-          <div data-gsap-reveal>
-            <SectionTag label={tags.industries.label} tone={tags.industries.tone} />
-          </div>
+          {tag && (
+            <div data-gsap-reveal>
+              <SectionTag label={tag.label} tone={tag.tone} />
+            </div>
+          )}
           <h2 data-gsap-reveal className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
-            {home.industriesTitle}
+            {title}
           </h2>
-          <p data-gsap-reveal className="mt-4 text-sm leading-relaxed text-ink-muted">
-            {home.industriesDescription}
-          </p>
+          {description && (
+            <p data-gsap-reveal className="mt-4 text-sm leading-relaxed text-ink-muted">
+              {description}
+            </p>
+          )}
         </div>
 
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

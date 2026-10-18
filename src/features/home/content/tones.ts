@@ -1,6 +1,4 @@
-import type { PageCopy } from '@/payload-types'
-
-/** Warna aksen dan label bagian di beranda. Hanya presentasi; teksnya datang dari CMS atau konstanta di sini. */
+/** Warna aksen dan label bagian. Hanya presentasi; teksnya datang dari CMS. */
 
 export type AccentColor = 'teal' | 'orange' | 'purple' | 'blue' | 'yellow'
 export type TagTone = 'orange' | 'purple' | 'teal' | 'yellow'
@@ -14,33 +12,18 @@ export interface SectionTagContent {
   tone: TagTone
 }
 
-export const SECTION_TAG_KEYS = ['attendance', 'requests', 'approval', 'modules', 'industries', 'testimonials', 'pricing', 'faq'] as const
+const TAG_TONES: readonly TagTone[] = ['orange', 'purple', 'teal', 'yellow']
 
-export type SectionTagKey = (typeof SECTION_TAG_KEYS)[number]
-export type SectionTags = Record<SectionTagKey, SectionTagContent>
+/** Label bagian dari teks CMS. Warnanya dipilih tetap dari isi teks, jadi label yang sama selalu berwarna sama. */
+export const tagFor = (label: string | null | undefined): SectionTagContent | undefined => {
+  const text = label?.trim()
 
-/** Warna label tiap bagian. Teks labelnya datang dari CMS (Teks Halaman). */
-const SECTION_TAG_TONES: Record<SectionTagKey, TagTone> = {
-  attendance: 'orange',
-  requests: 'purple',
-  approval: 'teal',
-  modules: 'orange',
-  industries: 'teal',
-  testimonials: 'yellow',
-  pricing: 'purple',
-  faq: 'orange',
+  if (!text) return undefined
+
+  const sum = [...text].reduce((total, char) => total + char.charCodeAt(0), 0)
+
+  return { label: text, tone: TAG_TONES[sum % TAG_TONES.length] }
 }
-
-export const buildSectionTags = (copy: PageCopy): SectionTags => ({
-  attendance: { label: copy.tagAttendance, tone: SECTION_TAG_TONES.attendance },
-  requests: { label: copy.tagRequests, tone: SECTION_TAG_TONES.requests },
-  approval: { label: copy.tagApproval, tone: SECTION_TAG_TONES.approval },
-  modules: { label: copy.tagModules, tone: SECTION_TAG_TONES.modules },
-  industries: { label: copy.tagIndustries, tone: SECTION_TAG_TONES.industries },
-  testimonials: { label: copy.tagTestimonials, tone: SECTION_TAG_TONES.testimonials },
-  pricing: { label: copy.tagPricing, tone: SECTION_TAG_TONES.pricing },
-  faq: { label: copy.tagFaq, tone: SECTION_TAG_TONES.faq },
-})
 
 export const getInitials = (name: string) =>
   name

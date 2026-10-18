@@ -3,9 +3,6 @@
 import { Check } from 'lucide-react'
 import React, { useRef } from 'react'
 
-import { DEMO_HREF } from '@/features/site/content/labels'
-import type { Home } from '@/payload-types'
-
 import { useParallax } from '../hooks/use-parallax'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { PillLink } from './pill-link'
@@ -14,13 +11,15 @@ const BIG_SHAPE_PARALLAX_SPEED = 0.2
 const SMALL_SHAPE_PARALLAX_SPEED = 0.4
 
 interface CtaSectionProps {
-  home: Home
+  title: string
+  description?: string | null
+  action?: { label: string; href: string } | null
+  guarantees: { id?: string | null; text: string }[]
 }
 
 /** Ajakan penutup gelap dengan bentuk geometris. Footer situs menyambung tepat di bawahnya. */
-export const CtaSection: React.FC<CtaSectionProps> = ({ home }) => {
+export const CtaSection: React.FC<CtaSectionProps> = ({ title, description, action, guarantees }) => {
   const rootRef = useRef<HTMLElement>(null)
-  const guarantees = home.ctaGuarantees ?? []
 
   useRevealOnScroll(rootRef)
   useParallax(rootRef)
@@ -45,28 +44,34 @@ export const CtaSection: React.FC<CtaSectionProps> = ({ home }) => {
       <div className="container relative pb-14 pt-24 md:pt-32">
         <div className="mx-auto max-w-2xl text-center">
           <h2 data-gsap-reveal className="text-3xl font-extrabold leading-tight md:text-4xl">
-            {home.ctaTitle}
+            {title}
           </h2>
-          <p data-gsap-reveal className="mt-4 text-sm text-white/80">
-            {home.ctaDescription}
-          </p>
-          <div data-gsap-reveal className="mt-8">
-            <PillLink href={DEMO_HREF} variant="accent" className="px-8 py-3.5">
-              {home.ctaAction}
-            </PillLink>
-          </div>
-          <ul className="mx-auto mt-12 grid max-w-xl gap-3 text-left sm:grid-cols-2">
-            {guarantees.map((item) => (
-              <li
-                key={item.id ?? item.text}
-                data-gsap-reveal
-                className="flex items-start gap-3 rounded-xl bg-white/5 p-4 text-xs leading-relaxed text-white/90"
-              >
-                <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent-teal" />
-                {item.text}
-              </li>
-            ))}
-          </ul>
+          {description && (
+            <p data-gsap-reveal className="mt-4 text-sm text-white/80">
+              {description}
+            </p>
+          )}
+          {action && (
+            <div data-gsap-reveal className="mt-8">
+              <PillLink href={action.href} variant="accent" className="px-8 py-3.5">
+                {action.label}
+              </PillLink>
+            </div>
+          )}
+          {guarantees.length > 0 && (
+            <ul className="mx-auto mt-12 grid max-w-xl gap-3 text-left sm:grid-cols-2">
+              {guarantees.map((item) => (
+                <li
+                  key={item.id ?? item.text}
+                  data-gsap-reveal
+                  className="flex items-start gap-3 rounded-xl bg-white/5 p-4 text-xs leading-relaxed text-white/90"
+                >
+                  <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent-teal" />
+                  {item.text}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </section>

@@ -4,7 +4,6 @@ import { Check } from 'lucide-react'
 import Link from 'next/link'
 import React, { useRef } from 'react'
 
-import type { FeatureSummary } from '@/features/cms/loaders'
 import {
   FEATURE_CATEGORY_DESCRIPTION,
   FEATURE_CATEGORY_LABEL,
@@ -13,10 +12,10 @@ import {
   FEATURE_STATUS_LABEL,
   type FeatureStatus,
 } from '@/features/site/content/labels'
-import type { Home } from '@/payload-types'
 import { cn } from '@/utilities/ui'
+import type { Feature } from '@/types/cms'
 
-import { type SectionTags, getAccentByIndex, type AccentColor } from '../content/tones'
+import { getAccentByIndex, type AccentColor, type SectionTagContent } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { SectionTag } from './section-tag'
 
@@ -35,13 +34,16 @@ const STATUS_PILL_CLASS: Record<FeatureStatus, string> = {
 }
 
 interface ModulesSectionProps {
-  tags: SectionTags
-  home: Home
-  features: FeatureSummary[]
+  anchor?: string | null
+  tag?: SectionTagContent | null
+  title: string
+  description?: string | null
+  tintClassName?: string
+  features: Feature[]
 }
 
 /** Peta modul per kategori fitur: yang sudah berjalan ditandai, yang belum ditandai sebagai rencana. */
-export const ModulesSection: React.FC<ModulesSectionProps> = ({ tags, home, features }) => {
+export const ModulesSection: React.FC<ModulesSectionProps> = ({ anchor, tag, title, description, tintClassName = 'bg-tint-sky', features }) => {
   const rootRef = useRef<HTMLElement>(null)
 
   useRevealOnScroll(rootRef)
@@ -52,27 +54,31 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ tags, home, feat
   })).filter((group) => group.items.length > 0)
 
   return (
-    <section ref={rootRef} id="fitur" className="bg-white py-10 md:py-16">
-      <div className="bg-tint-sky py-16 md:py-20">
+    <section ref={rootRef} id={anchor ?? undefined} className="bg-white py-10 md:py-16">
+      <div className={cn('py-16 md:py-20', tintClassName)}>
         <div className="container">
           <div className="max-w-2xl">
-            <div data-gsap-reveal>
-              <SectionTag label={tags.modules.label} tone={tags.modules.tone} />
-            </div>
+            {tag && (
+              <div data-gsap-reveal>
+                <SectionTag label={tag.label} tone={tag.tone} />
+              </div>
+            )}
             <h2 data-gsap-reveal className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
-              {home.modulesTitle}
+              {title}
             </h2>
-            <p data-gsap-reveal className="mt-4 text-sm leading-relaxed text-ink-muted">
-              {home.modulesDescription}
-            </p>
+            {description && (
+              <p data-gsap-reveal className="mt-4 text-sm leading-relaxed text-ink-muted">
+                {description}
+              </p>
+            )}
           </div>
 
           <ul className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {groups.map((group, index) => {
-              const isPlannedGroup = group.items.every((item) => item.status === FEATURE_STATUS.PLANNED)
+              const isPlannedGroup = group.items.every((item) => item.availability === FEATURE_STATUS.PLANNED)
               const groupStatus: FeatureStatus = isPlannedGroup
                 ? FEATURE_STATUS.PLANNED
-                : group.items.every((item) => item.status === FEATURE_STATUS.AVAILABLE)
+                : group.items.every((item) => item.availability === FEATURE_STATUS.AVAILABLE)
                   ? FEATURE_STATUS.AVAILABLE
                   : FEATURE_STATUS.PARTIAL
 

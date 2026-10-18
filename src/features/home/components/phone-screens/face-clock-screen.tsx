@@ -2,25 +2,25 @@
 
 import React, { useRef } from 'react'
 
-import type { Home } from '@/payload-types'
-
 import { useFaceScan } from '../../hooks/use-face-scan'
 
 interface FaceClockScreenProps {
-  home: Home
+  title?: string | null
+  date?: string | null
+  chips: string[]
+  buttonLabel?: string | null
 }
 
 /** Layar HP: simulasi absen dengan verifikasi wajah. Animasi diatur `useFaceScan`. */
-export const FaceClockScreen: React.FC<FaceClockScreenProps> = ({ home }) => {
+export const FaceClockScreen: React.FC<FaceClockScreenProps> = ({ title, date, chips, buttonLabel }) => {
   const rootRef = useRef<HTMLDivElement>(null)
-  const chips = home.faceChips ?? []
 
   useFaceScan(rootRef)
 
   return (
     <div ref={rootRef} className="flex h-full flex-col items-center px-5 pt-10 text-ink">
-      <p className="text-sm font-bold">{home.faceTitle}</p>
-      <p className="text-xs text-ink-muted">{home.faceDate}</p>
+      <p className="text-sm font-bold">{title}</p>
+      <p className="text-xs text-ink-muted">{date}</p>
 
       <div className="relative mt-6 h-40 w-40">
         <div className="absolute inset-0 rounded-full border-4 border-dashed border-phone-sky" />
@@ -49,13 +49,15 @@ export const FaceClockScreen: React.FC<FaceClockScreenProps> = ({ home }) => {
 
       <ul className="mt-6 flex flex-col items-center gap-2">
         {chips.map((chip) => (
-          <li key={chip.id ?? chip.text} data-face-chip className="rounded-full bg-tint-cyan px-3 py-1 text-xs font-medium text-ink">
-            {chip.text}
+          <li key={chip} data-face-chip className="rounded-full bg-tint-cyan px-3 py-1 text-xs font-medium text-ink">
+            {chip}
           </li>
         ))}
       </ul>
 
-      <span className="mt-6 rounded-full bg-ink px-6 py-2.5 text-xs font-semibold text-white">{home.faceButton}</span>
+      {buttonLabel && (
+        <span className="mt-6 rounded-full bg-ink px-6 py-2.5 text-xs font-semibold text-white">{buttonLabel}</span>
+      )}
     </div>
   )
 }

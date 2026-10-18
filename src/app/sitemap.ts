@@ -1,30 +1,29 @@
 import type { MetadataRoute } from 'next'
 
-import {
-  getFeatureSummaries,
-  getPageSlugs,
-  getSolutionSummaries,
-} from '@/features/cms/loaders'
+import { getFeatures, getPagesForSitemap, getSolutions } from '@/lib/cms/queries'
+import { defaultLocale } from '@/lib/i18n/config'
 import { TOOL_SLUGS } from '@/features/tools/tool-slugs'
 import { getServerSideURL } from '@/utilities/getURL'
 
-const STATIC_PATHS = ['/', '/fitur', '/solusi', '/harga', '/tools', '/tentang', '/demo'] as const
+const HOME_SLUG = 'home'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getServerSideURL()
-  const [features, solutions, pages] = await Promise.all([
-    getFeatureSummaries(),
-    getSolutionSummaries(),
-    getPageSlugs(),
+  const [pages, features, solutions] = await Promise.all([
+    getPagesForSitemap(),
+    getFeatures(defaultLocale),
+    getSolutions(defaultLocale),
   ])
 
-  const paths = [
-    ...STATIC_PATHS,
-    ...(features.isOk ? features.data.map((feature) => `/fitur/${feature.slug}`) : []),
-    ...(solutions.isOk ? solutions.data.map((solution) => `/solusi/${solution.slug}`) : []),
-    ...TOOL_SLUGS.map((slug) => `/tools/${slug}`),
-    ...(pages.isOk ? pages.data.map((slug) => `/${slug}`) : []),
+  const entries = [
+    ...pages.map((page) => ({
+      path: page.slug === HOME_SLUG ? '/' : `/${page.slug}`,
+      lastModified: new Date(page.updatedAt),
+    })),
+    ...features.map((feature) => ({ path: `/fitur/${feature.slug}`, lastModified: new Date(feature.updatedAt) })),
+    ...solutions.map((solution) => ({ path: `/solusi/${solution.slug}`, lastModified: new Date(solution.updatedAt) })),
+    ...TOOL_SLUGS.map((slug) => ({ path: `/tools/${slug}`, lastModified: new Date() })),
   ]
 
-  return paths.map((path) => ({ url: `${baseUrl}${path}`, lastModified: new Date() }))
+  return entries.map(({ path, lastModified }) => ({ url: `${baseUrl}${path}`, lastModified }))
 }

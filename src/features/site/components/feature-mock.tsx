@@ -1,6 +1,6 @@
 import React from 'react'
 
-import type { Feature } from '@/payload-types'
+import type { Feature } from '@/types/cms'
 
 interface FeatureMockProps {
   mock: Feature['mock']

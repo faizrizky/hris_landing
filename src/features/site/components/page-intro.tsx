@@ -17,14 +17,14 @@ interface PageIntroProps {
   title: string
   sentence?: string
   tag?: SectionTagContent
-  action?: { label: string; href: string }
+  buttons?: { label: string; href: string; style?: 'fill' | 'stroke' | null }[]
   note?: string
   /** Visual di kanan (isometrik, papan kartu, HP, dan lainnya). Tanpa ini, pembuka hanya teks. */
   visual?: React.ReactNode
 }
 
 /** Pembuka halaman dalam, selaras dengan hero beranda (setinggi layar, jadi bagian di bawahnya baru beranimasi saat di-scroll): teks di kiri, mockup isometrik beranimasi di kanan. */
-export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, tag, action, note, visual }) => {
+export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, tag, buttons = [], note, visual }) => {
   const rootRef = useRef<HTMLElement>(null)
 
   useHeroShowcase(rootRef)
@@ -46,11 +46,18 @@ export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, tag, acti
           </h1>
           {note && <p className="mt-4 text-sm font-semibold text-accent-orange">{note}</p>}
           {sentence && <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-muted">{sentence}</p>}
-          {action && (
-            <div className="mt-8">
-              <PillLink href={action.href} className="px-8 py-3.5">
-                {action.label}
-              </PillLink>
+          {buttons.length > 0 && (
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              {buttons.map((button) => (
+                <PillLink
+                  key={`${button.label}-${button.href}`}
+                  href={button.href}
+                  variant={button.style === 'stroke' ? 'outline' : 'dark'}
+                  className="px-8 py-3.5"
+                >
+                  {button.label}
+                </PillLink>
+              ))}
             </div>
           )}
         </div>

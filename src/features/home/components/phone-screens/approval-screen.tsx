@@ -2,32 +2,33 @@
 
 import React, { useRef } from 'react'
 
-import type { Home } from '@/payload-types'
-
 import { getInitials } from '../../content/tones'
 import { useApprovalChecklist } from '../../hooks/use-approval-checklist'
 
 interface ApprovalScreenProps {
-  home: Home
+  title?: string | null
+  subtitle?: string | null
+  pendingLabel?: string | null
+  doneLabel?: string | null
+  items: { name: string; detail: string }[]
 }
 
 /** Layar HP: daftar approval yang disetujui satu per satu. Animasi diatur `useApprovalChecklist`. */
-export const ApprovalScreen: React.FC<ApprovalScreenProps> = ({ home }) => {
+export const ApprovalScreen: React.FC<ApprovalScreenProps> = ({ title, subtitle, pendingLabel, doneLabel, items }) => {
   const rootRef = useRef<HTMLDivElement>(null)
-  const items = home.approvalItems ?? []
 
   useApprovalChecklist(rootRef)
 
   return (
     <div ref={rootRef} className="flex h-full flex-col text-ink">
       <div className="bg-phone-lavender px-5 pb-6 pt-10 text-white">
-        <p className="text-lg font-bold">{home.approvalScreenTitle}</p>
-        <p className="text-xs opacity-80">{home.approvalScreenSubtitle}</p>
+        <p className="text-lg font-bold">{title}</p>
+        <p className="text-xs opacity-80">{subtitle}</p>
       </div>
 
       <ul className="divide-y divide-black/5 px-4">
         {items.map((item) => (
-          <li key={item.id ?? item.name} data-check-item className="flex items-center gap-3 py-3.5">
+          <li key={item.name} data-check-item className="flex items-center gap-3 py-3.5">
             <span className="relative h-6 w-6 shrink-0 rounded-full border-2 border-accent-purple">
               <span
                 data-check-fill
@@ -60,13 +61,13 @@ export const ApprovalScreen: React.FC<ApprovalScreenProps> = ({ home }) => {
                 data-badge-pending
                 className="absolute inset-0 grid place-items-center rounded-full bg-accent-yellow/30 text-[10px] font-semibold"
               >
-                {home.approvalPendingLabel}
+                {pendingLabel}
               </span>
               <span
                 data-badge-done
                 className="absolute inset-0 grid place-items-center rounded-full bg-accent-teal/30 text-[10px] font-semibold opacity-0"
               >
-                {home.approvalDoneLabel}
+                {doneLabel}
               </span>
             </span>
           </li>

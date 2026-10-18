@@ -11,6 +11,8 @@ const PILL_VARIANT_CLASS: Record<PillLinkVariant, string> = {
   accent: 'bg-accent-purple text-white hover:bg-accent-purple/85',
 }
 
+const EXTERNAL_HREF = /^(https?:|mailto:|tel:)/i
+
 interface PillLinkProps {
   href: string
   variant?: PillLinkVariant
@@ -18,21 +20,25 @@ interface PillLinkProps {
   children: React.ReactNode
 }
 
-/** Tombol berbentuk pil yang berupa tautan. */
-export const PillLink: React.FC<PillLinkProps> = ({
-  href,
-  variant = 'dark',
-  className,
-  children,
-}) => (
-  <Link
-    href={href}
-    className={cn(
-      'inline-flex items-center justify-center rounded-full px-7 py-3 text-sm font-semibold transition-colors',
-      PILL_VARIANT_CLASS[variant],
-      className,
-    )}
-  >
-    {children}
-  </Link>
-)
+/** Tombol berbentuk pil yang berupa tautan. Tautan luar (https, mailto, tel) memakai <a> biasa. */
+export const PillLink: React.FC<PillLinkProps> = ({ href, variant = 'dark', className, children }) => {
+  const classes = cn(
+    'inline-flex items-center justify-center rounded-full px-7 py-3 text-sm font-semibold transition-colors',
+    PILL_VARIANT_CLASS[variant],
+    className,
+  )
+
+  if (EXTERNAL_HREF.test(href)) {
+    return (
+      <a href={href} className={classes} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
+        {children}
+      </a>
+    )
+  }
+
+  return (
+    <Link href={href} className={classes}>
+      {children}
+    </Link>
+  )
+}
