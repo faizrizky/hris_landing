@@ -10,8 +10,9 @@ interface PageIntroProps {
 
 /** Pembuka halaman dalam: satu judul besar (maksimal dua baris), satu kalimat, satu aksi. */
 export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, action, note }) => (
-  <section className="wrap pb-[calc(var(--section)/3)] pt-32 md:pt-44">
-    <h1 className="t-big lines max-w-[18ch] md:max-w-[22ch]">
+  <section className="bg-gradient-to-b from-tint-sky to-white pb-[calc(var(--section)/2.5)] pt-32 md:pt-44">
+    <div className="container">
+    <h1 className="t-big lines max-w-[20ch] md:max-w-[24ch]">
       <span className="line">
         <span data-line>{title}</span>
       </span>
@@ -31,5 +32,6 @@ export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, action, n
         {action.label}
       </Link>
     )}
+    </div>
   </section>
 )

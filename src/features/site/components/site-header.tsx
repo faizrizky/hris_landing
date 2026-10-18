@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React, { useCallback, useRef, useState } from 'react'
 
 import type { FeatureSummary, SolutionSummary } from '@/features/cms/loaders'
+import { BrandLogo } from '@/features/home/components/decorations'
 
 import {
   DEMO_HREF,
@@ -38,7 +39,7 @@ interface SiteHeaderProps {
 }
 
 const MENU_BUTTON_CLASS =
-  'inline-flex items-center gap-1 py-2 text-ink transition-colors hover:text-accent aria-expanded:text-accent'
+  'inline-flex items-center gap-1 py-2 transition-colors hover:text-ink aria-expanded:text-ink'
 
 const SOLUTION_TYPES: SolutionTypeId[] = [SOLUTION_TYPE.INDUSTRY, SOLUTION_TYPE.SCALE]
 
@@ -78,17 +79,12 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
   return (
     <header ref={headerRef} className="absolute inset-x-0 top-0 z-30">
-      <div className="wrap flex items-baseline justify-between py-5">
-        <Link
-          href="/"
-          onClick={closeAll}
-          className="text-[1.5rem] font-extrabold leading-none tracking-[-0.06em]"
-          aria-label={`${brandName}, ke beranda`}
-        >
-          {brandName}
+      <div className="container flex items-center justify-between py-5">
+        <Link href="/" onClick={closeAll} aria-label={`${brandName}, ke beranda`}>
+          <BrandLogo name={brandName} tone="dark" />
         </Link>
 
-        <nav aria-label="Menu utama" className="hidden items-baseline gap-7 text-[1.0625rem] lg:flex">
+        <nav aria-label="Menu utama" className="hidden items-center gap-7 text-sm font-medium text-ink-muted lg:flex">
           <button
             type="button"
             className={MENU_BUTTON_CLASS}
@@ -108,11 +104,11 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             Solusi
           </button>
           {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} onClick={closeAll} className="py-2 transition-colors hover:text-accent">
+            <Link key={link.href} href={link.href} onClick={closeAll} className="py-2 transition-colors hover:text-ink">
               {link.label}
             </Link>
           ))}
-          <Link href={DEMO_HREF} onClick={closeAll} className="btn min-h-10 px-5">
+          <Link href={DEMO_HREF} onClick={closeAll} className="btn min-h-0 px-5 py-2 text-xs">
             {actionLabel}
           </Link>
         </nav>
@@ -129,8 +125,8 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
       </div>
 
       {openMenu === MENU_ID.FEATURES && (
-        <div id="menu-fitur" className="absolute inset-x-0 top-full hidden bg-paper-2 lg:block">
-          <div className="wrap grid12 py-10">
+        <div id="menu-fitur" className="absolute inset-x-0 top-full hidden bg-tint-sky lg:block">
+          <div className="container grid12 py-10">
             <ul className="col-span-3 space-y-1">
               {categoriesWithFeatures.map((categoryId) => (
                 <li key={categoryId}>
@@ -139,7 +135,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                     onClick={() => setActiveCategory(categoryId)}
                     aria-pressed={activeCategory === categoryId}
                     className={`py-1.5 text-left text-[1.0625rem] transition-colors ${
-                      activeCategory === categoryId ? 'font-bold text-accent' : 'text-ink hover:text-accent'
+                      activeCategory === categoryId ? 'font-bold text-accent-deep' : 'text-ink hover:text-accent-deep'
                     }`}
                   >
                     {FEATURE_CATEGORY_LABEL[categoryId]}
@@ -153,7 +149,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                 {activeFeatures.map((feature) => (
                   <li key={feature.id}>
                     <Link href={`/fitur/${feature.slug}`} onClick={closeAll} className="group block">
-                      <span className="block font-semibold group-hover:text-accent">{feature.name}</span>
+                      <span className="block font-semibold group-hover:text-accent-deep">{feature.name}</span>
                       <span className="mt-0.5 block text-ink-soft">{feature.shortDescription}</span>
                       {feature.status !== FEATURE_STATUS.AVAILABLE && (
                         <span className="mt-0.5 block font-semibold text-ink-soft">
@@ -173,8 +169,8 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
       )}
 
       {openMenu === MENU_ID.SOLUTIONS && (
-        <div id="menu-solusi" className="absolute inset-x-0 top-full hidden bg-paper-2 lg:block">
-          <div className="wrap grid12 py-10">
+        <div id="menu-solusi" className="absolute inset-x-0 top-full hidden bg-tint-sky lg:block">
+          <div className="container grid12 py-10">
             <ul className="col-span-3 space-y-1">
               {SOLUTION_TYPES.map((typeId) => (
                 <li key={typeId}>
@@ -183,7 +179,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                     onClick={() => setActiveSolutionType(typeId)}
                     aria-pressed={activeSolutionType === typeId}
                     className={`py-1.5 text-left text-[1.0625rem] transition-colors ${
-                      activeSolutionType === typeId ? 'font-bold text-accent' : 'text-ink hover:text-accent'
+                      activeSolutionType === typeId ? 'font-bold text-accent-deep' : 'text-ink hover:text-accent-deep'
                     }`}
                   >
                     {SOLUTION_TYPE_LABEL[typeId]}
@@ -196,7 +192,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                 {activeSolutions.map((solution) => (
                   <li key={solution.id}>
                     <Link href={`/solusi/${solution.slug}`} onClick={closeAll} className="group block">
-                      <span className="block font-semibold group-hover:text-accent">{solution.name}</span>
+                      <span className="block font-semibold group-hover:text-accent-deep">{solution.name}</span>
                       <span className="mt-0.5 block text-ink-soft">{solution.tagline}</span>
                     </Link>
                   </li>
@@ -212,7 +208,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
 
       {isSheetOpen && (
         <div id="menu-sheet" className="fixed inset-0 z-40 overflow-y-auto bg-paper pt-20 lg:hidden">
-          <div className="wrap space-y-10 pb-16">
+          <div className="container space-y-10 pb-16">
             <div>
               <p className="font-semibold text-ink-soft">Fitur</p>
               <ul className="mt-3 space-y-2">

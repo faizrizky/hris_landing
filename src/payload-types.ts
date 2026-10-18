@@ -1183,96 +1183,96 @@ export interface SiteSetting {
 export interface Home {
   id: number;
   /**
-   * Dua baris besar di layar pertama. Maksimal 14 karakter per baris.
+   * Maksimal 16 karakter.
    */
   heroLineOne: string;
   /**
-   * Dua baris besar di layar pertama. Maksimal 14 karakter per baris.
+   * Maksimal 16 karakter.
    */
   heroLineTwo: string;
-  heroSentence: string;
-  heroAction: string;
-  showcaseHeading: string;
-  showcaseStates: {
-    arrive: string;
-    hover: string;
-    done: string;
-  };
-  showcaseRow: {
-    person: string;
-    request: string;
-    meta: string;
-    pendingLabel: string;
-    approveLabel: string;
-    rejectLabel: string;
-    doneLabel: string;
-  };
-  howHeading: string;
-  howSteps?:
+  heroDescription: string;
+  heroPrimaryAction: string;
+  heroSecondaryAction: string;
+  heroSecondaryHref: string;
+  showcaseApprovalsTitle: string;
+  showcaseApprovals?:
     | {
-        sentence: string;
-        call: string;
-        resultTitle: string;
-        /**
-         * Contoh: 08:02 atau 3 hari.
-         */
-        resultFigure: string;
-        resultLines?:
-          | {
-              text: string;
-              id?: string | null;
-            }[]
-          | null;
-        resultStatus: string;
-        id?: string | null;
-      }[]
-    | null;
-  switches?:
-    | {
-        sentence: string;
-        consequence: string;
-        defaultOn?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Maksimal sekitar 25 kata. Foto arsip ada di kode landing (public/pictures).
-   */
-  pastSentence: string;
-  /**
-   * Tampil di bawah foto. Foto arsip berlisensi terbuka dan wajib dikreditkan.
-   */
-  pastCredit: string;
-  checksHeading: string;
-  recordTitle: string;
-  records?:
-    | {
-        day: string;
-        time: string;
+        person: string;
+        detail: string;
         status: string;
         id?: string | null;
       }[]
     | null;
-  checks?:
+  showcaseAttendanceTitle: string;
+  showcaseAttendanceFigure: string;
+  showcaseAttendanceDetail: string;
+  showcasePayslipTitle: string;
+  showcasePayslipDetail: string;
+  trustPoints?:
     | {
-        what: string;
-        how: string;
-        result: string;
+        title: string;
+        description: string;
         id?: string | null;
       }[]
     | null;
-  /**
-   * Satu kalimat pendek (maksimal 42 karakter agar dua baris di HP). Tanpa angka harga jika belum ada daftar harga.
-   */
-  offerSentence: string;
-  offerAction: string;
-  offerIncluded?:
+  attendanceTitle: string;
+  attendanceDescription: string;
+  attendanceAction: string;
+  faceTitle: string;
+  faceDate: string;
+  faceChips?:
     | {
         text: string;
         id?: string | null;
       }[]
     | null;
-  faqHeading: string;
+  faceButton: string;
+  requestsTitle: string;
+  requestsDescription: string;
+  requestsAction: string;
+  requestCards?:
+    | {
+        title: string;
+        subtitle: string;
+        status: string;
+        id?: string | null;
+      }[]
+    | null;
+  requestsStripTitle: string;
+  requestsStripItems?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  approvalTitle: string;
+  approvalDescription: string;
+  approvalAction: string;
+  approvalScreenTitle: string;
+  approvalScreenSubtitle: string;
+  approvalPendingLabel: string;
+  approvalDoneLabel: string;
+  approvalItems?:
+    | {
+        name: string;
+        detail: string;
+        id?: string | null;
+      }[]
+    | null;
+  modulesTitle: string;
+  modulesDescription: string;
+  industriesTitle: string;
+  industriesDescription: string;
+  offerTitle: string;
+  offerDescription: string;
+  offerPoints?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  offerAction: string;
+  faqTitle: string;
   faqItems?:
     | {
         question: string;
@@ -1280,11 +1280,15 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Kata kerja 4 sampai 8 huruf, contoh: Coba
-   */
-  ctaWord: string;
-  ctaSentence: string;
+  ctaTitle: string;
+  ctaDescription: string;
+  ctaAction: string;
+  ctaGuarantees?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1394,81 +1398,89 @@ export interface SiteSettingsSelect<T extends boolean = true> {
 export interface HomeSelect<T extends boolean = true> {
   heroLineOne?: T;
   heroLineTwo?: T;
-  heroSentence?: T;
-  heroAction?: T;
-  showcaseHeading?: T;
-  showcaseStates?:
-    | T
-    | {
-        arrive?: T;
-        hover?: T;
-        done?: T;
-      };
-  showcaseRow?:
+  heroDescription?: T;
+  heroPrimaryAction?: T;
+  heroSecondaryAction?: T;
+  heroSecondaryHref?: T;
+  showcaseApprovalsTitle?: T;
+  showcaseApprovals?:
     | T
     | {
         person?: T;
-        request?: T;
-        meta?: T;
-        pendingLabel?: T;
-        approveLabel?: T;
-        rejectLabel?: T;
-        doneLabel?: T;
-      };
-  howHeading?: T;
-  howSteps?:
-    | T
-    | {
-        sentence?: T;
-        call?: T;
-        resultTitle?: T;
-        resultFigure?: T;
-        resultLines?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
-        resultStatus?: T;
-        id?: T;
-      };
-  switches?:
-    | T
-    | {
-        sentence?: T;
-        consequence?: T;
-        defaultOn?: T;
-        id?: T;
-      };
-  pastSentence?: T;
-  pastCredit?: T;
-  checksHeading?: T;
-  recordTitle?: T;
-  records?:
-    | T
-    | {
-        day?: T;
-        time?: T;
+        detail?: T;
         status?: T;
         id?: T;
       };
-  checks?:
+  showcaseAttendanceTitle?: T;
+  showcaseAttendanceFigure?: T;
+  showcaseAttendanceDetail?: T;
+  showcasePayslipTitle?: T;
+  showcasePayslipDetail?: T;
+  trustPoints?:
     | T
     | {
-        what?: T;
-        how?: T;
-        result?: T;
+        title?: T;
+        description?: T;
         id?: T;
       };
-  offerSentence?: T;
-  offerAction?: T;
-  offerIncluded?:
+  attendanceTitle?: T;
+  attendanceDescription?: T;
+  attendanceAction?: T;
+  faceTitle?: T;
+  faceDate?: T;
+  faceChips?:
     | T
     | {
         text?: T;
         id?: T;
       };
-  faqHeading?: T;
+  faceButton?: T;
+  requestsTitle?: T;
+  requestsDescription?: T;
+  requestsAction?: T;
+  requestCards?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        status?: T;
+        id?: T;
+      };
+  requestsStripTitle?: T;
+  requestsStripItems?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  approvalTitle?: T;
+  approvalDescription?: T;
+  approvalAction?: T;
+  approvalScreenTitle?: T;
+  approvalScreenSubtitle?: T;
+  approvalPendingLabel?: T;
+  approvalDoneLabel?: T;
+  approvalItems?:
+    | T
+    | {
+        name?: T;
+        detail?: T;
+        id?: T;
+      };
+  modulesTitle?: T;
+  modulesDescription?: T;
+  industriesTitle?: T;
+  industriesDescription?: T;
+  offerTitle?: T;
+  offerDescription?: T;
+  offerPoints?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  offerAction?: T;
+  faqTitle?: T;
   faqItems?:
     | T
     | {
@@ -1476,8 +1488,15 @@ export interface HomeSelect<T extends boolean = true> {
         answer?: T;
         id?: T;
       };
-  ctaWord?: T;
-  ctaSentence?: T;
+  ctaTitle?: T;
+  ctaDescription?: T;
+  ctaAction?: T;
+  ctaGuarantees?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

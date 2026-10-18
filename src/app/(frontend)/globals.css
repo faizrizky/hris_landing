@@ -1,35 +1,57 @@
 @import 'tailwindcss';
 
 /*
- * Sistem desain HRIS (arah "Type and nothing else").
- * Satu ground, satu ink, satu aksen. Permukaan dibedakan lewat selisih warna, bukan garis atau bayangan.
- * Tidak ada gradien, label pil, kartu beraksen ikon, atau dekorasi. Skala tipografi hanya lima langkah.
+ * Sistem desain HRIS: putih bersih, satu aksen biru, pita warna lembut sebagai pemisah bagian.
+ * Permukaan dibedakan lewat selisih warna dan garis tipis, bukan bayangan, gradien, atau label pil.
+ * Skala tipografi hanya lima langkah.
  */
 
 @theme {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 
-  --color-paper: #f6f8fc;
-  --color-paper-2: #e8eef7;
-  --color-ink: #0a0f1c;
-  --color-ink-soft: #46516a;
+  --color-paper: #ffffff;
+  --color-paper-2: #eef8ff;
+  --color-ink: #111114;
+  --color-ink-soft: #5b5b66;
+  --color-ink-muted: #5b5b66;
+  --color-brand: #2490ef;
   --color-accent: #2490ef;
-  --color-night: #0a1b33;
-  --color-night-2: #12294a;
-  --color-tint: #cfe4fb;
+  --color-accent-deep: #1668b8;
+  --color-night: #060608;
+  --color-night-2: #161618;
+  --color-night-shape: #161618;
+  --color-tint: #cddff2;
+  --color-tint-sky: #eef8ff;
+  --color-tint-lavender: #ecebff;
+  --color-tint-peach: #fff4ee;
+  --color-tint-cyan: #e3f8f6;
+  --color-accent-teal: #25d0c4;
+  --color-accent-orange: #f2733b;
+  --color-accent-purple: #7b7bf0;
+  --color-accent-blue: #2490ef;
+  --color-accent-yellow: #f6c445;
+  --color-phone-sky: #cddff2;
+  --color-phone-lavender: #9d9df2;
+  --color-card-yellow: #fdf0c8;
+  --color-card-cyan: #d6f4f2;
+  --color-card-pink: #fadbd0;
+  --color-line: #e4e6ee;
+  --color-ok: #1aa89d;
+  --color-wait: #b7791f;
 }
 
 :root {
-  --margin: clamp(1rem, 2.2vw, 2rem);
+  --margin: clamp(1rem, 2.4vw, 2.5rem);
   --gutter: clamp(0.75rem, 1.4vw, 1.5rem);
-  --section: clamp(5rem, 11vw, 12rem);
+  --section: clamp(4.5rem, 9vw, 9rem);
+  --max-width: 80rem;
 
   /* Lima langkah ukuran huruf. Tidak ada ukuran lain di halaman. */
   --step-body: 1.0625rem;
-  --step-statement: clamp(1.25rem, 1.05rem + 0.7vw, 1.5rem);
-  --step-head: clamp(1.75rem, 1.1rem + 2vw, 2.75rem);
-  --step-big: clamp(2.1rem, 0.8rem + 5.4vw, 5.75rem);
-  --step-display: clamp(3.4rem, 15.2vw, 16.5rem);
+  --step-statement: clamp(1.15rem, 1.02rem + 0.5vw, 1.35rem);
+  --step-head: clamp(1.6rem, 1.15rem + 1.5vw, 2.4rem);
+  --step-big: clamp(1.9rem, 1.4rem + 1.8vw, 2.75rem);
+  --step-display: clamp(2.6rem, 1.5rem + 3.6vw, 5rem);
 
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
@@ -122,7 +144,7 @@ a {
 }
 
 ::selection {
-  background: var(--color-accent);
+  background: var(--color-tint);
   color: var(--color-ink);
 }
 
@@ -155,14 +177,14 @@ a {
 }
 .t-big {
   font-size: var(--step-big);
-  line-height: 0.98;
-  letter-spacing: -0.045em;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
   font-weight: 800;
 }
 .t-display {
   font-size: var(--step-display);
-  line-height: 0.88;
-  letter-spacing: -0.055em;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
   font-weight: 800;
 }
 .nums {
@@ -173,8 +195,33 @@ p {
 }
 
 /* ---------- tata letak ---------- */
+.container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: 80rem;
+}
+@media (min-width: 48rem) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
 .wrap {
   padding-inline: var(--margin);
+  max-width: calc(var(--max-width) + var(--margin) * 2);
+  margin-inline: auto;
+}
+.band {
+  background: var(--band, var(--color-tint-sky));
+}
+.band-sky {
+  --band: var(--color-tint-sky);
+}
+.band-lavender {
+  --band: var(--color-tint-lavender);
+}
+.band-peach {
+  --band: var(--color-tint-peach);
 }
 .grid12 {
   display: grid;
@@ -200,7 +247,8 @@ p {
   align-items: center;
   justify-content: center;
   min-height: 3rem;
-  padding: 0 1.5rem;
+  padding: 0 1.75rem;
+  border-radius: 999px;
   background: var(--color-ink);
   color: var(--color-paper);
   font-size: var(--step-body);
@@ -218,8 +266,8 @@ p {
 }
 @media (hover: hover) and (pointer: fine) {
   .btn:hover {
-    background: var(--color-accent);
-    color: var(--color-ink);
+    background: var(--color-accent-deep);
+    color: #fff;
   }
 }
 
@@ -229,7 +277,7 @@ p {
 }
 @media (hover: hover) and (pointer: fine) {
   .btn-on-dark:hover {
-    background: var(--color-accent);
+    background: var(--color-tint);
   }
 }
 
@@ -255,8 +303,9 @@ p {
   width: 100%;
   min-height: 3.25rem;
   padding: 0.8rem 1rem;
-  background: var(--color-paper-2);
-  border: 0;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
   font-size: max(1rem, var(--step-body));
 }
 .field::placeholder {
@@ -292,6 +341,11 @@ p {
   text-decoration: underline;
   text-underline-offset: 0.2em;
 }
+}
+
+/* Beranda punya penutup sendiri, jadi ajakan di footer tidak diulang. */
+main:has(.home-cta) + footer .footer-invitation {
+  display: none;
 }
 
 /* ---------- gerak (konten tetap terlihat tanpa JavaScript) ---------- */
@@ -346,7 +400,7 @@ p {
 /* ---------- fragmen antarmuka produk (data-ui) memakai garis dan radius produk sendiri ---------- */
 [data-ui] {
   --ui-radius: 10px;
-  --ui-line: #d6deea;
+  --ui-line: #e4e6ee;
   border-radius: var(--ui-radius);
 }
 
