@@ -23,7 +23,7 @@ interface PageIntroProps {
   visual?: React.ReactNode
 }
 
-/** Pembuka halaman dalam, selaras dengan hero beranda: teks di kiri, mockup isometrik beranimasi di kanan. */
+/** Pembuka halaman dalam, selaras dengan hero beranda (setinggi layar, jadi bagian di bawahnya baru beranimasi saat di-scroll): teks di kiri, mockup isometrik beranimasi di kanan. */
 export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, tag, action, note, visual }) => {
   const rootRef = useRef<HTMLElement>(null)
 
@@ -36,9 +36,9 @@ export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, tag, acti
   return (
     <section
       ref={rootRef}
-      className="relative overflow-hidden bg-gradient-to-b from-tint-sky via-white to-white pb-12 pt-32 md:pb-16 md:pt-36"
+      className="relative flex min-h-[100svh] items-center overflow-hidden bg-gradient-to-b from-tint-sky via-white to-white pb-16 pt-28 md:pt-32"
     >
-      <div className="container grid items-center gap-10 md:grid-cols-[1fr_1fr]">
+      <div className="container grid w-full items-center gap-10 md:grid-cols-[1fr_1fr]">
         <div>
           {tag && <SectionTag label={tag.label} tone={tag.tone} />}
           <h1 className="mt-4 max-w-3xl text-4xl font-extrabold leading-[1.1] tracking-tight md:text-5xl lg:text-6xl">
