@@ -177,6 +177,7 @@ export interface Page {
     | TextSectionsBlock
     | FeatureGridBlock
     | WorkflowBlock
+    | PromoBentoBlock
     | PartnersBlock
     | LayoutSectionBlock
     | BadgeElement
@@ -1179,6 +1180,53 @@ export interface WorkflowBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PromoBentoBlock".
+ */
+export interface PromoBentoBlock {
+  /**
+   * Kata di awal judul yang diberi warna aksen. Mis. "Book Demo Gratis".
+   */
+  highlight?: string | null;
+  header: {
+    /**
+     * Press Enter for a new line.
+     */
+    title: string;
+    description?: string | null;
+  };
+  /**
+   * Warna pita latar bagian ini.
+   */
+  tint?: ('white' | 'sky' | 'lavender' | 'peach') | null;
+  cards?:
+    | {
+        title: string;
+        description?: string | null;
+        icon?:
+          | (
+              | 'headset'
+              | 'cloudDownload'
+              | 'wrench'
+              | 'settings'
+              | 'rocket'
+              | 'users'
+              | 'message'
+              | 'calendar'
+              | 'shield'
+              | 'sparkles'
+            )
+          | null;
+        tone?: ('lavender' | 'yellow' | 'sky' | 'peach' | 'cyan') | null;
+        size?: ('normal' | 'wide' | 'tall') | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'promoBento';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "PartnersBlock".
  */
 export interface PartnersBlock {
@@ -1644,6 +1692,7 @@ export interface PagesSelect<T extends boolean = true> {
         textSections?: T | TextSectionsBlockSelect<T>;
         featureGrid?: T | FeatureGridBlockSelect<T>;
         workflow?: T | WorkflowBlockSelect<T>;
+        promoBento?: T | PromoBentoBlockSelect<T>;
         partners?: T | PartnersBlockSelect<T>;
         layoutSection?: T | LayoutSectionBlockSelect<T>;
         badge?: T | BadgeElementSelect<T>;
@@ -2193,6 +2242,32 @@ export interface WorkflowBlockSelect<T extends boolean = true> {
     | {
         title?: T;
         description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PromoBentoBlock_select".
+ */
+export interface PromoBentoBlockSelect<T extends boolean = true> {
+  highlight?: T;
+  header?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
+  tint?: T;
+  cards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        icon?: T;
+        tone?: T;
+        size?: T;
         id?: T;
       };
   id?: T;

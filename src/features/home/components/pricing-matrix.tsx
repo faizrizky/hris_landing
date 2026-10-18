@@ -172,7 +172,7 @@ export const PricingMatrix: React.FC<PricingMatrixProps> = ({ plans, categories 
                     </ul>
                   </div>
                   {plans.map((plan, planIndex) => (
-                    <div key={plan.id ?? planIndex} className={cn('flex justify-center self-stretch py-1', plan.isFeatured && 'items-center rounded-lg bg-tint-sky/70')}>
+                    <div key={plan.id ?? planIndex} className={cn('flex items-center justify-center self-stretch rounded-lg py-1', plan.isFeatured && 'bg-tint-sky/70')}>
                       <MatrixCell mode={cells[planIndex]?.mode} label={cells[planIndex]?.label} />
                     </div>
                   ))}

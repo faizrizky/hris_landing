@@ -518,6 +518,51 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
       defaultProps: { header: headerDefaults, tint: "white", columns: "3", items: [] },
     }),
 
+    promoBento: section("promoBento", {
+      label: L("Promo (bento cards)", "Promo (kartu bento)"),
+      fields: {
+        highlight: plain("Highlighted words", "Kata berwarna di awal judul"),
+        header: header(),
+        tint: tint(),
+        cards: list(
+          "Cards",
+          "Kartu",
+          {
+            title: text("Title", "Judul"),
+            description: textarea("Description", "Deskripsi"),
+            icon: select("Icon", "Ikon", [
+              ["headset", "Headset", "Headset"],
+              ["cloudDownload", "Cloud download", "Unduh awan"],
+              ["wrench", "Wrench", "Kunci pas"],
+              ["settings", "Settings", "Pengaturan"],
+              ["rocket", "Rocket", "Roket"],
+              ["users", "People", "Orang"],
+              ["message", "Chat", "Percakapan"],
+              ["calendar", "Calendar", "Kalender"],
+              ["shield", "Shield", "Perisai"],
+              ["sparkles", "Sparkles", "Kilau"],
+            ]),
+            tone: select("Color", "Warna", [
+              ["lavender", "Lavender", "Lavender"],
+              ["yellow", "Yellow", "Kuning"],
+              ["sky", "Sky", "Biru muda"],
+              ["peach", "Peach", "Peach"],
+              ["cyan", "Teal", "Tosca"],
+            ]),
+            size: select("Size", "Ukuran", [
+              ["normal", "Normal", "Biasa"],
+              ["wide", "Wide", "Lebar"],
+              ["tall", "Tall", "Tinggi"],
+            ]),
+          },
+          "title",
+          { title: L("Card", "Kartu"), description: "", icon: "sparkles", tone: "lavender", size: "normal" },
+          9,
+        ),
+      },
+      defaultProps: { header: headerDefaults, tint: "white", cards: [] },
+    }),
+
     workflow: section("workflow", {
       label: L("Workflow steps", "Langkah berurutan"),
       fields: {

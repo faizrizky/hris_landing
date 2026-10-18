@@ -21,6 +21,7 @@ import { SolutionCatalogBlock } from "./SolutionCatalog";
 import { TestimonialsBlock } from "./Testimonials";
 import { TextSectionsBlock } from "./TextSections";
 import { ToolsListBlock } from "./ToolsList";
+import { PromoBentoBlock } from "./PromoBento";
 import { WorkflowBlock } from "./Workflow";
 import type { BlockContext } from "./types";
 
@@ -58,6 +59,7 @@ const components: { [T in BlockType]: BlockComponent<T> } = {
   textSections: TextSectionsBlock,
   featureGrid: FeatureGridBlock,
   workflow: WorkflowBlock,
+  promoBento: PromoBentoBlock,
   partners: PartnersBlock,
   layoutSection: LayoutSectionBlock,
   badge: ElementBlock,
