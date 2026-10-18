@@ -64,7 +64,7 @@ export const PageVisual: React.FC<PageVisualProps> = ({ title, rows }) => {
           </div>
           <ul className="mt-3 space-y-2">
             {panelRows.map((row, index) => (
-              <li key={row.title} className="flex items-center gap-2.5 rounded-xl bg-tint-sky p-2.5 text-[11px]">
+              <li key={index} className="flex items-center gap-2.5 rounded-xl bg-tint-sky p-2.5 text-[11px]">
                 <span className={cn('h-2 w-2 shrink-0 rounded-full', TONE_BG_CLASS[getAccentByIndex(index)])} />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate font-semibold">{row.title}</span>
@@ -93,8 +93,8 @@ export const PageVisual: React.FC<PageVisualProps> = ({ title, rows }) => {
             <Check className="h-9 w-9 text-accent-teal" strokeWidth={3} />
           </div>
           <ul className="mt-4 flex flex-col items-center gap-1.5">
-            {chips.map((chip) => (
-              <li key={chip.title} className="max-w-full truncate rounded-full bg-tint-cyan px-2.5 py-0.5 text-[9px] font-medium">
+            {chips.map((chip, chipIndex) => (
+              <li key={chipIndex} className="max-w-full truncate rounded-full bg-tint-cyan px-2.5 py-0.5 text-[9px] font-medium">
                 {chip.title}
               </li>
             ))}
@@ -103,7 +103,7 @@ export const PageVisual: React.FC<PageVisualProps> = ({ title, rows }) => {
 
         {floatingCards.map((card, index) => (
           <div
-            key={`${card.title}-${index}`}
+            key={index}
             data-iso-layer
             style={getLayerStyle(index === 0 ? LAYER_Z_PX.cardFirst : LAYER_Z_PX.cardSecond)}
             className={cn(

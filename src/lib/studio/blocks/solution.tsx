@@ -32,8 +32,8 @@ export function createSolutionConfig(context: StudioContext & { backPath: string
     return (
       <SolutionHeroSection
         name={solution.name}
-        title={String(props.heroTitle ?? "")}
-        description={String(props.heroDescription ?? "")}
+        title={props.heroTitle as string}
+        description={props.heroDescription as string}
         pains={solution.pains ?? []}
         points={solution.points ?? []}
       />

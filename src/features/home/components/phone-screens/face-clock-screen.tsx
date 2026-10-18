@@ -7,7 +7,7 @@ import { useFaceScan } from '../../hooks/use-face-scan'
 interface FaceClockScreenProps {
   title?: string | null
   date?: string | null
-  chips: string[]
+  chips: { id?: string | null; text: string }[]
   buttonLabel?: string | null
 }
 
@@ -48,9 +48,9 @@ export const FaceClockScreen: React.FC<FaceClockScreenProps> = ({ title, date, c
       </div>
 
       <ul className="mt-6 flex flex-col items-center gap-2">
-        {chips.map((chip) => (
-          <li key={chip} data-face-chip className="rounded-full bg-tint-cyan px-3 py-1 text-xs font-medium text-ink">
-            {chip}
+        {chips.map((chip, index) => (
+          <li key={chip.id ?? index} data-face-chip className="rounded-full bg-tint-cyan px-3 py-1 text-xs font-medium text-ink">
+            {chip.text}
           </li>
         ))}
       </ul>

@@ -31,7 +31,7 @@ export function FeatureBandBlock({ block }: { block: Block; ctx: BlockContext })
           <FaceClockScreen
             title={block.screenTitle}
             date={block.screenSubtitle}
-            chips={(block.chips ?? []).map((chip) => chip.text)}
+            chips={block.chips ?? []}
             buttonLabel={block.screenButton}
           />
         ) : (

@@ -16,7 +16,8 @@ const TAG_TONES: readonly TagTone[] = ['orange', 'purple', 'teal', 'yellow']
 
 /** Label bagian dari teks CMS. Warnanya dipilih tetap dari isi teks, jadi label yang sama selalu berwarna sama. */
 export const tagFor = (label: string | null | undefined): SectionTagContent | undefined => {
-  const text = label?.trim()
+  // Di editor visual, teks yang bisa diedit di kanvas datang sebagai elemen, bukan string.
+  const text = typeof label === 'string' ? label.trim() : undefined
 
   if (!text) return undefined
 
@@ -25,8 +26,8 @@ export const tagFor = (label: string | null | undefined): SectionTagContent | un
   return { label: text, tone: TAG_TONES[sum % TAG_TONES.length] }
 }
 
-export const getInitials = (name: string) =>
-  name
+export const getInitials = (name: unknown) =>
+  (typeof name === 'string' ? name : '')
     .split(' ')
     .map((part) => part.charAt(0))
     .join('')

@@ -36,11 +36,11 @@ export function createFeatureConfig(context: StudioContext & { backPath: string 
     const { feature } = meta(puck) as FeatureStudioMetadata;
     return (
       <FeatureHeroSection
-        title={String(props.heroTitle ?? "")}
-        description={String(props.heroDescription ?? "")}
+        title={props.heroTitle as string}
+        description={props.heroDescription as string}
         availability={feature.availability}
         category={feature.category}
-        mock={{ title: String(props.mockTitle ?? ""), rows: (props.mockRows as never) ?? [] }}
+        mock={{ title: props.mockTitle as string, rows: (props.mockRows as never) ?? [] }}
       />
     );
   };
@@ -55,7 +55,7 @@ export function createFeatureConfig(context: StudioContext & { backPath: string 
     return (
       <FeatureBlocksSection
         blocks={(props.blocks as never) ?? []}
-        mock={{ title: String(hero.mockTitle ?? ""), rows: (hero.mockRows as never) ?? [] }}
+        mock={{ title: hero.mockTitle as string, rows: (hero.mockRows as never) ?? [] }}
       />
     );
   };

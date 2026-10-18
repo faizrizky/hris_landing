@@ -39,7 +39,7 @@ export const PhoneVisual: React.FC<PhoneVisualProps> = ({ tone, title, rows, acc
                 const RowIcon = ROW_ICONS[index % ROW_ICONS.length]
 
                 return (
-                <li key={row.title} className="flex items-center gap-3 py-3.5">
+                <li key={index} className="flex items-center gap-3 py-3.5">
                   <span className={cn('grid h-6 w-6 shrink-0 place-items-center rounded-full', ROW_ICON_TINTS[index % ROW_ICON_TINTS.length])}>
                     <RowIcon aria-hidden className="h-3.5 w-3.5 text-white" strokeWidth={2.6} />
                   </span>

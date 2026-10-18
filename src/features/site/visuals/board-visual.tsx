@@ -28,7 +28,7 @@ export const BoardVisual: React.FC<BoardVisualProps> = ({ boardClassName, cards,
     <div className={cn('rounded-2xl p-5 md:p-6', boardClassName)}>
       <ul className="grid grid-cols-2 gap-3">
         {cards.slice(0, MAX_BOARD_CARDS).map((card, index) => (
-          <li key={card.title} data-enter="rise" className="min-w-0">
+          <li key={index} data-enter="rise" className="min-w-0">
             <div data-float>
               <UiCard
                 accent={getAccentByIndex(index)}

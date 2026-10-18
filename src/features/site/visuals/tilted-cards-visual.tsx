@@ -20,7 +20,7 @@ export const TiltedCardsVisual: React.FC<TiltedCardsVisualProps> = ({ cards }) =
   <div aria-hidden className="relative mx-auto flex w-full max-w-[460px] flex-col gap-4 py-4">
     {cards.slice(0, MAX_CARDS).map((card, index) => (
       <div
-        key={card.title}
+        key={index}
         data-enter="tilt"
         className={cn(index === 1 && 'md:ml-10', index === 2 && 'md:ml-4')}
       >

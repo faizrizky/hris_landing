@@ -17,8 +17,8 @@ export const OfferVisual: React.FC<OfferVisualProps> = ({ title, steps }) => (
       <div data-float className="rounded-3xl bg-white p-6 shadow-[0_24px_60px_-30px_rgba(60,60,140,0.5)]">
       <p className="text-base font-extrabold">{title}</p>
       <ul className="mt-5 space-y-3">
-        {steps.slice(0, MAX_STEPS).map((step) => (
-          <li key={step} className="flex items-center gap-3 text-sm">
+        {steps.slice(0, MAX_STEPS).map((step, stepIndex) => (
+          <li key={stepIndex} className="flex items-center gap-3 text-sm">
             <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-teal/25">
               <Check aria-hidden className="h-3 w-3" />
             </span>

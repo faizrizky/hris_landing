@@ -89,7 +89,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
   });
 
   const anchor = () => plain("Anchor (for #links)", "Anchor (untuk tautan #)");
-  const tag = () => text("Label (pill)", "Label kecil (pill)");
+  const tag = () => plain("Label (pill)", "Label kecil (pill)");
   const tint = () => select("Background band", "Pita latar", TINTS);
 
   /** Gambar beranimasi: jenis, warna, lencana, judul, sumber baris, dan baris manual. */
@@ -124,8 +124,8 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
           ["page", "Inner page — text + animated image", "Halaman dalam — teks + gambar beranimasi"],
         ]),
         tag: tag(),
-        titleLineOne: text("Title, line 1", "Judul, baris 1"),
-        titleLineTwo: text("Title, line 2 (blue)", "Judul, baris 2 (biru)"),
+        titleLineOne: plain("Title, line 1", "Judul, baris 1"),
+        titleLineTwo: plain("Title, line 2 (blue)", "Judul, baris 2 (biru)"),
         title: textarea("Title", "Judul"),
         note: text("Small note (orange)", "Catatan kecil (oranye)"),
         description: textarea("Description", "Deskripsi"),
@@ -138,7 +138,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
             approvals: list(
               "Approval rows",
               "Baris persetujuan",
-              { person: text("Employee", "Karyawan"), detail: text("Request", "Pengajuan"), status: text("Status", "Status") },
+              { person: plain("Employee", "Karyawan"), detail: text("Request", "Pengajuan"), status: plain("Status", "Status") },
               "person",
               { person: L("Name", "Nama"), detail: "", status: "" },
               4,
@@ -204,7 +204,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
         items: list(
           "Approval rows",
           "Baris persetujuan",
-          { name: text("Name", "Nama"), detail: text("Request", "Pengajuan") },
+          { name: plain("Name", "Nama"), detail: text("Request", "Pengajuan") },
           "name",
           { name: L("Name", "Nama"), detail: "" },
           5,
@@ -230,7 +230,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
         cards: list(
           "Request cards",
           "Kartu pengajuan",
-          { title: text("Type", "Jenis"), subtitle: text("Detail", "Rincian"), status: text("Status", "Status") },
+          { title: text("Type", "Jenis"), subtitle: text("Detail", "Rincian"), status: plain("Status", "Status") },
           "title",
           { title: L("Request", "Pengajuan"), subtitle: "", status: "" },
           6,
@@ -276,7 +276,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
           "Testimoni (hanya yang asli)",
           {
             quote: textarea("Quote", "Kutipan"),
-            name: text("Name", "Nama"),
+            name: plain("Name", "Nama"),
             role: text("Role", "Jabatan"),
             tone: select("Colour", "Warna", [
               ["yellow", "Yellow", "Kuning"],

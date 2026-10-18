@@ -22,7 +22,7 @@ interface HeroSectionProps {
   trustPoints?: { id?: string | null; title: string; description?: string | null }[] | null
 }
 
-const splitWords = (line: string) => line.split(' ').filter(Boolean)
+const splitWords = (line: string) => (typeof line === 'string' ? line.split(' ').filter(Boolean) : [line])
 
 /** Hero beranda: judul dan CTA di kiri, mockup isometrik di kanan, empat kartu keunggulan di bawahnya. */
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -58,10 +58,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="container relative grid items-center gap-10 md:grid-cols-[0.9fr_1.3fr]">
         <div>
           <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
-            {titleLines.map((line) => (
-              <span key={line.text} className={`block whitespace-nowrap ${line.isAccent ? 'text-brand' : ''}`}>
-                {splitWords(line.text).map((word) => (
-                  <span key={word} className="mr-3 inline-block overflow-hidden align-bottom md:mr-4">
+            {titleLines.map((line, lineIndex) => (
+              <span key={lineIndex} className={`block whitespace-nowrap ${line.isAccent ? 'text-brand' : ''}`}>
+                {splitWords(line.text).map((word, wordIndex) => (
+                  <span key={wordIndex} className="mr-3 inline-block overflow-hidden align-bottom md:mr-4">
                     <span data-hero-word className="inline-block">
                       {word}
                     </span>
@@ -78,11 +78,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <div data-hero-fade className="mt-8 flex flex-wrap items-center gap-6">
             {actions.map((button, index) =>
               index === 0 ? (
-                <PillLink key={button.label} href={button.href} className="px-8 py-3.5">
+                <PillLink key={index} href={button.href} className="px-8 py-3.5">
                   {button.label}
                 </PillLink>
               ) : (
-                <PillLink key={button.label} href={button.href} variant="outline" className="px-6 py-3">
+                <PillLink key={index} href={button.href} variant="outline" className="px-6 py-3">
                   {button.label}
                 </PillLink>
               ),

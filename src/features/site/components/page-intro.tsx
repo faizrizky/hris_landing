@@ -50,7 +50,7 @@ export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, tag, butt
             <div className="mt-8 flex flex-wrap items-center gap-4">
               {buttons.map((button) => (
                 <PillLink
-                  key={`${button.label}-${button.href}`}
+                  key={button.href}
                   href={button.href}
                   variant={button.style === 'stroke' ? 'outline' : 'dark'}
                   className="px-8 py-3.5"

@@ -40,7 +40,7 @@ export const PanelVisual: React.FC<PanelVisualProps> = ({ panelClassName, badge,
     </div>
     {chips.slice(0, MAX_CHIPS).map((chip, index) => (
       <div
-        key={chip}
+        key={index}
         data-parallax={index % 2 === 0 ? '0.25' : '0.08'}
         className={cn('absolute max-w-[60%]', CHIP_POSITION_CLASSES[index])}
       >

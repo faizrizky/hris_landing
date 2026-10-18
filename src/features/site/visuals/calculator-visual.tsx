@@ -32,7 +32,7 @@ export const CalculatorVisual: React.FC<CalculatorVisualProps> = ({ title, tabs 
       </div>
       <ul className="mt-5 flex flex-wrap gap-2">
         {tabs.slice(0, 3).map((tab, index) => (
-          <li key={tab} className="flex items-center gap-1.5 rounded-full bg-tint-lavender px-2.5 py-1 text-[10px] font-medium">
+          <li key={index} className="flex items-center gap-1.5 rounded-full bg-tint-lavender px-2.5 py-1 text-[10px] font-medium">
             <span className={cn('h-1.5 w-1.5 rounded-full', ACCENT_BAR_CLASS[getAccentByIndex(index)])} />
             {tab}
           </li>
