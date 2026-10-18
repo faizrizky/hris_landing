@@ -1,3 +1,4 @@
+import { PlanCard } from '@/features/site/components/plan-card'
 import { getPageCopy } from '@/features/cms/loaders'
 import { buildSectionTags } from '@/features/home/content/tones'
 import { CalendarBadge, ChartBadge } from '@/features/site/visuals/badge-sets'
@@ -27,6 +28,7 @@ export default async function PricingPage() {
   if (!result.isOk) return <ContentUnavailable message={result.message} />
 
   const page = result.data
+  const plans = page.plans ?? []
   const steps = page.steps ?? []
   const included = page.included ?? []
 
@@ -48,6 +50,19 @@ export default async function PricingPage() {
         sentence={page.intro}
         action={{ label: page.action, href: DEMO_HREF }}
       />
+
+      {plans.length > 0 && (
+        <PageSection title={page.plansTitle ?? undefined} description={page.plansDescription ?? undefined} ariaLabel="Paket harga">
+          <ul className="grid items-stretch gap-6 pt-3 md:grid-cols-3">
+            {plans.map((plan) => (
+              <li key={plan.id ?? plan.name}>
+                <PlanCard plan={plan} />
+              </li>
+            ))}
+          </ul>
+          {page.addonNote && <p className="mt-8 text-center text-sm text-ink-muted">{page.addonNote}</p>}
+        </PageSection>
+      )}
 
       <PageSection
         title={copy.pricingStepsTitle}

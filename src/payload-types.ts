@@ -1353,6 +1353,36 @@ export interface PricingPage {
   heading: string;
   intro: string;
   action: string;
+  plansTitle?: string | null;
+  plansDescription?: string | null;
+  /**
+   * Harga di sini masih contoh. Ubah sesuai harga resmi sebelum rilis. Tampil di /harga dan beranda.
+   */
+  plans?:
+    | {
+        name: string;
+        badge?: string | null;
+        isFeatured?: boolean | null;
+        pricePrefix?: string | null;
+        /**
+         * Contoh: Rp11.900
+         */
+        price: string;
+        priceUnit?: string | null;
+        description?: string | null;
+        inheritsFrom?: string | null;
+        features?:
+          | {
+              text: string;
+              isSoon?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        actionLabel: string;
+        id?: string | null;
+      }[]
+    | null;
+  addonNote?: string | null;
   steps?:
     | {
         title: string;
@@ -1605,6 +1635,30 @@ export interface PricingPageSelect<T extends boolean = true> {
   heading?: T;
   intro?: T;
   action?: T;
+  plansTitle?: T;
+  plansDescription?: T;
+  plans?:
+    | T
+    | {
+        name?: T;
+        badge?: T;
+        isFeatured?: T;
+        pricePrefix?: T;
+        price?: T;
+        priceUnit?: T;
+        description?: T;
+        inheritsFrom?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              isSoon?: T;
+              id?: T;
+            };
+        actionLabel?: T;
+        id?: T;
+      };
+  addonNote?: T;
   steps?:
     | T
     | {

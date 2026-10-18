@@ -1,6 +1,7 @@
 import React from 'react'
 
 import type { FeatureSummary } from '@/features/cms/loaders'
+import type { PricingPlan } from '@/features/site/components/plan-card'
 import type { Home, PageCopy, Solution, Testimonial } from '@/payload-types'
 
 import { buildSectionTags } from '../content/tones'
@@ -21,6 +22,7 @@ import { TestimonialsSection } from './testimonials-section'
 interface HomePageProps {
   home: Home
   copy: PageCopy
+  plans: PricingPlan[]
   features: FeatureSummary[]
   solutions: Solution[]
   testimonials: Testimonial[]
@@ -30,6 +32,7 @@ interface HomePageProps {
 export const HomePage: React.FC<HomePageProps> = ({
   home,
   copy,
+  plans,
   features,
   solutions,
   testimonials,
@@ -75,7 +78,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           testimonials={testimonials}
         />
       )}
-      <PricingSection tags={tags} home={home} />
+      <PricingSection tags={tags} home={home} plans={plans} />
       <FaqSection tags={tags} title={home.faqTitle} items={home.faqItems ?? []} />
       <CtaSection home={home} />
     </>
