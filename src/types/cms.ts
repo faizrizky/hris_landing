@@ -483,7 +483,8 @@ export interface Feature {
   id: number;
   _order?: string | null;
   name: string;
-  category: 'attendance' | 'requests' | 'payroll' | 'documents' | 'security' | 'performance' | 'planned';
+  category:
+    'attendance' | 'requests' | 'payroll' | 'team' | 'hradmin' | 'documents' | 'security' | 'performance' | 'planned';
   /**
    * Jangan tandai Tersedia untuk fitur yang belum rilis.
    */
