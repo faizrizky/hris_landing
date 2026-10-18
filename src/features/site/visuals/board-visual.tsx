@@ -28,19 +28,23 @@ export const BoardVisual: React.FC<BoardVisualProps> = ({ boardClassName, cards,
     <div className={cn('rounded-2xl p-5 md:p-6', boardClassName)}>
       <ul className="grid grid-cols-2 gap-3">
         {cards.slice(0, MAX_BOARD_CARDS).map((card, index) => (
-          <li key={card.title} data-float className="min-w-0">
-            <UiCard
-              accent={getAccentByIndex(index)}
-              title={card.title}
-              subtitle={card.subtitle}
-              lines={card.line ? [card.line] : []}
-            />
+          <li key={card.title} data-enter="rise" className="min-w-0">
+            <div data-float>
+              <UiCard
+                accent={getAccentByIndex(index)}
+                title={card.title}
+                subtitle={card.subtitle}
+                lines={card.line ? [card.line] : []}
+              />
+            </div>
           </li>
         ))}
       </ul>
     </div>
     <div className="absolute -bottom-4 -left-3 md:-left-8" data-parallax="0.3">
-      <div data-float>{accessory}</div>
+      <div data-enter="pop">
+        <div data-float>{accessory}</div>
+      </div>
     </div>
   </div>
 )

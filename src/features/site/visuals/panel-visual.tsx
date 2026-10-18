@@ -32,8 +32,10 @@ interface PanelVisualProps {
 export const PanelVisual: React.FC<PanelVisualProps> = ({ panelClassName, badge, chips }) => (
   <div aria-hidden className={cn('relative mx-auto h-[300px] w-full max-w-[440px] overflow-hidden rounded-3xl', panelClassName)}>
     <div data-parallax="0.12" className="absolute inset-0 grid place-items-center">
-      <div data-float className="scale-[1.5]">
-        {badge}
+      <div className="scale-[1.5]">
+        <div data-enter="pop">
+          <div data-float>{badge}</div>
+        </div>
       </div>
     </div>
     {chips.slice(0, MAX_CHIPS).map((chip, index) => (
@@ -42,12 +44,14 @@ export const PanelVisual: React.FC<PanelVisualProps> = ({ panelClassName, badge,
         data-parallax={index % 2 === 0 ? '0.25' : '0.08'}
         className={cn('absolute max-w-[60%]', CHIP_POSITION_CLASSES[index])}
       >
+        <div data-enter="rise">
         <div
           data-float
           className="flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold shadow-[0_10px_24px_-12px_rgba(20,20,60,0.35)]"
         >
           <span className={cn('h-2 w-2 shrink-0 rounded-full', ACCENT_DOT_CLASS[getAccentByIndex(index)])} />
           <span className="truncate">{chip}</span>
+        </div>
         </div>
       </div>
     ))}

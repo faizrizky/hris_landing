@@ -21,17 +21,17 @@ export const TiltedCardsVisual: React.FC<TiltedCardsVisualProps> = ({ cards }) =
     {cards.slice(0, MAX_CARDS).map((card, index) => (
       <div
         key={card.title}
-        data-float
-        style={{ rotate: `${CARD_ROTATIONS_DEG[index]}deg` }}
-        className={cn(
-          'rounded-2xl p-5 shadow-[0_14px_30px_-16px_rgba(20,20,60,0.3)]',
-          CARD_TONE_CLASSES[index],
-          index === 1 && 'md:ml-10',
-          index === 2 && 'md:ml-4',
-        )}
+        data-enter="tilt"
+        className={cn(index === 1 && 'md:ml-10', index === 2 && 'md:ml-4')}
       >
-        <p className="text-sm font-bold">{card.title}</p>
-        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ink-muted">{card.description}</p>
+        <div
+          data-float
+          style={{ rotate: `${CARD_ROTATIONS_DEG[index]}deg` }}
+          className={cn('rounded-2xl p-5 shadow-[0_14px_30px_-16px_rgba(20,20,60,0.3)]', CARD_TONE_CLASSES[index])}
+        >
+          <p className="text-sm font-bold">{card.title}</p>
+          <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-ink-muted">{card.description}</p>
+        </div>
       </div>
     ))}
   </div>

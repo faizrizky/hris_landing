@@ -22,7 +22,8 @@ interface CalculatorVisualProps {
 export const CalculatorVisual: React.FC<CalculatorVisualProps> = ({ title, tabs }) => (
   <div aria-hidden className="relative mx-auto w-full max-w-[440px] py-6">
     <DotGrid tone="orange" columns={8} rows={3} className="absolute -right-2 -top-2 hidden md:block" />
-    <div data-float data-parallax="0.1" className="rounded-3xl bg-white p-6 shadow-[0_24px_60px_-30px_rgba(60,60,140,0.5)]">
+    <div data-enter="rise" data-parallax="0.1">
+      <div data-float className="rounded-3xl bg-white p-6 shadow-[0_24px_60px_-30px_rgba(60,60,140,0.5)]">
       <p className="text-base font-extrabold">{title}</p>
       <div className="mt-5 space-y-3">
         <div className="h-11 rounded-xl border border-black/10 bg-tint-sky" />
@@ -37,6 +38,7 @@ export const CalculatorVisual: React.FC<CalculatorVisualProps> = ({ title, tabs 
           </li>
         ))}
       </ul>
+      </div>
     </div>
   </div>
 )

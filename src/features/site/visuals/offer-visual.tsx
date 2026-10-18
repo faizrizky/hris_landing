@@ -13,7 +13,8 @@ interface OfferVisualProps {
 /** Kartu putih besar berisi langkah bercentang di atas pita lavender, seperti kartu harga di beranda. */
 export const OfferVisual: React.FC<OfferVisualProps> = ({ title, steps }) => (
   <div aria-hidden className="relative mx-auto w-full max-w-[460px] rounded-3xl bg-tint-lavender p-6 md:p-8">
-    <div data-float data-parallax="0.08" className="rounded-3xl bg-white p-6 shadow-[0_24px_60px_-30px_rgba(60,60,140,0.5)]">
+    <div data-enter="rise" data-parallax="0.08">
+      <div data-float className="rounded-3xl bg-white p-6 shadow-[0_24px_60px_-30px_rgba(60,60,140,0.5)]">
       <p className="text-base font-extrabold">{title}</p>
       <ul className="mt-5 space-y-3">
         {steps.slice(0, MAX_STEPS).map((step) => (
@@ -25,10 +26,13 @@ export const OfferVisual: React.FC<OfferVisualProps> = ({ title, steps }) => (
           </li>
         ))}
       </ul>
+      </div>
     </div>
     <div className="absolute -right-3 -top-6 md:-right-8" data-parallax="0.3">
-      <div data-float>
-        <WalletBadge />
+      <div data-enter="pop">
+        <div data-float>
+          <WalletBadge />
+        </div>
       </div>
     </div>
   </div>

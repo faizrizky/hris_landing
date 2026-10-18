@@ -6,6 +6,7 @@ import { SectionTag } from '@/features/home/components/section-tag'
 import type { SectionTagContent } from '@/features/home/content/tones'
 import { useFloat } from '@/features/home/hooks/use-float'
 import { useParallax } from '@/features/home/hooks/use-parallax'
+import { useVisualEntrance } from '@/features/home/hooks/use-visual-entrance'
 import { usePhoneEntrance } from '@/features/home/hooks/use-phone-entrance'
 import { cn } from '@/utilities/ui'
 
@@ -36,6 +37,7 @@ export const PageSection: React.FC<PageSectionProps> = ({
   const rootRef = useRef<HTMLElement>(null)
 
   useParallax(rootRef)
+  useVisualEntrance(rootRef)
   useFloat(rootRef)
   usePhoneEntrance(rootRef)
 

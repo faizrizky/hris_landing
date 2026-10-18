@@ -8,6 +8,7 @@ import type { SectionTagContent } from '@/features/home/content/tones'
 import { useFloat } from '@/features/home/hooks/use-float'
 import { useHeroShowcase } from '@/features/home/hooks/use-hero-showcase'
 import { useParallax } from '@/features/home/hooks/use-parallax'
+import { useVisualEntrance } from '@/features/home/hooks/use-visual-entrance'
 import { usePhoneIntro } from '@/features/home/hooks/use-phone-intro'
 
 const VISUAL_PARALLAX_SPEED = 0.1
@@ -28,6 +29,7 @@ export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, tag, acti
 
   useHeroShowcase(rootRef)
   useParallax(rootRef)
+  useVisualEntrance(rootRef)
   useFloat(rootRef)
   usePhoneIntro(rootRef)
 

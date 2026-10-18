@@ -90,3 +90,18 @@ export const MENU_ITEM_OFFSET_PX = 12
 export const MENU_ITEM_DURATION_SECONDS = 0.45
 export const MENU_ITEM_STAGGER_SECONDS = 0.04
 export const MENU_ITEM_DELAY_SECONDS = 0.08
+
+/** Animasi masuk visual halaman dalam (atribut data-enter: rise, pop, tilt) */
+export const ENTER_SELECTOR = '[data-enter]'
+export const ENTER_START = 'top 88%'
+export const ENTER_STAGGER_SECONDS = 0.12
+export const ENTER_RISE_OFFSET_PX = 70
+export const ENTER_RISE_START_SCALE = 0.94
+export const ENTER_RISE_DURATION_SECONDS = 0.9
+export const ENTER_POP_START_SCALE = 0
+export const ENTER_POP_START_ROTATION_DEG = -25
+export const ENTER_POP_DURATION_SECONDS = 0.7
+export const ENTER_TILT_OFFSET_PX = 110
+export const ENTER_TILT_START_ROTATION_DEG = 10
+export const ENTER_TILT_DURATION_SECONDS = 0.9
+export const ENTER_INTRO_DELAY_SECONDS = 0.3
