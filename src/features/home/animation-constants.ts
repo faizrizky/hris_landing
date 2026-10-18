@@ -39,11 +39,6 @@ export const HERO_WORD_STAGGER_SECONDS = 0.12
 export const HERO_WORD_START_PERCENT = 110
 export const HERO_FADE_DURATION_SECONDS = 0.7
 export const HERO_FADE_OFFSET_PX = 24
-export const HERO_CARD_DURATION_SECONDS = 0.9
-export const HERO_CARD_STAGGER_SECONDS = 0.12
-export const HERO_CARD_OFFSET_PX = 48
-export const HERO_CARD_START_SCALE = 0.92
-export const HERO_CARD_OVERLAP_SECONDS = 0.6
 
 /** Kartu testimoni */
 export const TESTIMONIAL_START = 'top 70%'
@@ -78,3 +73,12 @@ export const POP_START_SCALE = 0
 export const POP_START_ROTATION_DEG = -25
 export const POP_DURATION_SECONDS = 0.7
 export const POP_DELAY_SECONDS = 0.6
+
+/** Showcase isometrik di hero: tiap layer naik di sumbu Z lalu melayang pelan */
+export const SHOWCASE_LIFT_START_PX = 90
+export const SHOWCASE_LIFT_DURATION_SECONDS = 1.1
+export const SHOWCASE_LIFT_STAGGER_SECONDS = 0.18
+export const SHOWCASE_LIFT_DELAY_SECONDS = 0.35
+export const SHOWCASE_FLOAT_DISTANCE_PX = 14
+export const SHOWCASE_FLOAT_DURATION_SECONDS = 3.2
+export const SHOWCASE_FLOAT_STAGGER_SECONDS = 0.5

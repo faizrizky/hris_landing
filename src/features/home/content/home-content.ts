@@ -27,70 +27,40 @@ export interface UiCardContent {
 }
 
 export const HERO_CONTENT = {
-  titleWords: ['Kelola', 'tim,', 'tanpa', 'ribet'],
+  titleLines: [
+    { id: 'line-1', words: ['Kelola', 'tim,'], isAccent: false },
+    { id: 'line-2', words: ['tanpa', 'ribet'], isAccent: true },
+  ],
   description:
-    'HRIS adalah aplikasi HR untuk absensi wajah, cuti, lembur, dan slip gaji. Praktis untuk karyawan, tenang untuk atasan dan HR.',
+    'HRIS membantu perusahaan menyederhanakan operasional HR: absensi wajah, cuti, lembur, approval, sampai slip gaji dalam satu aplikasi yang praktis untuk karyawan, atasan, dan HR.',
   primaryCta: 'Minta Demo',
-  secondaryCta: 'Coba Gratis',
+  secondaryCta: 'Pelajari Selengkapnya',
+  secondaryHref: '#absensi',
+  headerCta: 'Coba Gratis',
 } as const
 
-export interface HeroCardContent extends UiCardContent {
-  positionClass: string
-  parallaxSpeed: number
-}
-
-export const HERO_CARDS: readonly HeroCardContent[] = [
-  {
-    id: 'clock-in',
-    accent: 'teal',
-    title: 'Absen masuk berhasil',
-    subtitle: '08:02 · Kantor Pusat',
-    lines: ['Wajah terverifikasi', 'Lokasi sesuai area kerja'],
-    footer: 'Tepat waktu',
-    positionClass: 'md:left-[34%] md:top-0 md:w-[230px]',
-    parallaxSpeed: 0.1,
+/** Data untuk mockup produk isometrik di hero. Angka hanya ilustrasi tampilan. */
+export const HERO_SHOWCASE = {
+  dashboard: {
+    title: 'Dashboard HR',
+    stats: [
+      { id: 'present', label: 'Hadir hari ini', value: '92%', accent: 'teal' },
+      { id: 'leave', label: 'Cuti menunggu', value: '5', accent: 'orange' },
+      { id: 'overtime', label: 'Lembur minggu ini', value: '12 jam', accent: 'purple' },
+    ],
+    chartBars: [48, 62, 55, 78, 70, 88, 64],
+    rows: [
+      { id: 'r1', initials: 'AR', name: 'Andi Rahman', status: 'Hadir', tone: 'teal' },
+      { id: 'r2', initials: 'SD', name: 'Sari Dewi', status: 'Cuti', tone: 'orange' },
+      { id: 'r3', initials: 'BP', name: 'Budi Pratama', status: 'Dinas luar', tone: 'purple' },
+    ],
   },
-  {
-    id: 'leave-request',
-    accent: 'orange',
-    title: 'Pengajuan cuti',
-    subtitle: 'Cuti tahunan · 3 hari',
-    lines: ['Menunggu persetujuan atasan'],
-    footer: 'Terkirim',
-    positionClass: 'md:right-0 md:top-[8%] md:w-[190px]',
-    parallaxSpeed: 0.25,
-  },
-  {
-    id: 'overtime',
-    accent: 'blue',
-    title: 'Lembur disetujui',
-    subtitle: 'Jumat · 2 jam',
-    lines: ['Disetujui oleh atasan'],
-    footer: 'Masuk ke payroll',
-    positionClass: 'md:left-0 md:top-[38%] md:w-[190px]',
-    parallaxSpeed: 0.2,
-  },
-  {
-    id: 'payslip',
-    accent: 'purple',
-    title: 'Slip gaji tersedia',
-    subtitle: 'Periode Oktober',
-    lines: ['Rincian pendapatan dan potongan'],
-    footer: 'Siap diunduh',
-    positionClass: 'md:right-0 md:top-[44%] md:w-[200px]',
-    parallaxSpeed: 0.35,
-  },
-  {
-    id: 'attendance-week',
-    accent: 'purple',
-    title: 'Kehadiran minggu ini',
-    subtitle: 'Senin sampai Jumat',
-    lines: ['Hadir 4 hari', 'Terlambat 1 hari', 'Cuti 0 hari'],
-    footer: 'Ringkasan otomatis',
-    positionClass: 'md:bottom-0 md:left-[12%] md:w-[270px]',
-    parallaxSpeed: 0.15,
-  },
-]
+  phone: { title: 'Absen berhasil', subtitle: '08:02 · Kantor Pusat', chips: ['Wajah', 'Lokasi'] },
+  floatingCards: [
+    { id: 'leave-approved', accent: 'orange', title: 'Cuti disetujui', subtitle: '3 hari · 20 sampai 22 Okt' },
+    { id: 'payslip', accent: 'purple', title: 'Slip gaji tersedia', subtitle: 'Periode Oktober' },
+  ],
+} as const
 
 export interface FeatureBandContent {
   id: string

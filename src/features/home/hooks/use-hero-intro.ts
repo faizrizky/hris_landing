@@ -3,11 +3,6 @@
 import type { RefObject } from 'react'
 
 import {
-  HERO_CARD_DURATION_SECONDS,
-  HERO_CARD_OFFSET_PX,
-  HERO_CARD_OVERLAP_SECONDS,
-  HERO_CARD_STAGGER_SECONDS,
-  HERO_CARD_START_SCALE,
   HERO_FADE_DURATION_SECONDS,
   HERO_FADE_OFFSET_PX,
   HERO_WORD_DURATION_SECONDS,
@@ -19,9 +14,8 @@ import { gsap, useGSAP } from './register-gsap'
 
 const HERO_WORD_SELECTOR = '[data-hero-word]'
 const HERO_FADE_SELECTOR = '[data-hero-fade]'
-const HERO_CARD_SELECTOR = '[data-hero-card]'
 
-/** Animasi masuk hero: judul per kata, teks dan tombol, lalu kartu-kartu. */
+/** Animasi masuk hero: judul per kata, lalu teks, tombol, dan kartu keunggulan. */
 export const useHeroIntro = (rootRef: RefObject<HTMLElement | null>) => {
   useGSAP(
     () => {
@@ -48,17 +42,6 @@ export const useHeroIntro = (rootRef: RefObject<HTMLElement | null>) => {
               stagger: HERO_WORD_STAGGER_SECONDS,
             },
             `-=${HERO_WORD_DURATION_SECONDS / 2}`,
-          )
-          .from(
-            HERO_CARD_SELECTOR,
-            {
-              autoAlpha: 0,
-              y: HERO_CARD_OFFSET_PX,
-              scale: HERO_CARD_START_SCALE,
-              duration: HERO_CARD_DURATION_SECONDS,
-              stagger: HERO_CARD_STAGGER_SECONDS,
-            },
-            `-=${HERO_CARD_OVERLAP_SECONDS}`,
           )
       })
 

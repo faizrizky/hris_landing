@@ -1,87 +1,80 @@
 'use client'
 
+import Link from 'next/link'
 import React, { useRef } from 'react'
 
 import { cn } from '@/utilities/ui'
 
-import { DEMO_HREF, HERO_CARDS, HERO_CONTENT } from '../content/home-content'
-import { useDrawLines } from '../hooks/use-draw-lines'
-import { useFloat } from '../hooks/use-float'
+import { DEMO_HREF, HERO_CONTENT } from '../content/home-content'
 import { useHeroIntro } from '../hooks/use-hero-intro'
+import { useHeroShowcase } from '../hooks/use-hero-showcase'
 import { useParallax } from '../hooks/use-parallax'
-import { CurvedLine, DotGrid } from './decorations'
+import { HeroShowcase } from './hero-showcase'
 import { PillLink } from './pill-link'
-import { UiCard } from './ui-card'
+import { TrustPoints } from './trust-points'
 
-/** Hero: judul besar di kiri, kumpulan kartu melayang dengan parallax di kanan. */
+const SHOWCASE_PARALLAX_SPEED = 0.1
+
+/**
+ * Hero ala KantorKu: judul dan CTA di kiri, mockup produk isometrik besar di kanan,
+ * dan empat kartu keunggulan langsung di bawahnya.
+ */
 export const HeroSection: React.FC = () => {
   const rootRef = useRef<HTMLElement>(null)
 
   useHeroIntro(rootRef)
   useParallax(rootRef)
-  useFloat(rootRef)
-  useDrawLines(rootRef)
+  useHeroShowcase(rootRef)
 
   return (
     <section
       ref={rootRef}
       id="beranda"
-      className="relative overflow-hidden bg-white pb-16 pt-32 md:pb-24 md:pt-40"
+      className="relative overflow-hidden bg-gradient-to-b from-tint-sky via-white to-white pb-10 pt-28 md:pb-12 md:pt-32"
     >
       <div
         aria-hidden
-        className="absolute -right-40 top-10 h-[620px] w-[620px] rounded-full bg-tint-peach"
+        className="absolute -right-24 top-16 h-[520px] w-[520px] rounded-full bg-accent-blue/10 blur-3xl"
       />
-      <div
-        aria-hidden
-        className="absolute bottom-8 right-[26%] hidden h-72 w-72 rounded-full bg-accent-teal/20 md:block"
-      />
-      <DotGrid tone="teal" columns={7} rows={7} className="absolute bottom-6 left-4 hidden md:block" />
 
-      <div className="container relative grid items-center gap-12 md:grid-cols-[1fr_1.15fr]">
+      <div className="container relative grid items-center gap-10 md:grid-cols-[0.9fr_1.3fr]">
         <div>
-          <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight md:text-7xl">
-            {HERO_CONTENT.titleWords.map((word) => (
-              <span key={word} className="mr-3 inline-block overflow-hidden align-bottom md:mr-4">
-                <span data-hero-word className="inline-block">
-                  {word}
-                </span>
+          <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
+            {HERO_CONTENT.titleLines.map((line) => (
+              <span key={line.id} className={cn('block', line.isAccent && 'text-brand')}>
+                {line.words.map((word) => (
+                  <span key={word} className="mr-3 inline-block overflow-hidden align-bottom md:mr-4">
+                    <span data-hero-word className="inline-block">
+                      {word}
+                    </span>
+                  </span>
+                ))}
               </span>
             ))}
           </h1>
-          <p data-hero-fade className="mt-6 max-w-md text-sm leading-relaxed text-ink-muted">
+          <p data-hero-fade className="mt-6 max-w-md text-base leading-relaxed text-ink-muted">
             {HERO_CONTENT.description}
           </p>
-          <div data-hero-fade className="mt-8 flex flex-wrap items-center gap-3">
-            <PillLink href={DEMO_HREF}>{HERO_CONTENT.primaryCta}</PillLink>
-            <PillLink href={DEMO_HREF} variant="outline">
-              {HERO_CONTENT.secondaryCta}
+          <div data-hero-fade className="mt-8 flex flex-wrap items-center gap-6">
+            <PillLink href={DEMO_HREF} className="px-8 py-3.5">
+              {HERO_CONTENT.primaryCta}
             </PillLink>
+            <Link
+              href={HERO_CONTENT.secondaryHref}
+              className="text-sm font-semibold underline underline-offset-4 transition-colors hover:text-brand"
+            >
+              {HERO_CONTENT.secondaryCta}
+            </Link>
           </div>
         </div>
 
-        <div className="relative flex flex-col gap-4 md:block md:h-[470px]">
-          <CurvedLine className="absolute left-[24%] top-[-2%] hidden md:block" />
-          <DotGrid
-            tone="orange"
-            columns={6}
-            rows={4}
-            className="absolute left-[8%] top-[28%] hidden md:block"
-          />
-          {HERO_CARDS.map(({ id, positionClass, parallaxSpeed, ...card }) => (
-            <div
-              key={id}
-              data-parallax={parallaxSpeed}
-              className={cn('md:absolute', positionClass)}
-            >
-              <div data-hero-card>
-                <div data-float>
-                  <UiCard {...card} />
-                </div>
-              </div>
-            </div>
-          ))}
+        <div data-parallax={SHOWCASE_PARALLAX_SPEED}>
+          <HeroShowcase />
         </div>
+      </div>
+
+      <div className="container relative mt-10 md:mt-6">
+        <TrustPoints />
       </div>
     </section>
   )

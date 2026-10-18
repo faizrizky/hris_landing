@@ -16,10 +16,9 @@ import { PricingSection } from './pricing-section'
 import { RequestsSection } from './requests-section'
 import { SmoothScroll } from './smooth-scroll'
 import { TestimonialsSection } from './testimonials-section'
-import { TrustPointsSection } from './trust-points-section'
 
 /**
- * Beranda: hero, poin kepercayaan, absensi, pengajuan, approval, peta modul, solusi industri,
+ * Beranda: hero (dengan poin kepercayaan), absensi, pengajuan, approval, peta modul, solusi industri,
  * testimoni, harga, FAQ, lalu penutup gelap dengan footer.
  */
 export const HomePage: React.FC = () => (
@@ -27,7 +26,6 @@ export const HomePage: React.FC = () => (
     <SmoothScroll />
     <HomeHeader />
     <HeroSection />
-    <TrustPointsSection />
     <FeatureBand
       content={ATTENDANCE_BAND}
       tintClassName="bg-tint-sky"
