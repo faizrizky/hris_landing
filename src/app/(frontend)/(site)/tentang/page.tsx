@@ -1,3 +1,4 @@
+import { PageVisual } from '@/features/site/components/page-visual'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
@@ -24,7 +25,14 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageIntro title={page.heading} sentence={page.statement} action={{ label: 'Minta demo', href: DEMO_HREF }} />
+      <PageIntro
+        visual={
+          <PageVisual
+            title={page.heading}
+            rows={principles.map((principle) => ({ title: principle.title, detail: principle.description }))}
+          />
+        }
+        title={page.heading} sentence={page.statement} action={{ label: 'Minta demo', href: DEMO_HREF }} />
 
       <PageSection title="Cerita kami">
         <div className="max-w-2xl space-y-4">

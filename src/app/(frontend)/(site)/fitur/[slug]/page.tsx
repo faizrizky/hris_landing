@@ -1,3 +1,4 @@
+import { PageVisual } from '@/features/site/components/page-visual'
 import { Check } from 'lucide-react'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
@@ -45,6 +46,12 @@ export default async function FeaturePage({ params }: Args) {
   return (
     <>
       <PageIntro
+        visual={
+          <PageVisual
+            title={feature.mock.title}
+            rows={(feature.mock.rows ?? []).map((row) => ({ title: row.label, detail: row.detail, badge: row.status }))}
+          />
+        }
         title={feature.heroTitle}
         tag={SECTION_TAGS.modules}
         sentence={feature.heroDescription}

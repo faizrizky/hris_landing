@@ -1,3 +1,4 @@
+import { PageVisual } from '@/features/site/components/page-visual'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
@@ -30,6 +31,16 @@ export default async function FeaturesPage() {
   return (
     <>
       <PageIntro
+        visual={
+          <PageVisual
+            title="Fitur HRIS"
+            rows={features.slice(0, 4).map((feature) => ({
+              title: feature.name,
+              detail: feature.shortDescription,
+              badge: feature.status === FEATURE_STATUS.AVAILABLE ? undefined : FEATURE_STATUS_LABEL[feature.status],
+            }))}
+          />
+        }
         title="Semua yang dikerjakan aplikasi"
         tag={SECTION_TAGS.modules}
         sentence="Yang sudah berjalan ditandai jelas. Yang masih rencana kami sebut rencana."

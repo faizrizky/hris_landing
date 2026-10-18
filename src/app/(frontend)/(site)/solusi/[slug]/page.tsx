@@ -1,3 +1,4 @@
+import { PageVisual } from '@/features/site/components/page-visual'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
@@ -43,6 +44,12 @@ export default async function SolutionPage({ params }: Args) {
   return (
     <>
       <PageIntro
+        visual={
+          <PageVisual
+            title={solution.name}
+            rows={[...pains, ...points].map((item) => ({ title: item.title, detail: item.description }))}
+          />
+        }
         title={solution.heroTitle}
         tag={SECTION_TAGS.industries}
         sentence={solution.heroDescription}

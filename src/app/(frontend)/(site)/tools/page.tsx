@@ -1,3 +1,4 @@
+import { PageVisual } from '@/features/site/components/page-visual'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
@@ -16,6 +17,12 @@ export default function ToolsPage() {
   return (
     <>
       <PageIntro
+        visual={
+          <PageVisual
+            title="Kalkulator HR"
+            rows={CALCULATORS.slice(0, 4).map((calculator) => ({ title: calculator.title, detail: calculator.summary }))}
+          />
+        }
         title="Kalkulator HR gratis"
         tag={SECTION_TAGS.modules}
         sentence="Hitungan cepat untuk urusan yang sering ditanyakan, lengkap dengan dasar aturannya."

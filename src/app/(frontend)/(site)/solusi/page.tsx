@@ -1,3 +1,4 @@
+import { PageVisual } from '@/features/site/components/page-visual'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
@@ -23,6 +24,12 @@ export default async function SolutionsPage() {
   return (
     <>
       <PageIntro
+        visual={
+          <PageVisual
+            title="Solusi HRIS"
+            rows={result.data.slice(0, 4).map((solution) => ({ title: solution.name, detail: solution.tagline }))}
+          />
+        }
         title="Untuk berbagai jenis usaha"
         tag={SECTION_TAGS.industries}
         sentence="Alur kerja tiap industri berbeda. Pilih yang paling mirip dengan tempatmu."

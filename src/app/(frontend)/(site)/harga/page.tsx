@@ -1,3 +1,4 @@
+import { PageVisual } from '@/features/site/components/page-visual'
 import { PillLink } from '@/features/home/components/pill-link'
 import { Check } from 'lucide-react'
 import { SECTION_TAGS } from '@/features/home/content/tones'
@@ -28,6 +29,12 @@ export default async function PricingPage() {
   return (
     <>
       <PageIntro
+        visual={
+          <PageVisual
+            title={page.heading}
+            rows={steps.map((step, index) => ({ title: `${index + 1}. ${step.title}`, detail: step.description }))}
+          />
+        }
         title={page.heading}
         tag={SECTION_TAGS.pricing}
         sentence={page.intro}

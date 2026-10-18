@@ -1,3 +1,4 @@
+import { PageVisual } from '@/features/site/components/page-visual'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -28,7 +29,16 @@ export default async function CalculatorPage({ params }: Args) {
 
   return (
     <>
-      <PageIntro title={calculator.title} tag={SECTION_TAGS.modules} sentence={calculator.summary} />
+      <PageIntro
+        visual={
+          <PageVisual
+            title={calculator.title}
+            rows={CALCULATORS.filter((item) => item.slug !== calculator.slug)
+              .slice(0, 4)
+              .map((item) => ({ title: item.title, detail: item.summary }))}
+          />
+        }
+        title={calculator.title} tag={SECTION_TAGS.modules} sentence={calculator.summary} />
       <section className="pb-20" aria-label="Kalkulator">
         <div className="container">
           <CalculatorForm slug={calculator.slug} />
