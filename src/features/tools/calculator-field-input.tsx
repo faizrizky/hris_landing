@@ -6,6 +6,7 @@ import type { CalculatorField } from './types'
 import { FIELD_KIND } from './types'
 
 const MAX_SEGMENTED_OPTIONS = 3
+const UNIT_IN_LABEL = /\s*\([^)]*\)\s*$/
 const THOUSANDS_SEPARATOR = /\B(?=(\d{3})+(?!\d))/g
 
 /** 5000000 → "5.000.000" untuk tampilan isian uang. */
@@ -25,6 +26,8 @@ interface CalculatorFieldInputProps {
 /** Satu isian kalkulator: uang berawalan Rp, angka bersatuan, dan pilihan (tombol bila sedikit, dropdown bila banyak). */
 export const CalculatorFieldInput: React.FC<CalculatorFieldInputProps> = ({ field, value, error, onChange, onBlur }) => {
   const inputId = `calc-${field.name}`
+  // Satuan sudah tampil di dalam kolom, jadi "(hari)" di akhir label tidak diulang.
+  const label = field.unit ? field.label.replace(UNIT_IN_LABEL, '') : field.label
   const describedBy = error ? `${inputId}-error` : field.hint ? `${inputId}-hint` : undefined
   const shellClass = cn(INPUT_SHELL_CLASS, error ? 'border-accent-orange' : 'border-line')
 
@@ -34,7 +37,7 @@ export const CalculatorFieldInput: React.FC<CalculatorFieldInputProps> = ({ fiel
 
       if (options.length <= MAX_SEGMENTED_OPTIONS) {
         return (
-          <div role="radiogroup" aria-labelledby={`${inputId}-label`} className="mt-2 grid gap-2 sm:grid-cols-2">
+          <div role="radiogroup" aria-labelledby={`${inputId}-label`} className="mt-1.5 grid gap-2 sm:grid-cols-2">
             {options.map((option) => {
               const isSelected = option.value === value
 
@@ -64,7 +67,7 @@ export const CalculatorFieldInput: React.FC<CalculatorFieldInputProps> = ({ fiel
           value={value}
           onChange={(event) => onChange(event.target.value)}
           onBlur={onBlur}
-          className={cn(shellClass, 'mt-2 h-12 w-full text-sm font-semibold outline-none')}
+          className={cn(shellClass, 'mt-1.5 h-12 w-full text-sm font-semibold outline-none')}
         >
           {options.map((option) => (
             <option key={option.value} value={option.value}>
@@ -78,7 +81,7 @@ export const CalculatorFieldInput: React.FC<CalculatorFieldInputProps> = ({ fiel
     const isMoney = field.kind === FIELD_KIND.MONEY
 
     return (
-      <div className={cn(shellClass, 'mt-2 h-12 gap-2')}>
+      <div className={cn(shellClass, 'mt-1.5 h-12 gap-2')}>
         {isMoney && <span className="text-sm font-bold text-ink-muted">Rp</span>}
         <input
           id={inputId}
@@ -102,7 +105,7 @@ export const CalculatorFieldInput: React.FC<CalculatorFieldInputProps> = ({ fiel
     <div>
       <span id={`${inputId}-label`}>
         <label htmlFor={inputId} className="text-xs font-semibold text-ink-soft">
-          {field.label}
+          {label}
         </label>
       </span>
       {control}

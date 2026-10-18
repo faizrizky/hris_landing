@@ -1,4 +1,4 @@
-import { ArrowRight, Smartphone } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import React from 'react'
@@ -37,21 +37,11 @@ export default async function CalculatorPage({ params }: Args) {
 
   return (
     <>
-      <section className="pb-10 pt-12 md:pt-16">
-        <div className="container grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)]">
-          <div>
-            {tag && <SectionTag label={tag.label} tone={tag.tone} />}
-            <h1 className="mt-4 text-4xl font-extrabold leading-tight md:text-5xl">{calculator.title}</h1>
-            <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-muted">{calculator.summary}</p>
-          </div>
-          <div className="rounded-3xl bg-tint-lavender p-6">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-ink-muted">Terhubung dengan aplikasi</p>
-            <p className="mt-2 flex items-center gap-2 text-lg font-extrabold">
-              <Smartphone aria-hidden className="h-5 w-5 text-accent-purple" />
-              HRIS
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-ink-soft">Absensi, pengajuan, slip gaji, serta ringkasan pajak dan BPJS karyawan dalam satu aplikasi.</p>
-          </div>
+      <section className="pb-10 pt-32 md:pb-12 md:pt-40">
+        <div className="container max-w-4xl text-center">
+          {tag && <SectionTag label={tag.label} tone={tag.tone} />}
+          <h1 className="mt-5 text-4xl font-extrabold leading-tight md:text-5xl">{calculator.title}</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-ink-muted">{calculator.summary}</p>
         </div>
       </section>
 

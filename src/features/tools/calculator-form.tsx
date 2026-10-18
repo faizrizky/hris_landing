@@ -92,7 +92,7 @@ const CalculatorFormBody: React.FC<{ calculator: CalculatorDefinition }> = ({ ca
   return (
     <div className="grid items-start gap-6 lg:grid-cols-2">
       <div className="space-y-5">
-        <form onSubmit={(event) => event.preventDefault()} noValidate className="rounded-3xl bg-white p-6 shadow-[0_24px_60px_-34px_rgba(60,60,140,0.5)] md:p-8">
+        <form onSubmit={(event) => event.preventDefault()} noValidate className="rounded-3xl border border-line bg-white p-6 shadow-[0_24px_60px_-34px_rgba(60,60,140,0.35)] md:p-8">
           <div className="flex items-center justify-between gap-3">
             <h2 className="flex items-center gap-3 text-xl font-extrabold">
               <span className="grid h-9 w-9 place-items-center rounded-full bg-tint-lavender text-sm font-bold text-accent-purple">1</span>
@@ -104,18 +104,21 @@ const CalculatorFormBody: React.FC<{ calculator: CalculatorDefinition }> = ({ ca
             </button>
           </div>
 
-          <div className="mt-6 space-y-7">
+          <div className="mt-6 space-y-6">
             {sections.map((section) => {
               const SectionIcon = SECTION_ICON[section.fields[0].kind]
               const isPaired = section.fields.length === 2 && section.fields.every((field) => field.kind === FIELD_KIND.NUMBER)
+              const hasTitle = section.fields.length > 1
 
               return (
-                <div key={section.title} role="group" aria-label={section.title} className="border-t border-line pt-6 first:border-t-0 first:pt-0">
-                  <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink">
-                    <SectionIcon aria-hidden className="h-4 w-4 text-accent-purple" />
-                    {section.title}
-                  </h3>
-                  <div className={isPaired ? 'mt-4 grid gap-4 sm:grid-cols-2' : 'mt-4 space-y-4'}>
+                <div key={section.title} role="group" aria-label={section.title}>
+                  {hasTitle && (
+                    <h3 className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-ink">
+                      <SectionIcon aria-hidden className="h-4 w-4 text-accent-purple" />
+                      {section.title}
+                    </h3>
+                  )}
+                  <div className={isPaired ? 'grid gap-4 sm:grid-cols-2' : 'space-y-4'}>
                     {section.fields.map((field) => (
                       <CalculatorFieldInput
                         key={field.name}
