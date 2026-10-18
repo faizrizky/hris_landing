@@ -1,3 +1,5 @@
+import { PageSection } from '@/features/site/components/page-section'
+import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
 import React from 'react'
 
@@ -22,37 +24,28 @@ export default async function AboutPage() {
 
   return (
     <>
-      <PageIntro title={page.heading} action={{ label: 'Minta demo', href: DEMO_HREF }} />
+      <PageIntro title={page.heading} sentence={page.statement} action={{ label: 'Minta demo', href: DEMO_HREF }} />
 
-      <section className="wrap grid12 gap-y-10 py-14 md:py-20" aria-label="Cerita">
-        <p data-reveal className="t-statement col-span-12 max-w-[30ch] lg:col-span-5">
-          {page.statement}
-        </p>
-        <div className="col-span-12 space-y-5 lg:col-span-6 lg:col-start-7">
+      <PageSection title="Cerita kami">
+        <div className="max-w-2xl space-y-4">
           {paragraphs.map((paragraph, index) => (
-            <p key={paragraph.id ?? index} data-reveal style={{ '--i': index } as React.CSSProperties} className="max-w-[56ch]">
+            <p key={paragraph.id ?? index} data-reveal className="text-sm leading-relaxed text-ink-muted">
               {paragraph.text}
             </p>
           ))}
         </div>
-      </section>
+      </PageSection>
 
       {principles.length > 0 && (
-        <section className="bg-paper-2 py-16 md:py-24" aria-label="Prinsip">
-          <ul className="wrap grid12 gap-y-10">
+        <PageSection title="Prinsip kami" bandClassName="bg-tint-lavender">
+          <ul className="grid gap-5 md:grid-cols-3">
             {principles.map((principle, index) => (
-              <li
-                key={principle.id ?? principle.title}
-                data-reveal
-                style={{ '--i': index } as React.CSSProperties}
-                className="col-span-12 lg:col-span-4"
-              >
-                <h2 className="t-statement font-bold">{principle.title}</h2>
-                <p className="mt-2 max-w-[34ch]">{principle.description}</p>
+              <li key={principle.id ?? principle.title}>
+                <AccentCard index={index} title={principle.title} description={principle.description} />
               </li>
             ))}
           </ul>
-        </section>
+        </PageSection>
       )}
     </>
   )

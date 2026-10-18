@@ -19,7 +19,7 @@ interface TextFieldProps {
 }
 
 const TextField: React.FC<TextFieldProps> = ({ order, name, label, type = 'text', autoComplete, isRequired, error }) => (
-  <div data-rise style={{ '--i': order } as React.CSSProperties}>
+  <div style={{ '--i': order } as React.CSSProperties}>
     <label htmlFor={`lead-${name}`} className="block font-semibold">
       {label}
       {isRequired && <span className="sr-only"> (wajib)</span>}
@@ -75,7 +75,7 @@ export const DemoForm: React.FC = () => {
       <TextField order={3} name="phone" label="Nomor WhatsApp" type="tel" autoComplete="tel" isRequired error={fieldErrors.phone} />
       <TextField order={4} name="industry" label="Industri (opsional)" error={fieldErrors.industry} />
 
-      <div data-rise style={{ '--i': 5 } as React.CSSProperties}>
+      <div>
         <label htmlFor="lead-employeeCount" className="block font-semibold">
           Jumlah karyawan (opsional)
         </label>
@@ -89,7 +89,7 @@ export const DemoForm: React.FC = () => {
         </select>
       </div>
 
-      <div data-rise style={{ '--i': 6 } as React.CSSProperties}>
+      <div>
         <label htmlFor="lead-message" className="block font-semibold">
           Yang ingin kamu selesaikan (opsional)
         </label>
@@ -110,8 +110,6 @@ export const DemoForm: React.FC = () => {
       <button
         type="submit"
         disabled={isPending}
-        data-rise
-        style={{ '--i': 7 } as React.CSSProperties}
         className="btn w-full disabled:opacity-60 md:w-auto"
       >
         {isPending ? 'Mengirim…' : 'Kirim pengajuan'}

@@ -1,3 +1,6 @@
+import { SECTION_TAGS } from '@/features/home/content/tones'
+import { PageSection } from '@/features/site/components/page-section'
+import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -41,49 +44,43 @@ export default async function SolutionPage({ params }: Args) {
     <>
       <PageIntro
         title={solution.heroTitle}
+        tag={SECTION_TAGS.industries}
         sentence={solution.heroDescription}
         action={{ label: 'Minta demo', href: DEMO_HREF }}
       />
 
       {pains.length > 0 && (
-        <section className="wrap grid12 gap-y-10 bg-paper-2 py-16 md:py-24" aria-label="Masalah yang sering dihadapi">
-          <h2 data-reveal className="t-head col-span-12 max-w-[16ch] lg:col-span-4">
-            Yang biasanya menyita waktu
-          </h2>
-          <ul className="col-span-12 space-y-8 lg:col-span-7 lg:col-start-6">
+        <PageSection title="Yang biasanya menyita waktu" bandClassName="bg-tint-peach">
+          <ul className="grid gap-5 md:grid-cols-3">
             {pains.map((pain, index) => (
-              <li key={pain.id ?? pain.title} data-reveal style={{ '--i': index } as React.CSSProperties}>
-                <p className="t-statement font-bold">{pain.title}</p>
-                <p className="mt-1 max-w-[46ch]">{pain.description}</p>
+              <li key={pain.id ?? pain.title}>
+                <AccentCard index={index} title={pain.title} description={pain.description} />
               </li>
             ))}
           </ul>
-        </section>
+        </PageSection>
       )}
 
       {points.length > 0 && (
-        <section className="wrap grid12 gap-y-10 py-16 md:py-24" aria-label="Cara HRIS membantu">
-          <h2 data-reveal className="t-head col-span-12 max-w-[14ch] lg:col-span-4">
-            Cara HRIS membantu
-          </h2>
-          <ul className="col-span-12 space-y-8 lg:col-span-7 lg:col-start-6">
+        <PageSection title="Cara HRIS membantu">
+          <ul className="grid gap-5 md:grid-cols-2">
             {points.map((point, index) => {
               const feature = typeof point.feature === 'object' ? point.feature : null
 
               return (
-                <li key={point.id ?? point.title} data-reveal style={{ '--i': index } as React.CSSProperties}>
-                  <p className="t-statement font-bold">{point.title}</p>
-                  <p className="mt-1 max-w-[46ch]">{point.description}</p>
-                  {feature && (
-                    <Link href={`/fitur/${feature.slug}`} className="link mt-2 inline-block font-semibold">
-                      Lihat fitur {feature.name} →
-                    </Link>
-                  )}
+                <li key={point.id ?? point.title}>
+                  <AccentCard index={index} title={point.title} description={point.description}>
+                    {feature && (
+                      <Link href={`/fitur/${feature.slug}`} className="relative mt-3 inline-block text-xs font-semibold underline underline-offset-4 hover:text-brand">
+                        Lihat fitur {feature.name}
+                      </Link>
+                    )}
+                  </AccentCard>
                 </li>
               )
             })}
           </ul>
-        </section>
+        </PageSection>
       )}
 
       <FaqIndented heading="Pertanyaan umum" items={solution.faqs ?? []} />

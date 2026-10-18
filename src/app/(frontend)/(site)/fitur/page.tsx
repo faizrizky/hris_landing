@@ -1,5 +1,7 @@
+import { SECTION_TAGS } from '@/features/home/content/tones'
+import { PageSection } from '@/features/site/components/page-section'
+import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 import { getFeatureSummaries } from '@/features/cms/loaders'
 import { ContentUnavailable } from '@/features/site/components/content-unavailable'
@@ -28,36 +30,38 @@ export default async function FeaturesPage() {
   return (
     <>
       <PageIntro
-        title="Semua yang dikerjakan aplikasi."
+        title="Semua yang dikerjakan aplikasi"
+        tag={SECTION_TAGS.modules}
         sentence="Yang sudah berjalan ditandai jelas. Yang masih rencana kami sebut rencana."
         action={{ label: 'Minta demo', href: DEMO_HREF }}
       />
 
-      {FEATURE_CATEGORY_ORDER.map((categoryId) => {
+      {FEATURE_CATEGORY_ORDER.map((categoryId, groupIndex) => {
         const items = features.filter((feature) => feature.category === categoryId)
 
         if (items.length === 0) return null
 
         return (
-          <section key={categoryId} className="wrap grid12 py-14 md:py-20" aria-label={FEATURE_CATEGORY_LABEL[categoryId]}>
-            <div data-reveal className="col-span-12 lg:col-span-4">
-              <h2 className="t-head">{FEATURE_CATEGORY_LABEL[categoryId]}</h2>
-              <p className="mt-3 max-w-[32ch]">{FEATURE_CATEGORY_DESCRIPTION[categoryId]}</p>
-            </div>
-            <ul className="col-span-12 mt-8 space-y-6 lg:col-span-8 lg:mt-0">
+          <PageSection
+            key={categoryId}
+            title={FEATURE_CATEGORY_LABEL[categoryId]}
+            description={FEATURE_CATEGORY_DESCRIPTION[categoryId]}
+            bandClassName={groupIndex % 2 === 1 ? 'bg-tint-sky' : undefined}
+          >
+            <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {items.map((feature, index) => (
-                <li key={feature.id} data-reveal style={{ '--i': Math.min(index, 4) } as React.CSSProperties}>
-                  <Link href={`/fitur/${feature.slug}`} className="group block">
-                    <span className="t-statement block font-bold group-hover:text-accent">{feature.name}</span>
-                    <span className="mt-1 block max-w-[52ch]">{feature.shortDescription}</span>
-                    {feature.status !== FEATURE_STATUS.AVAILABLE && (
-                      <span className="mt-1 block font-semibold">{FEATURE_STATUS_LABEL[feature.status]}</span>
-                    )}
-                  </Link>
+                <li key={feature.id}>
+                  <AccentCard
+                    index={index}
+                    title={feature.name}
+                    description={feature.shortDescription}
+                    href={`/fitur/${feature.slug}`}
+                    badge={feature.status === FEATURE_STATUS.AVAILABLE ? undefined : FEATURE_STATUS_LABEL[feature.status]}
+                  />
                 </li>
               ))}
             </ul>
-          </section>
+          </PageSection>
         )
       })}
     </>

@@ -349,28 +349,7 @@ main:has(.home-cta) + footer .footer-invitation {
 }
 
 /* ---------- gerak (konten tetap terlihat tanpa JavaScript) ---------- */
-.lines .line {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.12em;
-  margin-bottom: -0.12em;
-}
-.lines [data-line] {
-  display: block;
-}
-
 @media (prefers-reduced-motion: no-preference) {
-  .js [data-rise] {
-    opacity: 0;
-    transform: translateY(18px);
-    animation: rise 800ms var(--ease-out) forwards;
-    animation-delay: calc(var(--i, 0) * 90ms + 160ms);
-  }
-  .js .lines [data-line] {
-    transform: translateY(108%);
-    animation: line 900ms var(--ease-out) forwards;
-    animation-delay: calc(var(--i, 0) * 110ms + 120ms);
-  }
   .js [data-reveal] {
     opacity: 0;
     transform: translateY(24px);
@@ -385,18 +364,6 @@ main:has(.home-cta) + footer .footer-invitation {
   }
 }
 
-@keyframes rise {
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes line {
-  to {
-    transform: none;
-  }
-}
-
 /* ---------- fragmen antarmuka produk (data-ui) memakai garis dan radius produk sendiri ---------- */
 [data-ui] {
   --ui-radius: 10px;
@@ -404,23 +371,3 @@ main:has(.home-cta) + footer .footer-invitation {
   border-radius: var(--ui-radius);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .js .legal-text > * {
-    opacity: 0;
-    transform: translateY(18px);
-    animation: rise 800ms var(--ease-out) forwards;
-    animation-delay: 900ms;
-  }
-  .js .legal-text > :nth-child(1) { animation-delay: 180ms; }
-  .js .legal-text > :nth-child(2) { animation-delay: 240ms; }
-  .js .legal-text > :nth-child(3) { animation-delay: 300ms; }
-  .js .legal-text > :nth-child(4) { animation-delay: 360ms; }
-  .js .legal-text > :nth-child(5) { animation-delay: 420ms; }
-  .js .legal-text > :nth-child(6) { animation-delay: 480ms; }
-  .js .legal-text > :nth-child(7) { animation-delay: 540ms; }
-  .js .legal-text > :nth-child(8) { animation-delay: 600ms; }
-  .js .legal-text > :nth-child(9) { animation-delay: 660ms; }
-  .js .legal-text > :nth-child(10) { animation-delay: 720ms; }
-  .js .legal-text > :nth-child(11) { animation-delay: 780ms; }
-  .js .legal-text > :nth-child(12) { animation-delay: 840ms; }
-}

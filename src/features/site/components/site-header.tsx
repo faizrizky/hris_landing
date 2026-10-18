@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React, { useCallback, useRef, useState } from 'react'
 
 import type { FeatureSummary, SolutionSummary } from '@/features/cms/loaders'
+import { MegaPanel } from './mega-panel'
 import { BrandLogo } from '@/features/home/components/decorations'
 
 import {
@@ -125,11 +126,11 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
       </div>
 
       {openMenu === MENU_ID.FEATURES && (
-        <div id="menu-fitur" className="absolute inset-x-0 top-full hidden bg-tint-sky lg:block">
+        <MegaPanel id="menu-fitur" revision={activeCategory}>
           <div className="container grid12 py-10">
             <ul className="col-span-3 space-y-1">
               {categoriesWithFeatures.map((categoryId) => (
-                <li key={categoryId}>
+                <li key={categoryId} data-menu-item>
                   <button
                     type="button"
                     onClick={() => setActiveCategory(categoryId)}
@@ -144,10 +145,10 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
               ))}
             </ul>
             <div className="col-span-9">
-              <p className="max-w-[60ch] text-ink-soft">{FEATURE_CATEGORY_DESCRIPTION[activeCategory]}</p>
+              <p data-menu-item className="max-w-[60ch] text-ink-soft">{FEATURE_CATEGORY_DESCRIPTION[activeCategory]}</p>
               <ul className="mt-6 grid grid-cols-3 gap-x-8 gap-y-6">
                 {activeFeatures.map((feature) => (
-                  <li key={feature.id}>
+                  <li key={feature.id} data-menu-item>
                     <Link href={`/fitur/${feature.slug}`} onClick={closeAll} className="group block">
                       <span className="block font-semibold group-hover:text-accent-deep">{feature.name}</span>
                       <span className="mt-0.5 block text-ink-soft">{feature.shortDescription}</span>
@@ -160,20 +161,20 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                   </li>
                 ))}
               </ul>
-              <Link href="/fitur" onClick={closeAll} className="link mt-8 inline-block font-semibold">
+              <Link href="/fitur" onClick={closeAll} data-menu-item className="link mt-8 inline-block font-semibold">
                 Lihat semua fitur →
               </Link>
             </div>
           </div>
-        </div>
+        </MegaPanel>
       )}
 
       {openMenu === MENU_ID.SOLUTIONS && (
-        <div id="menu-solusi" className="absolute inset-x-0 top-full hidden bg-tint-sky lg:block">
+        <MegaPanel id="menu-solusi" revision={activeSolutionType}>
           <div className="container grid12 py-10">
             <ul className="col-span-3 space-y-1">
               {SOLUTION_TYPES.map((typeId) => (
-                <li key={typeId}>
+                <li key={typeId} data-menu-item>
                   <button
                     type="button"
                     onClick={() => setActiveSolutionType(typeId)}
@@ -190,7 +191,7 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
             <div className="col-span-9">
               <ul className="grid grid-cols-3 gap-x-8 gap-y-6">
                 {activeSolutions.map((solution) => (
-                  <li key={solution.id}>
+                  <li key={solution.id} data-menu-item>
                     <Link href={`/solusi/${solution.slug}`} onClick={closeAll} className="group block">
                       <span className="block font-semibold group-hover:text-accent-deep">{solution.name}</span>
                       <span className="mt-0.5 block text-ink-soft">{solution.tagline}</span>
@@ -198,12 +199,12 @@ export const SiteHeader: React.FC<SiteHeaderProps> = ({
                   </li>
                 ))}
               </ul>
-              <Link href="/solusi" onClick={closeAll} className="link mt-8 inline-block font-semibold">
+              <Link href="/solusi" onClick={closeAll} data-menu-item className="link mt-8 inline-block font-semibold">
                 Lihat semua solusi →
               </Link>
             </div>
           </div>
-        </div>
+        </MegaPanel>
       )}
 
       {isSheetOpen && (

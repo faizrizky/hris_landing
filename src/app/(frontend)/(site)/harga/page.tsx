@@ -1,5 +1,9 @@
+import { PillLink } from '@/features/home/components/pill-link'
+import { Check } from 'lucide-react'
+import { SECTION_TAGS } from '@/features/home/content/tones'
+import { PageSection } from '@/features/site/components/page-section'
+import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 import { getPricingPage } from '@/features/cms/loaders'
 import { ContentUnavailable } from '@/features/site/components/content-unavailable'
@@ -23,42 +27,41 @@ export default async function PricingPage() {
 
   return (
     <>
-      <PageIntro title={page.heading} sentence={page.intro} action={{ label: page.action, href: DEMO_HREF }} />
+      <PageIntro
+        title={page.heading}
+        tag={SECTION_TAGS.pricing}
+        sentence={page.intro}
+        action={{ label: page.action, href: DEMO_HREF }}
+      />
 
-      <section className="wrap grid12 gap-y-10 py-16 md:py-24" aria-label="Cara kami menyusun penawaran">
-        <h2 data-reveal className="t-head col-span-12 max-w-[14ch] lg:col-span-4">
-          Cara kami menyusun penawaran
-        </h2>
-        <ol className="col-span-12 space-y-8 lg:col-span-7 lg:col-start-6">
+      <PageSection title="Cara kami menyusun penawaran">
+        <ol className="grid gap-5 md:grid-cols-3">
           {steps.map((step, index) => (
-            <li key={step.id ?? step.title} data-reveal style={{ '--i': index } as React.CSSProperties}>
-              <p className="t-statement font-bold">{step.title}</p>
-              <p className="mt-1 max-w-[46ch]">{step.description}</p>
+            <li key={step.id ?? step.title}>
+              <AccentCard index={index} title={`${index + 1}. ${step.title}`} description={step.description} />
             </li>
           ))}
         </ol>
-      </section>
+      </PageSection>
 
       {included.length > 0 && (
-        <section className="bg-paper-2 py-16 md:py-24" aria-label="Yang termasuk">
-          <div className="wrap grid12 gap-y-8">
-            <h2 data-reveal className="t-head col-span-12 max-w-[14ch] lg:col-span-4">
-              Yang termasuk
-            </h2>
-            <ul className="col-span-12 space-y-2 lg:col-span-7 lg:col-start-6">
+        <PageSection title="Yang termasuk" bandClassName="bg-tint-lavender">
+          <div data-reveal className="max-w-2xl rounded-3xl bg-white p-8 shadow-[0_24px_60px_-30px_rgba(60,60,140,0.5)]">
+            <ul className="space-y-3">
               {included.map((item) => (
-                <li key={item.id ?? item.text} data-reveal className="t-statement">
+                <li key={item.id ?? item.text} className="flex items-center gap-3 text-sm">
+                  <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-accent-teal/25">
+                    <Check aria-hidden className="h-3 w-3" />
+                  </span>
                   {item.text}
                 </li>
               ))}
             </ul>
-            <div className="col-span-12 lg:col-span-7 lg:col-start-6">
-              <Link href={DEMO_HREF} className="btn">
-                {page.action}
-              </Link>
+            <div className="mt-8">
+              <PillLink href={DEMO_HREF}>{page.action}</PillLink>
             </div>
           </div>
-        </section>
+        </PageSection>
       )}
 
       <FaqIndented heading="Pertanyaan umum" items={page.faqs ?? []} />

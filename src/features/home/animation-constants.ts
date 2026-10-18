@@ -82,3 +82,11 @@ export const SHOWCASE_LIFT_DELAY_SECONDS = 0.35
 export const SHOWCASE_FLOAT_DISTANCE_PX = 14
 export const SHOWCASE_FLOAT_DURATION_SECONDS = 3.2
 export const SHOWCASE_FLOAT_STAGGER_SECONDS = 0.5
+
+/** Mega menu: panel turun halus, lalu item muncul bertahap */
+export const MENU_PANEL_OFFSET_PX = -14
+export const MENU_PANEL_DURATION_SECONDS = 0.4
+export const MENU_ITEM_OFFSET_PX = 12
+export const MENU_ITEM_DURATION_SECONDS = 0.45
+export const MENU_ITEM_STAGGER_SECONDS = 0.04
+export const MENU_ITEM_DELAY_SECONDS = 0.08

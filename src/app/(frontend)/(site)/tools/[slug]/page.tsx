@@ -1,3 +1,4 @@
+import { SECTION_TAGS } from '@/features/home/content/tones'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import React from 'react'
@@ -27,13 +28,15 @@ export default async function CalculatorPage({ params }: Args) {
 
   return (
     <>
-      <PageIntro title={calculator.title} sentence={calculator.summary} />
-      <section className="wrap pb-[calc(var(--section)/2)]" aria-label="Kalkulator">
-        <CalculatorForm slug={calculator.slug} />
-        <p className="mt-16 max-w-[60ch] text-ink-soft">
-          {calculator.basis ? `Dasar: ${calculator.basis} ` : ''}
-          Hasil adalah perkiraan, bukan nasihat hukum atau pajak. Konsultasikan dengan ahli sebelum mengambil keputusan.
-        </p>
+      <PageIntro title={calculator.title} tag={SECTION_TAGS.modules} sentence={calculator.summary} />
+      <section className="pb-20" aria-label="Kalkulator">
+        <div className="container">
+          <CalculatorForm slug={calculator.slug} />
+          <p className="mt-12 max-w-xl text-xs leading-relaxed text-ink-muted">
+            {calculator.basis ? `Dasar: ${calculator.basis} ` : ''}
+            Hasil adalah perkiraan, bukan nasihat hukum atau pajak. Konsultasikan dengan ahli sebelum mengambil keputusan.
+          </p>
+        </div>
       </section>
     </>
   )

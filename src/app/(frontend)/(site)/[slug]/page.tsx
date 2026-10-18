@@ -1,3 +1,4 @@
+import { PageIntro } from '@/features/site/components/page-intro'
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
@@ -48,16 +49,18 @@ export default async function CmsPage({ params }: Args) {
   const columns = (page.layout ?? []).flatMap((block) => block.columns ?? [])
 
   return (
-    <article className="wrap grid12 pb-[calc(var(--section)/2)] pt-32 md:pt-44">
+    <>
       {isDraft && <LivePreviewListener />}
-      <h1 data-rise className="t-big col-span-12 max-w-[14ch] md:col-span-9">
-        {page.title}
-      </h1>
-      <div className="col-span-12 mt-14 md:col-span-7 md:col-start-5">
+      <PageIntro title={page.title} />
+      <article className="container pb-20">
         {columns.map((column) =>
-          column.richText ? <RichText key={column.id ?? column.size} data={column.richText} /> : null,
+          column.richText ? (
+            <div key={column.id ?? column.size} className="rounded-3xl bg-white p-6 shadow-[0_24px_60px_-30px_rgba(60,60,140,0.35)] md:p-10">
+              <RichText data={column.richText} />
+            </div>
+          ) : null,
         )}
-      </div>
-    </article>
+      </article>
+    </>
   )
 }

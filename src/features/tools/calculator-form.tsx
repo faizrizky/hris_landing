@@ -77,7 +77,7 @@ const CalculatorFormBody: React.FC<CalculatorFormBodyProps> = ({ calculator }) =
           const error = errors[field.name]
 
           return (
-            <div key={field.name} data-rise style={{ '--i': index } as React.CSSProperties}>
+            <div key={field.name} style={{ '--i': index } as React.CSSProperties}>
               <label htmlFor={`calc-${field.name}`} className="block font-semibold">
                 {field.label}
               </label>
@@ -119,9 +119,7 @@ const CalculatorFormBody: React.FC<CalculatorFormBodyProps> = ({ calculator }) =
           )
         })}
         <button
-          type="submit"
-          data-rise
-          style={{ '--i': calculator.fields.length } as React.CSSProperties}
+          type="submit"          style={{ '--i': calculator.fields.length } as React.CSSProperties}
           className="btn w-full md:w-auto"
         >
           Hitung
@@ -131,7 +129,7 @@ const CalculatorFormBody: React.FC<CalculatorFormBodyProps> = ({ calculator }) =
       <div className="col-span-12 lg:col-span-5 lg:col-start-8" aria-live="polite">
         {outcome && 'error' in outcome && <p role="alert" className="font-semibold">{outcome.error}</p>}
         {outcome && 'rows' in outcome && (
-          <dl data-rise className="bg-paper-2 p-6">
+          <dl className="rounded-2xl bg-tint-sky p-6">
             {outcome.rows.map((row) => (
               <div key={row.label} className={cn('py-2', row.isPrimary && 'pb-5')}>
                 <dt className="text-ink-soft">{row.label}</dt>

@@ -1,5 +1,8 @@
+import { Check } from 'lucide-react'
+import { SECTION_TAGS } from '@/features/home/content/tones'
+import { PageSection } from '@/features/site/components/page-section'
+import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import React from 'react'
 
@@ -43,72 +46,60 @@ export default async function FeaturePage({ params }: Args) {
     <>
       <PageIntro
         title={feature.heroTitle}
+        tag={SECTION_TAGS.modules}
         sentence={feature.heroDescription}
         note={feature.status === FEATURE_STATUS.AVAILABLE ? undefined : FEATURE_STATUS_LABEL[feature.status]}
         action={{ label: 'Minta demo', href: DEMO_HREF }}
       />
 
       {benefits.length > 0 && (
-        <section className="wrap grid12 gap-y-12 py-14 md:py-24" aria-label="Manfaat utama">
-          {benefits.map((benefit, index) => (
-            <div
-              key={benefit.id ?? benefit.title}
-              data-reveal
-              style={{ '--i': index } as React.CSSProperties}
-              className={[
-                'col-span-12 lg:col-span-4',
-                index === 1 ? 'lg:mt-16' : '',
-                index === 2 ? 'lg:mt-32' : '',
-              ].join(' ')}
-            >
-              <h2 className="t-statement font-bold">{benefit.title}</h2>
-              <p className="mt-3 max-w-[34ch]">{benefit.description}</p>
-            </div>
-          ))}
-        </section>
+        <PageSection title="Manfaat utama" ariaLabel="Manfaat utama">
+          <ul className="grid gap-5 md:grid-cols-3">
+            {benefits.map((benefit, index) => (
+              <li key={benefit.id ?? benefit.title}>
+                <AccentCard index={index} title={benefit.title} description={benefit.description} />
+              </li>
+            ))}
+          </ul>
+        </PageSection>
       )}
 
       {blocks.map((block, index) => (
-        <section key={block.id ?? block.title} className="wrap grid12 gap-y-10 py-14 md:py-24" aria-label={block.title}>
-          <h2 data-reveal className="t-head col-span-12 max-w-[18ch] lg:col-span-5">
-            {block.title}
-          </h2>
-          <div data-reveal style={{ '--i': 1 } as React.CSSProperties} className="col-span-12 lg:col-span-6 lg:col-start-7">
-            <p className="max-w-[52ch]">{block.description}</p>
-            <ul className="mt-6 space-y-2">
-              {(block.points ?? []).map((point) => (
-                <li key={point.id ?? point.text} className="font-semibold">
-                  {point.text}
-                </li>
-              ))}
-            </ul>
-            {index === 0 && (
-              <div className="mt-10">
-                <FeatureMock mock={feature.mock} />
-              </div>
-            )}
+        <PageSection key={block.id ?? block.title} bandClassName={index % 2 === 0 ? 'bg-tint-sky' : undefined} ariaLabel={block.title}>
+          <div className="grid items-start gap-10 md:grid-cols-2">
+            <div>
+              <h2 data-reveal className="text-3xl font-extrabold leading-tight md:text-4xl">
+                {block.title}
+              </h2>
+              <p data-reveal className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted">
+                {block.description}
+              </p>
+              <ul className="mt-6 space-y-2">
+                {(block.points ?? []).map((point) => (
+                  <li key={point.id ?? point.text} data-reveal className="flex items-start gap-2 text-sm">
+                    <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent-teal" />
+                    {point.text}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {index === 0 && <FeatureMock mock={feature.mock} />}
           </div>
-        </section>
+        </PageSection>
       ))}
 
       <FaqIndented heading="Pertanyaan umum" items={feature.faqs ?? []} />
 
       {related.length > 0 && (
-        <section className="wrap grid12 py-14 md:py-24" aria-label="Fitur terkait">
-          <h2 data-reveal className="t-head col-span-12 lg:col-span-4">
-            Fitur terkait
-          </h2>
-          <ul className="col-span-12 mt-6 space-y-4 lg:col-span-8 lg:mt-0">
-            {related.map((item) => (
-              <li key={item.id} data-reveal>
-                <Link href={`/fitur/${item.slug}`} className="group block">
-                  <span className="t-statement block font-bold group-hover:text-accent">{item.name}</span>
-                  <span className="block">{item.shortDescription}</span>
-                </Link>
+        <PageSection title="Fitur terkait" bandClassName="bg-tint-lavender">
+          <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {related.map((item, index) => (
+              <li key={item.id}>
+                <AccentCard index={index} title={item.name} description={item.shortDescription} href={`/fitur/${item.slug}`} />
               </li>
             ))}
           </ul>
-        </section>
+        </PageSection>
       )}
     </>
   )
