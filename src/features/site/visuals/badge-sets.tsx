@@ -17,7 +17,9 @@ import React from 'react'
 
 import type { FeatureCategoryId } from '@/features/site/content/labels'
 
-import { GlyphBadge } from './glyph-badge'
+import type { AccentColor } from '@/features/home/content/tones'
+
+import { GlyphBadge, type BadgeShape } from './glyph-badge'
 
 /** Ikon per kategori fitur, supaya tiap bagian punya lencana sendiri. */
 export const CATEGORY_ICON: Record<FeatureCategoryId, LucideIcon> = {
@@ -32,9 +34,23 @@ export const CATEGORY_ICON: Record<FeatureCategoryId, LucideIcon> = {
   planned: Hourglass,
 }
 
-export const CategoryBadge: React.FC<{ category: FeatureCategoryId }> = ({ category }) => (
-  <GlyphBadge icon={CATEGORY_ICON[category]} accent="orange" shape="square" />
-)
+/** Warna dan bentuk lencana tiap kategori, supaya daftar fitur tidak seragam satu warna. */
+const CATEGORY_BADGE_STYLE: Record<FeatureCategoryId, { accent: AccentColor; shape: BadgeShape }> = {
+  attendance: { accent: 'blue', shape: 'circle' },
+  requests: { accent: 'purple', shape: 'square' },
+  payroll: { accent: 'teal', shape: 'hexagon' },
+  team: { accent: 'orange', shape: 'circle' },
+  hradmin: { accent: 'yellow', shape: 'hexagon' },
+  documents: { accent: 'teal', shape: 'square' },
+  security: { accent: 'purple', shape: 'shield' },
+  performance: { accent: 'orange', shape: 'hexagon' },
+  planned: { accent: 'blue', shape: 'square' },
+}
+
+export const CategoryBadge: React.FC<{ category: FeatureCategoryId }> = ({ category }) => {
+  const { accent, shape } = CATEGORY_BADGE_STYLE[category]
+  return <GlyphBadge icon={CATEGORY_ICON[category]} accent={accent} shape={shape} />
+}
 
 export const UsersBadge: React.FC = () => <GlyphBadge icon={Users} accent="teal" shape="circle" />
 export const CalculatorBadge: React.FC = () => <GlyphBadge icon={Calculator} accent="yellow" shape="hexagon" />
