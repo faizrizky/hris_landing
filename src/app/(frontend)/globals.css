@@ -222,3 +222,26 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+
+/* Token warna beranda (mengikuti referensi desain, aksen biru HRIS #2490EF) */
+@theme {
+  --color-ink: #111114;
+  --color-ink-muted: #5b5b66;
+  --color-brand: #2490ef;
+  --color-night: #060608;
+  --color-night-shape: #161618;
+  --color-tint-sky: #eef8ff;
+  --color-tint-lavender: #ecebff;
+  --color-tint-peach: #fff4ee;
+  --color-tint-cyan: #e3f8f6;
+  --color-accent-teal: #25d0c4;
+  --color-accent-orange: #f2733b;
+  --color-accent-purple: #7b7bf0;
+  --color-accent-blue: #2490ef;
+  --color-accent-yellow: #f6c445;
+  --color-phone-sky: #cddff2;
+  --color-phone-lavender: #9d9df2;
+  --color-card-yellow: #fdf0c8;
+  --color-card-cyan: #d6f4f2;
+  --color-card-pink: #fadbd0;
+}
