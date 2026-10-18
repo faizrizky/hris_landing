@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 
 export default function StudioLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="id">
-      <body className={`${fontVariables} studio-body`}>{children}</body>
+    <html lang="id" suppressHydrationWarning>
+      <body className={`${fontVariables} studio-body`} suppressHydrationWarning>{children}</body>
     </html>
   );
 }
