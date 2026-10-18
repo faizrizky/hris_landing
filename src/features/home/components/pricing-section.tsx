@@ -9,6 +9,7 @@ import { cn } from '@/utilities/ui'
 import type { SectionTagContent } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { PillLink } from './pill-link'
+import { PricingEstimator, PricingMatrix } from './pricing-matrix'
 import { SectionTag } from './section-tag'
 
 const PLAN_PREVIEW_FEATURE_COUNT = 4
@@ -21,6 +22,10 @@ interface PricingSectionProps {
   description?: string | null
   tintClassName?: string
   plans: PricingPlan[]
+  showEstimator?: boolean | null
+  estimatorTitle?: string | null
+  estimatorDescription?: string | null
+  matrix?: React.ComponentProps<typeof PricingMatrix>['categories'] | null
   addonNote?: string | null
   points?: { id?: string | null; text: string }[] | null
   action?: { label: string; href: string } | null
@@ -35,6 +40,10 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
   description,
   tintClassName = 'bg-tint-lavender',
   plans,
+  showEstimator,
+  estimatorTitle,
+  estimatorDescription,
+  matrix,
   addonNote,
   points,
   action,
@@ -63,6 +72,12 @@ export const PricingSection: React.FC<PricingSectionProps> = ({
               ))}
             </ul>
           )}
+
+          {!isCompact && showEstimator && plans.length > 0 && (
+            <PricingEstimator title={estimatorTitle} description={estimatorDescription} plans={plans} />
+          )}
+
+          {!isCompact && matrix && matrix.length > 0 && plans.length > 0 && <PricingMatrix plans={plans} categories={matrix} />}
 
           {addonNote && <p className="mt-8 text-center text-sm text-ink-muted">{addonNote}</p>}
 

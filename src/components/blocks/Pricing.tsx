@@ -17,6 +17,10 @@ export function PricingBlock({ block }: { block: Block; ctx: BlockContext }) {
       description={block.header.description}
       tintClassName={tintClass(block.tint) || undefined}
       plans={block.plans ?? []}
+      showEstimator={block.showEstimator}
+      estimatorTitle={block.estimatorTitle}
+      estimatorDescription={block.estimatorDescription}
+      matrix={block.matrix}
       addonNote={block.addonNote}
       points={block.points}
       action={firstButton(block.buttons)}

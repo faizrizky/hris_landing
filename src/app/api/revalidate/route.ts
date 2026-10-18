@@ -1,8 +1,11 @@
 import { revalidatePath, revalidateTag } from 'next/cache'
+import { timingSafeEqual } from 'node:crypto'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { array, object, string, type InferType } from 'yup'
 
 const REVALIDATE_SECRET_HEADER = 'x-revalidate-secret'
+const BEARER_PREFIX = 'Bearer '
 /** Segera kedaluwarsa: setelah editor menyimpan di CMS, permintaan berikutnya tidak boleh menerima data lama. */
 const CACHE_PROFILE = { expire: 0 }
 
@@ -13,10 +16,23 @@ const revalidateBodySchema = object({
 
 type RevalidateBody = InferType<typeof revalidateBodySchema>
 
+/** Rahasia dikirim CMS sebagai `Authorization: Bearer …`; header `x-revalidate-secret` tetap diterima. */
+const readSecret = (request: NextRequest): string => {
+  const authorization = request.headers.get('authorization') ?? ''
+  if (authorization.startsWith(BEARER_PREFIX)) return authorization.slice(BEARER_PREFIX.length)
+  return request.headers.get(REVALIDATE_SECRET_HEADER) ?? ''
+}
+
+const isSecretValid = (provided: string, expected: string): boolean => {
+  const providedBytes = Buffer.from(provided)
+  const expectedBytes = Buffer.from(expected)
+  return providedBytes.length === expectedBytes.length && timingSafeEqual(providedBytes, expectedBytes)
+}
+
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const secret = process.env.REVALIDATE_SECRET
 
-  if (!secret || request.headers.get(REVALIDATE_SECRET_HEADER) !== secret) {
+  if (!secret || !isSecretValid(readSecret(request), secret)) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 })
   }
 

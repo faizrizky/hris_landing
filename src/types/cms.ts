@@ -779,6 +779,47 @@ export interface PricingBlock {
       }[]
     | null;
   /**
+   * Pengunjung mengisi jumlah karyawan dan melihat perkiraan biaya per bulan tiap paket (harga paket × jumlah).
+   */
+  showEstimator?: boolean | null;
+  /**
+   * Mis. Pilih paket yang tepat.
+   */
+  estimatorTitle?: string | null;
+  estimatorDescription?: string | null;
+  /**
+   * Tabel fitur per kategori. Kolom "Isi per paket" mengikuti urutan paket di atas (paket pertama, kedua, dst.).
+   */
+  matrix?:
+    | {
+        title: string;
+        groups?:
+          | {
+              title: string;
+              isSoon?: boolean | null;
+              points?:
+                | {
+                    text: string;
+                    id?: string | null;
+                  }[]
+                | null;
+              cells?:
+                | {
+                    mode?: ('included' | 'excluded' | 'addon') | null;
+                    /**
+                     * Untuk tambahan berbayar, mis. +Rp2.000.000/bulan.
+                     */
+                    label?: string | null;
+                    id?: string | null;
+                  }[]
+                | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * Catatan di bawah paket, mis. harga tambah fitur.
    */
   addonNote?: string | null;
@@ -1877,6 +1918,35 @@ export interface PricingBlockSelect<T extends boolean = true> {
             };
         actionLabel?: T;
         actionHref?: T;
+        id?: T;
+      };
+  showEstimator?: T;
+  estimatorTitle?: T;
+  estimatorDescription?: T;
+  matrix?:
+    | T
+    | {
+        title?: T;
+        groups?:
+          | T
+          | {
+              title?: T;
+              isSoon?: T;
+              points?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              cells?:
+                | T
+                | {
+                    mode?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
         id?: T;
       };
   addonNote?: T;
