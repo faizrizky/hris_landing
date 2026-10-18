@@ -7,9 +7,10 @@ import { proratedLeaveCalculator } from './calculators/calculate-prorated-leave'
 import { severanceCalculator } from './calculators/calculate-severance'
 import { thrCalculator } from './calculators/calculate-thr'
 import { turnoverCalculator } from './calculators/calculate-turnover'
+import { CALCULATOR_META, withFieldMeta } from './calculator-meta'
 import type { CalculatorDefinition, UpcomingCalculator } from './types'
 
-export const CALCULATORS: readonly CalculatorDefinition[] = [
+const BASE_CALCULATORS: readonly CalculatorDefinition[] = [
   overtimeCalculator,
   thrCalculator,
   dailyWageCalculator,
@@ -20,6 +21,15 @@ export const CALCULATORS: readonly CalculatorDefinition[] = [
   costPerHireCalculator,
   turnoverCalculator,
 ]
+
+const withMeta = (calculator: CalculatorDefinition): CalculatorDefinition => ({
+  ...calculator,
+  fields: withFieldMeta(calculator.slug, calculator.fields),
+  legalBasis: CALCULATOR_META[calculator.slug]?.legalBasis,
+  tip: CALCULATOR_META[calculator.slug]?.tip,
+})
+
+export const CALCULATORS: readonly CalculatorDefinition[] = BASE_CALCULATORS.map(withMeta)
 
 /** Kalkulator yang belum tersedia. Tabel tarif pajaknya belum diverifikasi, jadi sengaja tidak ditayangkan. */
 export const UPCOMING_CALCULATORS: readonly UpcomingCalculator[] = [

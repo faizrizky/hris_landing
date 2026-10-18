@@ -21,6 +21,11 @@ export interface CalculatorField {
   step?: number
   defaultValue?: string
   options?: readonly SelectOption[]
+  /** Satuan di ujung kanan kolom isian, mis. "bulan" atau "jam". */
+  unit?: string
+  placeholder?: string
+  /** Judul kelompok isian; field berurutan dengan judul sama berada dalam satu kartu kecil. */
+  section?: string
 }
 
 export interface ResultRow {
@@ -32,7 +37,17 @@ export interface ResultRow {
 
 export type CalculationValues = Record<string, string>
 
-export type CalculationOutcome = { rows: ResultRow[]; note?: string } | { error: string }
+export interface CalculationSuccess {
+  rows: ResultRow[]
+  /** Penjelasan singkat di bawah rumus. */
+  note?: string
+  /** Label status hasil, mis. "Proporsional (pro-rata)". */
+  status?: string
+  /** Rumus dengan angka yang dimasukkan, mis. "(6 bulan / 12) × Upah sebulan". */
+  formula?: string
+}
+
+export type CalculationOutcome = CalculationSuccess | { error: string }
 
 export interface CalculatorDefinition {
   slug: string
@@ -40,6 +55,10 @@ export interface CalculatorDefinition {
   summary: string
   /** Dasar aturan yang dipakai. Kosong jika rumusnya murni matematika. */
   basis?: string
+  /** Butir dasar hukum atau rumus yang ditampilkan di kartu hasil. */
+  legalBasis?: readonly string[]
+  /** Info singkat "Tahukah Anda?" di bawah isian. */
+  tip?: string
   fields: readonly CalculatorField[]
   calculate: (values: CalculationValues) => CalculationOutcome
 }
