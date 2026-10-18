@@ -1,3 +1,4 @@
+import { getPageCopy } from '@/features/cms/loaders'
 import { UsersBadge, ChatBadge } from '@/features/site/visuals/badge-sets'
 import { PhoneVisual } from '@/features/site/visuals/phone-visual'
 import { PanelVisual } from '@/features/site/visuals/panel-visual'
@@ -26,6 +27,12 @@ export default async function AboutPage() {
   const paragraphs = page.paragraphs ?? []
   const principles = page.principles ?? []
 
+  const copyResult = await getPageCopy()
+
+  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
+
+  const copy = copyResult.data
+
   return (
     <>
       <PageIntro
@@ -35,7 +42,7 @@ export default async function AboutPage() {
         title={page.heading} sentence={page.statement} action={{ label: 'Minta demo', href: DEMO_HREF }} />
 
       <PageSection
-        title="Cerita kami"
+        title={copy.aboutStoryTitle}
         visual={
           <PanelVisual
             panelClassName="bg-tint-peach"
@@ -55,13 +62,13 @@ export default async function AboutPage() {
 
       {principles.length > 0 && (
         <PageSection
-          title="Prinsip kami"
+          title={copy.aboutPrinciplesTitle}
           bandClassName="bg-tint-lavender"
           visualSide="left"
           visual={
             <PhoneVisual
               tone="lavender"
-              title="Prinsip kami"
+              title={copy.aboutPrinciplesTitle}
               accessory={<ChatBadge />}
               rows={principles.map((principle) => ({ title: principle.title }))}
             />

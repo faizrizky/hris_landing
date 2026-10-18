@@ -3,6 +3,7 @@ import type {
   Feature,
   Home,
   Page,
+  PageCopy,
   PricingPage,
   SiteSetting,
   Solution,
@@ -26,6 +27,9 @@ export const getSiteSettings = (): Promise<LoadResult<SiteSetting>> =>
 
 export const getHome = (): Promise<LoadResult<Home>> =>
   loadSafely('beranda', () => cmsClient.findGlobal({ slug: 'home' }))
+
+export const getPageCopy = (): Promise<LoadResult<PageCopy>> =>
+  loadSafely('teks halaman', () => cmsClient.findGlobal({ slug: 'page-copy' }))
 
 export const getPricingPage = (): Promise<LoadResult<PricingPage>> =>
   loadSafely('halaman harga', () => cmsClient.findGlobal({ slug: 'pricing-page' }))

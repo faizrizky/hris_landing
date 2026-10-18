@@ -1,8 +1,9 @@
+import { getPageCopy } from '@/features/cms/loaders'
+import { buildSectionTags } from '@/features/home/content/tones'
 import { CategoryBadge, ChartBadge, CalendarBadge } from '@/features/site/visuals/badge-sets'
 import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { PhoneVisual } from '@/features/site/visuals/phone-visual'
 import { Check } from 'lucide-react'
-import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
@@ -45,6 +46,13 @@ export default async function FeaturePage({ params }: Args) {
   const blocks = feature.blocks ?? []
   const related = (feature.related ?? []).filter((item): item is Exclude<typeof item, number> => typeof item === 'object')
 
+  const copyResult = await getPageCopy()
+
+  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
+
+  const copy = copyResult.data
+  const tags = buildSectionTags(copy)
+
   return (
     <>
       <PageIntro
@@ -57,7 +65,7 @@ export default async function FeaturePage({ params }: Args) {
           />
         }
         title={feature.heroTitle}
-        tag={SECTION_TAGS.modules}
+        tag={tags.modules}
         sentence={feature.heroDescription}
         note={feature.status === FEATURE_STATUS.AVAILABLE ? undefined : FEATURE_STATUS_LABEL[feature.status]}
         action={{ label: 'Minta demo', href: DEMO_HREF }}
@@ -65,8 +73,8 @@ export default async function FeaturePage({ params }: Args) {
 
       {benefits.length > 0 && (
         <PageSection
-          title="Manfaat utama"
-          ariaLabel="Manfaat utama"
+          title={copy.benefitsTitle}
+          ariaLabel={copy.benefitsTitle}
           visual={
             <PanelVisual
               panelClassName="bg-tint-sky"
@@ -116,10 +124,10 @@ export default async function FeaturePage({ params }: Args) {
         </PageSection>
       ))}
 
-      <FaqIndented heading="Pertanyaan umum" items={feature.faqs ?? []} />
+      <FaqIndented heading={copy.faqTitle} items={feature.faqs ?? []} />
 
       {related.length > 0 && (
-        <PageSection title="Fitur terkait" bandClassName="bg-tint-lavender">
+        <PageSection title={copy.relatedFeaturesTitle} bandClassName="bg-tint-lavender">
           <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {related.map((item, index) => (
               <li key={item.id}>

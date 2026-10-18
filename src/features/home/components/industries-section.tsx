@@ -6,7 +6,7 @@ import React, { useRef } from 'react'
 import type { Home, Solution } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
-import { SECTION_TAGS, getAccentByIndex, type AccentColor } from '../content/tones'
+import { type SectionTags, getAccentByIndex, type AccentColor } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { SectionTag } from './section-tag'
 
@@ -19,12 +19,13 @@ const ACCENT_BAR_CLASS: Record<AccentColor, string> = {
 }
 
 interface IndustriesSectionProps {
+  tags: SectionTags
   home: Home
   solutions: Solution[]
 }
 
 /** Solusi per industri: kartu ringkas yang menaut ke halaman solusinya. */
-export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ home, solutions }) => {
+export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ tags, home, solutions }) => {
   const rootRef = useRef<HTMLElement>(null)
 
   useRevealOnScroll(rootRef)
@@ -34,7 +35,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ home, solu
       <div className="container">
         <div className="max-w-2xl">
           <div data-gsap-reveal>
-            <SectionTag label={SECTION_TAGS.industries.label} tone={SECTION_TAGS.industries.tone} />
+            <SectionTag label={tags.industries.label} tone={tags.industries.tone} />
           </div>
           <h2 data-gsap-reveal className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
             {home.industriesTitle}

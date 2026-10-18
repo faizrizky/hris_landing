@@ -16,7 +16,7 @@ import {
 import type { Home } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
-import { SECTION_TAGS, getAccentByIndex, type AccentColor } from '../content/tones'
+import { type SectionTags, getAccentByIndex, type AccentColor } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { SectionTag } from './section-tag'
 
@@ -35,12 +35,13 @@ const STATUS_PILL_CLASS: Record<FeatureStatus, string> = {
 }
 
 interface ModulesSectionProps {
+  tags: SectionTags
   home: Home
   features: FeatureSummary[]
 }
 
 /** Peta modul per kategori fitur: yang sudah berjalan ditandai, yang belum ditandai sebagai rencana. */
-export const ModulesSection: React.FC<ModulesSectionProps> = ({ home, features }) => {
+export const ModulesSection: React.FC<ModulesSectionProps> = ({ tags, home, features }) => {
   const rootRef = useRef<HTMLElement>(null)
 
   useRevealOnScroll(rootRef)
@@ -56,7 +57,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ home, features }
         <div className="container">
           <div className="max-w-2xl">
             <div data-gsap-reveal>
-              <SectionTag label={SECTION_TAGS.modules.label} tone={SECTION_TAGS.modules.tone} />
+              <SectionTag label={tags.modules.label} tone={tags.modules.tone} />
             </div>
             <h2 data-gsap-reveal className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
               {home.modulesTitle}

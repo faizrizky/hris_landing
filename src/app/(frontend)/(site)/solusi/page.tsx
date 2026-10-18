@@ -1,7 +1,8 @@
+import { getPageCopy } from '@/features/cms/loaders'
+import { buildSectionTags } from '@/features/home/content/tones'
 import { ChartBadge, UsersBadge } from '@/features/site/visuals/badge-sets'
 import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { BoardVisual } from '@/features/site/visuals/board-visual'
-import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
@@ -23,6 +24,13 @@ export default async function SolutionsPage() {
 
   if (!result.isOk) return <ContentUnavailable message={result.message} />
 
+  const copyResult = await getPageCopy()
+
+  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
+
+  const copy = copyResult.data
+  const tags = buildSectionTags(copy)
+
   return (
     <>
       <PageIntro
@@ -33,9 +41,9 @@ export default async function SolutionsPage() {
             cards={result.data.slice(0, 6).map((solution) => ({ title: solution.name, line: solution.tagline }))}
           />
         }
-        title="Untuk berbagai jenis usaha"
-        tag={SECTION_TAGS.industries}
-        sentence="Alur kerja tiap industri berbeda. Pilih yang paling mirip dengan tempatmu."
+        title={copy.solutionsHeading}
+        tag={tags.industries}
+        sentence={copy.solutionsSentence}
         action={{ label: 'Minta demo', href: DEMO_HREF }}
       />
 

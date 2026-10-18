@@ -1,5 +1,7 @@
+import { getPageCopy } from '@/features/cms/loaders'
+import { buildSectionTags } from '@/features/home/content/tones'
+import { ContentUnavailable } from '@/features/site/components/content-unavailable'
 import { CalculatorVisual } from '@/features/site/visuals/calculator-visual'
-import { SECTION_TAGS } from '@/features/home/content/tones'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import React from 'react'
@@ -27,6 +29,13 @@ export default async function CalculatorPage({ params }: Args) {
 
   if (!calculator) return notFound()
 
+  const copyResult = await getPageCopy()
+
+  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
+
+  const copy = copyResult.data
+  const tags = buildSectionTags(copy)
+
   return (
     <>
       <PageIntro
@@ -36,7 +45,7 @@ export default async function CalculatorPage({ params }: Args) {
             tabs={CALCULATORS.filter((item) => item.slug !== calculator.slug).map((item) => item.title)}
           />
         }
-        title={calculator.title} tag={SECTION_TAGS.modules} sentence={calculator.summary} />
+        title={calculator.title} tag={tags.modules} sentence={calculator.summary} />
       <section className="pb-20" aria-label="Kalkulator">
         <div className="container">
           <CalculatorForm slug={calculator.slug} />

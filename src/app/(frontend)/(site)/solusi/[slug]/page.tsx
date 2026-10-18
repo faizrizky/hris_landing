@@ -1,8 +1,9 @@
+import { getPageCopy } from '@/features/cms/loaders'
+import { buildSectionTags } from '@/features/home/content/tones'
 import { CalendarBadge } from '@/features/site/visuals/badge-sets'
 import { PhoneVisual } from '@/features/site/visuals/phone-visual'
 import { TiltedCardsVisual } from '@/features/site/visuals/tilted-cards-visual'
 import { PageVisual } from '@/features/site/components/page-visual'
-import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
@@ -44,6 +45,13 @@ export default async function SolutionPage({ params }: Args) {
   const pains = solution.pains ?? []
   const points = solution.points ?? []
 
+  const copyResult = await getPageCopy()
+
+  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
+
+  const copy = copyResult.data
+  const tags = buildSectionTags(copy)
+
   return (
     <>
       <PageIntro
@@ -54,14 +62,14 @@ export default async function SolutionPage({ params }: Args) {
           />
         }
         title={solution.heroTitle}
-        tag={SECTION_TAGS.industries}
+        tag={tags.industries}
         sentence={solution.heroDescription}
         action={{ label: 'Minta demo', href: DEMO_HREF }}
       />
 
       {pains.length > 0 && (
         <PageSection
-          title="Yang biasanya menyita waktu"
+          title={copy.painsTitle}
           bandClassName="bg-tint-peach"
           visual={<TiltedCardsVisual cards={pains.map((pain) => ({ title: pain.title, description: pain.description }))} />}
         >
@@ -77,7 +85,7 @@ export default async function SolutionPage({ params }: Args) {
 
       {points.length > 0 && (
         <PageSection
-          title="Cara HRIS membantu"
+          title={copy.helpTitle}
           visualSide="left"
           visual={
             <PhoneVisual
@@ -108,7 +116,7 @@ export default async function SolutionPage({ params }: Args) {
         </PageSection>
       )}
 
-      <FaqIndented heading="Pertanyaan umum" items={solution.faqs ?? []} />
+      <FaqIndented heading={copy.faqTitle} items={solution.faqs ?? []} />
     </>
   )
 }

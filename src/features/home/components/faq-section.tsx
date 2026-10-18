@@ -5,17 +5,18 @@ import React, { useRef } from 'react'
 
 import type { Home } from '@/payload-types'
 
-import { SECTION_TAGS } from '../content/tones'
+import type { SectionTags } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { SectionTag } from './section-tag'
 
 interface FaqSectionProps {
+  tags: SectionTags
   title: string
   items: NonNullable<Home['faqItems']>
 }
 
 /** FAQ memakai elemen <details> bawaan sehingga bisa dibuka dengan keyboard tanpa JavaScript. */
-export const FaqSection: React.FC<FaqSectionProps> = ({ title, items }) => {
+export const FaqSection: React.FC<FaqSectionProps> = ({ tags, title, items }) => {
   const rootRef = useRef<HTMLElement>(null)
 
   useRevealOnScroll(rootRef)
@@ -25,7 +26,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ title, items }) => {
       <div className="container">
         <div className="mx-auto max-w-3xl">
           <div data-gsap-reveal className="text-center">
-            <SectionTag label={SECTION_TAGS.faq.label} tone={SECTION_TAGS.faq.tone} />
+            <SectionTag label={tags.faq.label} tone={tags.faq.tone} />
             <h2 className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
               {title}
             </h2>

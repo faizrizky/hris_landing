@@ -6,17 +6,18 @@ import React, { useRef } from 'react'
 import { DEMO_HREF } from '@/features/site/content/labels'
 import type { Home } from '@/payload-types'
 
-import { SECTION_TAGS } from '../content/tones'
+import type { SectionTags } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { PillLink } from './pill-link'
 import { SectionTag } from './section-tag'
 
 interface PricingSectionProps {
+  tags: SectionTags
   home: Home
 }
 
 /** Harga: tanpa angka, mengarahkan ke penawaran sesuai jumlah karyawan. */
-export const PricingSection: React.FC<PricingSectionProps> = ({ home }) => {
+export const PricingSection: React.FC<PricingSectionProps> = ({ tags, home }) => {
   const rootRef = useRef<HTMLElement>(null)
   const points = home.offerPoints ?? []
 
@@ -30,7 +31,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ home }) => {
             data-gsap-reveal
             className="mx-auto max-w-3xl rounded-3xl bg-white p-8 text-center shadow-[0_24px_60px_-30px_rgba(60,60,140,0.5)] md:p-12"
           >
-            <SectionTag label={SECTION_TAGS.pricing.label} tone={SECTION_TAGS.pricing.tone} />
+            <SectionTag label={tags.pricing.label} tone={tags.pricing.tone} />
             <h2 className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">{home.offerTitle}</h2>
             <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-ink-muted">{home.offerDescription}</p>
             <ul className="mx-auto mt-8 flex max-w-md flex-col gap-3 text-left">

@@ -1,10 +1,11 @@
+import { getPageCopy } from '@/features/cms/loaders'
+import { buildSectionTags } from '@/features/home/content/tones'
 import { CalendarBadge, ChartBadge } from '@/features/site/visuals/badge-sets'
 import { PhoneVisual } from '@/features/site/visuals/phone-visual'
 import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { OfferVisual } from '@/features/site/visuals/offer-visual'
 import { PillLink } from '@/features/home/components/pill-link'
 import { Check } from 'lucide-react'
-import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
@@ -29,6 +30,13 @@ export default async function PricingPage() {
   const steps = page.steps ?? []
   const included = page.included ?? []
 
+  const copyResult = await getPageCopy()
+
+  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
+
+  const copy = copyResult.data
+  const tags = buildSectionTags(copy)
+
   return (
     <>
       <PageIntro
@@ -36,13 +44,13 @@ export default async function PricingPage() {
           <OfferVisual title={page.heading} steps={steps.map((step) => step.title)} />
         }
         title={page.heading}
-        tag={SECTION_TAGS.pricing}
+        tag={tags.pricing}
         sentence={page.intro}
         action={{ label: page.action, href: DEMO_HREF }}
       />
 
       <PageSection
-        title="Cara kami menyusun penawaran"
+        title={copy.pricingStepsTitle}
         visual={
           <PanelVisual
             panelClassName="bg-tint-sky"
@@ -62,13 +70,13 @@ export default async function PricingPage() {
 
       {included.length > 0 && (
         <PageSection
-          title="Yang termasuk"
+          title={copy.pricingIncludedTitle}
           bandClassName="bg-tint-lavender"
           visualSide="left"
           visual={
             <PhoneVisual
               tone="sky"
-              title="Yang termasuk"
+              title={copy.pricingIncludedTitle}
               accessory={<ChartBadge />}
               rows={included.map((item) => ({ title: item.text }))}
             />
@@ -92,7 +100,7 @@ export default async function PricingPage() {
         </PageSection>
       )}
 
-      <FaqIndented heading="Pertanyaan umum" items={page.faqs ?? []} />
+      <FaqIndented heading={copy.faqTitle} items={page.faqs ?? []} />
     </>
   )
 }

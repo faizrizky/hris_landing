@@ -1,8 +1,9 @@
+import { getPageCopy } from '@/features/cms/loaders'
+import { buildSectionTags } from '@/features/home/content/tones'
 import { CategoryBadge } from '@/features/site/visuals/badge-sets'
 import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { BoardVisual } from '@/features/site/visuals/board-visual'
 import { BellBadge } from '@/features/home/components/accessories'
-import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
 import type { Metadata } from 'next'
@@ -31,6 +32,13 @@ export default async function FeaturesPage() {
 
   const features = result.data
 
+  const copyResult = await getPageCopy()
+
+  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
+
+  const copy = copyResult.data
+  const tags = buildSectionTags(copy)
+
   return (
     <>
       <PageIntro
@@ -41,9 +49,9 @@ export default async function FeaturesPage() {
             cards={features.slice(0, 6).map((feature) => ({ title: feature.name, subtitle: feature.status === FEATURE_STATUS.AVAILABLE ? undefined : FEATURE_STATUS_LABEL[feature.status], line: feature.shortDescription }))}
           />
         }
-        title="Semua yang dikerjakan aplikasi"
-        tag={SECTION_TAGS.modules}
-        sentence="Yang sudah berjalan ditandai jelas. Yang masih rencana kami sebut rencana."
+        title={copy.featuresHeading}
+        tag={tags.modules}
+        sentence={copy.featuresSentence}
         action={{ label: 'Minta demo', href: DEMO_HREF }}
       />
 

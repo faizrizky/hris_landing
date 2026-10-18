@@ -5,7 +5,7 @@ import React, { useRef } from 'react'
 import type { Testimonial } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 
-import { SECTION_TAGS, getInitials } from '../content/tones'
+import { type SectionTags, getInitials } from '../content/tones'
 import { useRevealOnScroll } from '../hooks/use-reveal-on-scroll'
 import { useTestimonialCards } from '../hooks/use-testimonial-cards'
 import { SectionTag } from './section-tag'
@@ -20,12 +20,13 @@ const TESTIMONIAL_TONE_CLASS: Record<Testimonial['tone'], string> = {
 }
 
 interface TestimonialsSectionProps {
+  tags: SectionTags
   title: string
   testimonials: Testimonial[]
 }
 
 /** Testimoni asli: kartu pastel miring yang jatuh bertahap. Tidak dirender bila belum ada. */
-export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ title, testimonials }) => {
+export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ tags, title, testimonials }) => {
   const rootRef = useRef<HTMLElement>(null)
 
   useRevealOnScroll(rootRef)
@@ -36,7 +37,7 @@ export const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({ title,
       <div className="container grid items-center gap-12 md:grid-cols-[0.6fr_1.4fr]">
         <div>
           <div data-gsap-reveal>
-            <SectionTag label={SECTION_TAGS.testimonials.label} tone={SECTION_TAGS.testimonials.tone} />
+            <SectionTag label={tags.testimonials.label} tone={tags.testimonials.tone} />
           </div>
           <h2 data-gsap-reveal className="mt-4 text-3xl font-extrabold leading-snug md:text-4xl">
             {title}

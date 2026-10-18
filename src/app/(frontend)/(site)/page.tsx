@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { getFeatureSummaries, getHome, getHomeSolutions, getRealTestimonials, getSiteSettings } from '@/features/cms/loaders'
+import { getFeatureSummaries, getHome, getPageCopy, getHomeSolutions, getRealTestimonials, getSiteSettings } from '@/features/cms/loaders'
 import { HomePage as HomeContent } from '@/features/home/components/home-page'
 import { ContentUnavailable } from '@/features/site/components/content-unavailable'
 
@@ -16,18 +16,21 @@ export const generateMetadata = async (): Promise<Metadata> => {
 }
 
 export default async function HomePage() {
-  const [homeResult, featuresResult, solutionsResult, testimonialsResult] = await Promise.all([
+  const [homeResult, copyResult, featuresResult, solutionsResult, testimonialsResult] = await Promise.all([
     getHome(),
+    getPageCopy(),
     getFeatureSummaries(),
     getHomeSolutions(),
     getRealTestimonials(),
   ])
 
   if (!homeResult.isOk) return <ContentUnavailable message={homeResult.message} />
+  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
 
   return (
     <HomeContent
       home={homeResult.data}
+      copy={copyResult.data}
       features={featuresResult.isOk ? featuresResult.data : []}
       solutions={solutionsResult.isOk ? solutionsResult.data : []}
       testimonials={testimonialsResult.isOk ? testimonialsResult.data : []}

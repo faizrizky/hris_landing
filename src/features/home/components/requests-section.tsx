@@ -5,7 +5,7 @@ import React, { useRef } from 'react'
 import { DEMO_HREF } from '@/features/site/content/labels'
 import type { Home } from '@/payload-types'
 
-import { SECTION_TAGS, getAccentByIndex } from '../content/tones'
+import { type SectionTags, getAccentByIndex } from '../content/tones'
 import { useDrawLines } from '../hooks/use-draw-lines'
 import { useFloat } from '../hooks/use-float'
 import { useParallax } from '../hooks/use-parallax'
@@ -20,11 +20,12 @@ const BELL_PARALLAX_SPEED = 0.3
 const BOARD_PARALLAX_SPEED = 0.08
 
 interface RequestsSectionProps {
+  tags: SectionTags
   home: Home
 }
 
 /** Pengajuan: teks di kiri, papan kartu di kanan dengan ikon notifikasi melayang, lalu baris ringkasan. */
-export const RequestsSection: React.FC<RequestsSectionProps> = ({ home }) => {
+export const RequestsSection: React.FC<RequestsSectionProps> = ({ tags, home }) => {
   const rootRef = useRef<HTMLElement>(null)
   const cards = home.requestCards ?? []
   const stripItems = home.requestsStripItems ?? []
@@ -41,7 +42,7 @@ export const RequestsSection: React.FC<RequestsSectionProps> = ({ home }) => {
       <div className="container grid items-center gap-12 md:grid-cols-[0.9fr_1.1fr]">
         <div>
           <div data-gsap-reveal>
-            <SectionTag label={SECTION_TAGS.requests.label} tone={SECTION_TAGS.requests.tone} />
+            <SectionTag label={tags.requests.label} tone={tags.requests.tone} />
           </div>
           <h2 data-gsap-reveal className="mt-4 text-3xl font-extrabold leading-tight md:text-4xl">
             {home.requestsTitle}

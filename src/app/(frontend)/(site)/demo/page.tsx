@@ -1,9 +1,11 @@
+import { getPageCopy } from '@/features/cms/loaders'
+import { buildSectionTags } from '@/features/home/content/tones'
+import { ContentUnavailable } from '@/features/site/components/content-unavailable'
 import { PageSection } from '@/features/site/components/page-section'
 import { ChatBadge } from '@/features/site/visuals/badge-sets'
 import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { PhoneVisual, type PhoneRow } from '@/features/site/visuals/phone-visual'
 import { PageIntro } from '@/features/site/components/page-intro'
-import { SECTION_TAGS } from '@/features/home/content/tones'
 import type { Metadata } from 'next'
 import React from 'react'
 
@@ -14,29 +16,31 @@ export const metadata: Metadata = {
   description: 'Jadwalkan demo 30 menit HRIS. Ceritakan kebutuhanmu, kami hubungi lewat WhatsApp atau email.',
 }
 
-const DEMO_AGENDA: PhoneRow[] = [
-  { title: 'Absen wajah dan lokasi', detail: 'Langsung di aplikasi' },
-  { title: 'Pengajuan dan approval', detail: 'Cuti, lembur, dinas luar' },
-  { title: 'Slip gaji', detail: 'Dilihat karyawan sendiri' },
-]
+export default async function DemoPage() {
+  const copyResult = await getPageCopy()
 
-export default function DemoPage() {
+  if (!copyResult.isOk) return <ContentUnavailable message={copyResult.message} />
+
+  const copy = copyResult.data
+  const tags = buildSectionTags(copy)
+  const demoAgenda: PhoneRow[] = (copy.demoAgenda ?? []).map((item) => ({ title: item.title, detail: item.detail }))
+
   return (
     <>
       <PageIntro
-        visual={<PhoneVisual tone="lavender" title="Isi demo 30 menit" accessory={<ChatBadge />} rows={DEMO_AGENDA} />}
-        title="Minta demo"
-        tag={SECTION_TAGS.attendance}
-        sentence="Demo 30 menit gratis. Kami tunjukkan absen, pengajuan, approval, dan slip gaji langsung di aplikasi."
+        visual={<PhoneVisual tone="lavender" title={copy.demoVisualTitle} accessory={<ChatBadge />} rows={demoAgenda} />}
+        title={copy.demoHeading}
+        tag={tags.attendance}
+        sentence={copy.demoSentence}
       />
       <PageSection
-        title="Isi formulir, kami hubungi"
-        description="Tim kami menjadwalkan demo lewat WhatsApp atau email."
+        title={copy.demoFormTitle}
+        description={copy.demoFormDescription}
         visual={
           <PanelVisual
             panelClassName="bg-tint-peach"
             badge={<ChatBadge />}
-            chips={DEMO_AGENDA.map((item) => item.title)}
+            chips={demoAgenda.map((item) => item.title)}
           />
         }
       >

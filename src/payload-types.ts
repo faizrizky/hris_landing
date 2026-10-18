@@ -110,12 +110,14 @@ export interface Config {
   globals: {
     'site-settings': SiteSetting;
     home: Home;
+    'page-copy': PageCopy;
     'pricing-page': PricingPage;
     'about-page': AboutPage;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     home: HomeSelect<false> | HomeSelect<true>;
+    'page-copy': PageCopySelect<false> | PageCopySelect<true>;
     'pricing-page': PricingPageSelect<false> | PricingPageSelect<true>;
     'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
   };
@@ -1293,6 +1295,54 @@ export interface Home {
   createdAt?: string | null;
 }
 /**
+ * Judul, kalimat pembuka, dan judul bagian di halaman fitur, solusi, tools, demo, harga, dan tentang. Isi beranda ada di Beranda.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-copy".
+ */
+export interface PageCopy {
+  id: number;
+  featuresHeading: string;
+  featuresSentence: string;
+  benefitsTitle: string;
+  relatedFeaturesTitle: string;
+  solutionsHeading: string;
+  solutionsSentence: string;
+  painsTitle: string;
+  helpTitle: string;
+  toolsHeading: string;
+  toolsSentence: string;
+  toolsListTitle: string;
+  demoHeading: string;
+  demoSentence: string;
+  demoVisualTitle: string;
+  demoFormTitle: string;
+  demoFormDescription: string;
+  demoAgenda?:
+    | {
+        title: string;
+        detail: string;
+        id?: string | null;
+      }[]
+    | null;
+  pricingStepsTitle: string;
+  pricingIncludedTitle: string;
+  aboutStoryTitle: string;
+  aboutPrinciplesTitle: string;
+  faqTitle: string;
+  homeTestimonialsTitle: string;
+  tagAttendance: string;
+  tagRequests: string;
+  tagApproval: string;
+  tagModules: string;
+  tagIndustries: string;
+  tagTestimonials: string;
+  tagPricing: string;
+  tagFaq: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Isi halaman /harga.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1497,6 +1547,52 @@ export interface HomeSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-copy_select".
+ */
+export interface PageCopySelect<T extends boolean = true> {
+  featuresHeading?: T;
+  featuresSentence?: T;
+  benefitsTitle?: T;
+  relatedFeaturesTitle?: T;
+  solutionsHeading?: T;
+  solutionsSentence?: T;
+  painsTitle?: T;
+  helpTitle?: T;
+  toolsHeading?: T;
+  toolsSentence?: T;
+  toolsListTitle?: T;
+  demoHeading?: T;
+  demoSentence?: T;
+  demoVisualTitle?: T;
+  demoFormTitle?: T;
+  demoFormDescription?: T;
+  demoAgenda?:
+    | T
+    | {
+        title?: T;
+        detail?: T;
+        id?: T;
+      };
+  pricingStepsTitle?: T;
+  pricingIncludedTitle?: T;
+  aboutStoryTitle?: T;
+  aboutPrinciplesTitle?: T;
+  faqTitle?: T;
+  homeTestimonialsTitle?: T;
+  tagAttendance?: T;
+  tagRequests?: T;
+  tagApproval?: T;
+  tagModules?: T;
+  tagIndustries?: T;
+  tagTestimonials?: T;
+  tagPricing?: T;
+  tagFaq?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
