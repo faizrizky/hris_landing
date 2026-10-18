@@ -16,7 +16,6 @@ import { FaceClockScreen } from './phone-screens/face-clock-screen'
 import { PhoneFrame } from './phone-frame'
 import { PricingSection } from './pricing-section'
 import { RequestsSection } from './requests-section'
-import { SmoothScroll } from './smooth-scroll'
 import { TestimonialsSection } from './testimonials-section'
 
 const TESTIMONIALS_TITLE = 'Apa kata mereka tentang HRIS'
@@ -31,7 +30,6 @@ interface HomePageProps {
 /** Beranda: hero, absensi, pengajuan, approval, fitur, solusi, testimoni asli, harga, FAQ, penutup. */
 export const HomePage: React.FC<HomePageProps> = ({ home, features, solutions, testimonials }) => (
   <>
-    <SmoothScroll />
     <HeroSection home={home} />
     <FeatureBand
       id="absensi"

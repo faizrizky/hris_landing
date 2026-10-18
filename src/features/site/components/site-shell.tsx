@@ -2,6 +2,8 @@ import React from 'react'
 
 import { getFeatureSummaries, getSiteSettings, getSolutionSummaries } from '@/features/cms/loaders'
 
+import { SmoothScroll } from '@/features/home/components/smooth-scroll'
+
 import { ContentUnavailable } from './content-unavailable'
 import { SiteFooter } from './site-footer'
 import { SiteHeader } from './site-header'
@@ -26,6 +28,7 @@ export const SiteShell = async ({ children }: SiteShellProps) => {
 
   return (
     <>
+      <SmoothScroll />
       <SiteHeader
         brandName={settings.brandName}
         actionLabel={settings.actionLabel}
