@@ -1,5 +1,6 @@
+import { CategoryBadge, ChartBadge, CalendarBadge } from '@/features/site/visuals/badge-sets'
+import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { PhoneVisual } from '@/features/site/visuals/phone-visual'
-import { ShieldCheckBadge } from '@/features/home/components/accessories'
 import { Check } from 'lucide-react'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
@@ -51,7 +52,7 @@ export default async function FeaturePage({ params }: Args) {
           <PhoneVisual
             tone="sky"
             title={feature.mock.title}
-            accessory={<ShieldCheckBadge />}
+            accessory={<CategoryBadge category={feature.category} />}
             rows={(feature.mock.rows ?? []).map((row) => ({ title: row.label, detail: row.detail, badge: row.status }))}
           />
         }
@@ -63,7 +64,17 @@ export default async function FeaturePage({ params }: Args) {
       />
 
       {benefits.length > 0 && (
-        <PageSection title="Manfaat utama" ariaLabel="Manfaat utama">
+        <PageSection
+          title="Manfaat utama"
+          ariaLabel="Manfaat utama"
+          visual={
+            <PanelVisual
+              panelClassName="bg-tint-sky"
+              badge={<CategoryBadge category={feature.category} />}
+              chips={benefits.map((benefit) => benefit.title)}
+            />
+          }
+        >
           <ul className="grid gap-5 md:grid-cols-3">
             {benefits.map((benefit, index) => (
               <li key={benefit.id ?? benefit.title}>
@@ -75,26 +86,33 @@ export default async function FeaturePage({ params }: Args) {
       )}
 
       {blocks.map((block, index) => (
-        <PageSection key={block.id ?? block.title} bandClassName={index % 2 === 0 ? 'bg-tint-sky' : undefined} ariaLabel={block.title}>
-          <div className="grid items-start gap-10 md:grid-cols-2">
-            <div>
-              <h2 data-reveal className="text-3xl font-extrabold leading-tight md:text-4xl">
-                {block.title}
-              </h2>
-              <p data-reveal className="mt-4 max-w-md text-sm leading-relaxed text-ink-muted">
-                {block.description}
-              </p>
-              <ul className="mt-6 space-y-2">
-                {(block.points ?? []).map((point) => (
-                  <li key={point.id ?? point.text} data-reveal className="flex items-start gap-2 text-sm">
-                    <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent-teal" />
-                    {point.text}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            {index === 0 && <FeatureMock mock={feature.mock} />}
-          </div>
+        <PageSection
+          key={block.id ?? block.title}
+          title={block.title}
+          description={block.description}
+          bandClassName={index % 2 === 0 ? 'bg-tint-sky' : undefined}
+          visualSide={index % 2 === 0 ? 'right' : 'left'}
+          visual={
+            index === 0 ? (
+              <FeatureMock mock={feature.mock} />
+            ) : (
+              <PhoneVisual
+                tone={index % 2 === 0 ? 'sky' : 'lavender'}
+                title={block.title}
+                accessory={index % 2 === 0 ? <ChartBadge /> : <CalendarBadge />}
+                rows={(block.points ?? []).map((point) => ({ title: point.text }))}
+              />
+            )
+          }
+        >
+          <ul className="grid gap-3 md:grid-cols-2">
+            {(block.points ?? []).map((point) => (
+              <li key={point.id ?? point.text} data-reveal className="flex items-start gap-2 text-sm">
+                <Check aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent-teal" />
+                {point.text}
+              </li>
+            ))}
+          </ul>
         </PageSection>
       ))}
 

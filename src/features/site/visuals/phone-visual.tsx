@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react'
+import { CalendarDays, Clock, FileText, ShieldCheck, Wallet, type LucideIcon } from 'lucide-react'
 import React from 'react'
 
 import { PhoneFrame } from '@/features/home/components/phone-frame'
@@ -7,6 +7,8 @@ import { cn } from '@/utilities/ui'
 
 const PHONE_CROP_HEIGHT_CLASS = 'h-[330px] md:h-[400px]'
 const MAX_PHONE_ROWS = 5
+const ROW_ICONS: readonly LucideIcon[] = [Clock, CalendarDays, FileText, Wallet, ShieldCheck]
+const ROW_ICON_TINTS = ['bg-accent-teal', 'bg-accent-orange', 'bg-accent-purple', 'bg-accent-blue', 'bg-accent-yellow'] as const
 
 export interface PhoneRow {
   title: string
@@ -33,10 +35,13 @@ export const PhoneVisual: React.FC<PhoneVisualProps> = ({ tone, title, rows, acc
               <p className="truncate text-lg font-bold">{title}</p>
             </div>
             <ul className="divide-y divide-black/5 px-4">
-              {rows.slice(0, MAX_PHONE_ROWS).map((row) => (
+              {rows.slice(0, MAX_PHONE_ROWS).map((row, index) => {
+                const RowIcon = ROW_ICONS[index % ROW_ICONS.length]
+
+                return (
                 <li key={row.title} className="flex items-center gap-3 py-3.5">
-                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-accent-teal">
-                    <Check aria-hidden className="h-3.5 w-3.5 text-white" strokeWidth={3} />
+                  <span className={cn('grid h-6 w-6 shrink-0 place-items-center rounded-full', ROW_ICON_TINTS[index % ROW_ICON_TINTS.length])}>
+                    <RowIcon aria-hidden className="h-3.5 w-3.5 text-white" strokeWidth={2.6} />
                   </span>
                   <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-tint-lavender text-[10px] font-bold text-accent-purple">
                     {getInitials(row.title)}
@@ -51,7 +56,8 @@ export const PhoneVisual: React.FC<PhoneVisualProps> = ({ tone, title, rows, acc
                     </span>
                   )}
                 </li>
-              ))}
+                )
+              })}
             </ul>
           </div>
         </PhoneFrame>

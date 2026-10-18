@@ -1,3 +1,5 @@
+import { CategoryBadge } from '@/features/site/visuals/badge-sets'
+import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { BoardVisual } from '@/features/site/visuals/board-visual'
 import { BellBadge } from '@/features/home/components/accessories'
 import { SECTION_TAGS } from '@/features/home/content/tones'
@@ -56,6 +58,14 @@ export default async function FeaturesPage() {
             title={FEATURE_CATEGORY_LABEL[categoryId]}
             description={FEATURE_CATEGORY_DESCRIPTION[categoryId]}
             bandClassName={groupIndex % 2 === 1 ? 'bg-tint-sky' : undefined}
+            visualSide={groupIndex % 2 === 1 ? 'left' : 'right'}
+            visual={
+              <PanelVisual
+                panelClassName={groupIndex % 2 === 1 ? 'bg-tint-lavender' : 'bg-tint-peach'}
+                badge={<CategoryBadge category={categoryId} />}
+                chips={items.map((feature) => feature.name)}
+              />
+            }
           >
             <ul className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {items.map((feature, index) => (

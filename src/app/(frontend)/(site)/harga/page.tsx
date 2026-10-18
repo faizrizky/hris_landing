@@ -1,3 +1,6 @@
+import { CalendarBadge, ChartBadge } from '@/features/site/visuals/badge-sets'
+import { PhoneVisual } from '@/features/site/visuals/phone-visual'
+import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { OfferVisual } from '@/features/site/visuals/offer-visual'
 import { PillLink } from '@/features/home/components/pill-link'
 import { Check } from 'lucide-react'
@@ -38,7 +41,16 @@ export default async function PricingPage() {
         action={{ label: page.action, href: DEMO_HREF }}
       />
 
-      <PageSection title="Cara kami menyusun penawaran">
+      <PageSection
+        title="Cara kami menyusun penawaran"
+        visual={
+          <PanelVisual
+            panelClassName="bg-tint-sky"
+            badge={<CalendarBadge />}
+            chips={steps.map((step) => step.title)}
+          />
+        }
+      >
         <ol className="grid gap-5 md:grid-cols-3">
           {steps.map((step, index) => (
             <li key={step.id ?? step.title}>
@@ -49,7 +61,19 @@ export default async function PricingPage() {
       </PageSection>
 
       {included.length > 0 && (
-        <PageSection title="Yang termasuk" bandClassName="bg-tint-lavender">
+        <PageSection
+          title="Yang termasuk"
+          bandClassName="bg-tint-lavender"
+          visualSide="left"
+          visual={
+            <PhoneVisual
+              tone="sky"
+              title="Yang termasuk"
+              accessory={<ChartBadge />}
+              rows={included.map((item) => ({ title: item.text }))}
+            />
+          }
+        >
           <div data-reveal className="max-w-2xl rounded-3xl bg-white p-8 shadow-[0_24px_60px_-30px_rgba(60,60,140,0.5)]">
             <ul className="space-y-3">
               {included.map((item) => (

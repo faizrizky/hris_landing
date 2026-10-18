@@ -1,5 +1,6 @@
+import { ChartBadge, UsersBadge } from '@/features/site/visuals/badge-sets'
+import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { BoardVisual } from '@/features/site/visuals/board-visual'
-import { CheckCircleBadge } from '@/features/home/components/accessories'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
@@ -28,7 +29,7 @@ export default async function SolutionsPage() {
         visual={
           <BoardVisual
             boardClassName="bg-tint-lavender"
-            accessory={<CheckCircleBadge />}
+            accessory={<UsersBadge />}
             cards={result.data.slice(0, 6).map((solution) => ({ title: solution.name, line: solution.tagline }))}
           />
         }
@@ -48,6 +49,14 @@ export default async function SolutionsPage() {
             key={typeId}
             title={SOLUTION_TYPE_LABEL[typeId]}
             bandClassName={groupIndex % 2 === 1 ? 'bg-tint-sky' : undefined}
+            visualSide={groupIndex % 2 === 1 ? 'left' : 'right'}
+            visual={
+              <PanelVisual
+                panelClassName={groupIndex % 2 === 1 ? 'bg-tint-peach' : 'bg-tint-lavender'}
+                badge={groupIndex % 2 === 1 ? <ChartBadge /> : <UsersBadge />}
+                chips={items.map((solution) => solution.name)}
+              />
+            }
           >
             <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {items.map((solution, index) => (

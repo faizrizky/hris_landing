@@ -1,3 +1,6 @@
+import { UsersBadge, ChatBadge } from '@/features/site/visuals/badge-sets'
+import { PhoneVisual } from '@/features/site/visuals/phone-visual'
+import { PanelVisual } from '@/features/site/visuals/panel-visual'
 import { TiltedCardsVisual } from '@/features/site/visuals/tilted-cards-visual'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
@@ -31,7 +34,16 @@ export default async function AboutPage() {
         }
         title={page.heading} sentence={page.statement} action={{ label: 'Minta demo', href: DEMO_HREF }} />
 
-      <PageSection title="Cerita kami">
+      <PageSection
+        title="Cerita kami"
+        visual={
+          <PanelVisual
+            panelClassName="bg-tint-peach"
+            badge={<UsersBadge />}
+            chips={principles.map((principle) => principle.title)}
+          />
+        }
+      >
         <div className="max-w-2xl space-y-4">
           {paragraphs.map((paragraph, index) => (
             <p key={paragraph.id ?? index} data-reveal className="text-sm leading-relaxed text-ink-muted">
@@ -42,7 +54,19 @@ export default async function AboutPage() {
       </PageSection>
 
       {principles.length > 0 && (
-        <PageSection title="Prinsip kami" bandClassName="bg-tint-lavender">
+        <PageSection
+          title="Prinsip kami"
+          bandClassName="bg-tint-lavender"
+          visualSide="left"
+          visual={
+            <PhoneVisual
+              tone="lavender"
+              title="Prinsip kami"
+              accessory={<ChatBadge />}
+              rows={principles.map((principle) => ({ title: principle.title }))}
+            />
+          }
+        >
           <ul className="grid gap-5 md:grid-cols-3">
             {principles.map((principle, index) => (
               <li key={principle.id ?? principle.title}>

@@ -1,7 +1,7 @@
 import { Check } from 'lucide-react'
 import React from 'react'
 
-import { ShieldCheckBadge } from '@/features/home/components/accessories'
+import { WalletBadge } from './badge-sets'
 
 const MAX_STEPS = 4
 
@@ -28,7 +28,7 @@ export const OfferVisual: React.FC<OfferVisualProps> = ({ title, steps }) => (
     </div>
     <div className="absolute -right-3 -top-6 md:-right-8" data-parallax="0.3">
       <div data-float>
-        <ShieldCheckBadge />
+        <WalletBadge />
       </div>
     </div>
   </div>

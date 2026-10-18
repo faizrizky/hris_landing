@@ -66,6 +66,7 @@ export const CurvedLine: React.FC<CurvedLineProps> = ({ className }) => (
   </svg>
 )
 
+/** Logo HRIS sama dengan ikon aplikasi mobile: huruf H dengan sosok orang di antara tiangnya, di atas kotak biru. */
 export const BrandLogo: React.FC<{ name: string; tone: 'dark' | 'light'; className?: string }> = ({
   name,
   tone,
@@ -73,14 +74,23 @@ export const BrandLogo: React.FC<{ name: string; tone: 'dark' | 'light'; classNa
 }) => (
   <span
     className={cn(
-      'inline-flex items-center gap-2 text-2xl font-extrabold tracking-tight',
+      'inline-flex items-center gap-2.5 text-2xl font-extrabold tracking-tight',
       tone === 'dark' ? 'text-ink' : 'text-white',
       className,
     )}
   >
-    <svg aria-hidden width="22" height="30" viewBox="0 0 22 30">
-      <circle cx="11" cy="8" r="8" className="fill-accent-teal" />
-      <circle cx="11" cy="22" r="8" className="fill-accent-purple" />
+    <svg aria-hidden width="32" height="32" viewBox="0 0 1024 1024">
+      <defs>
+        <linearGradient id="logo-latar" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#2490EF" />
+          <stop offset="1" stopColor="#1B6FC9" />
+        </linearGradient>
+      </defs>
+      <rect width="1024" height="1024" rx="230" fill="url(#logo-latar)" />
+      <rect x="300" y="292" width="86" height="440" rx="43" fill="#fff" />
+      <rect x="638" y="292" width="86" height="440" rx="43" fill="#fff" />
+      <rect x="386" y="498" width="252" height="84" fill="#fff" />
+      <circle cx="512" cy="372" r="54" fill="#fff" />
     </svg>
     {name}
   </span>

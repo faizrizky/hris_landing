@@ -1,3 +1,6 @@
+import { CalendarBadge } from '@/features/site/visuals/badge-sets'
+import { PhoneVisual } from '@/features/site/visuals/phone-visual'
+import { TiltedCardsVisual } from '@/features/site/visuals/tilted-cards-visual'
 import { PageVisual } from '@/features/site/components/page-visual'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
@@ -57,7 +60,11 @@ export default async function SolutionPage({ params }: Args) {
       />
 
       {pains.length > 0 && (
-        <PageSection title="Yang biasanya menyita waktu" bandClassName="bg-tint-peach">
+        <PageSection
+          title="Yang biasanya menyita waktu"
+          bandClassName="bg-tint-peach"
+          visual={<TiltedCardsVisual cards={pains.map((pain) => ({ title: pain.title, description: pain.description }))} />}
+        >
           <ul className="grid gap-5 md:grid-cols-3">
             {pains.map((pain, index) => (
               <li key={pain.id ?? pain.title}>
@@ -69,7 +76,18 @@ export default async function SolutionPage({ params }: Args) {
       )}
 
       {points.length > 0 && (
-        <PageSection title="Cara HRIS membantu">
+        <PageSection
+          title="Cara HRIS membantu"
+          visualSide="left"
+          visual={
+            <PhoneVisual
+              tone="lavender"
+              title={solution.name}
+              accessory={<CalendarBadge />}
+              rows={points.map((point) => ({ title: point.title }))}
+            />
+          }
+        >
           <ul className="grid gap-5 md:grid-cols-2">
             {points.map((point, index) => {
               const feature = typeof point.feature === 'object' ? point.feature : null
