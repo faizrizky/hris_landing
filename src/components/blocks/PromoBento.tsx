@@ -45,30 +45,58 @@ const SIZE_CLASS: Record<string, string> = {
   tall: "lg:col-span-3 lg:row-span-2",
 };
 
+const RING_SIZES = ["h-24 w-24", "h-40 w-40", "h-56 w-56"] as const;
+const ART_SIZE_CLASS: Record<string, string> = {
+  normal: "h-28",
+  wide: "min-h-36 w-44 self-stretch",
+  tall: "min-h-56 flex-1",
+};
+const ICON_SIZE_CLASS: Record<string, string> = {
+  normal: "h-14 w-14 rounded-2xl",
+  wide: "h-20 w-20 rounded-3xl",
+  tall: "h-24 w-24 rounded-[1.75rem]",
+};
+const ICON_GLYPH_CLASS: Record<string, string> = { normal: "h-7 w-7", wide: "h-10 w-10", tall: "h-12 w-12" };
+
+/** Panel ilustrasi: lingkaran konsentris, ikon besar dalam ubin putih, dan dua chip kecil melayang. */
+function PromoArt({ card, size }: { card: Card; size: string }) {
+  return (
+    <div className={cn("relative grid shrink-0 place-items-center overflow-hidden rounded-2xl bg-white/55", ART_SIZE_CLASS[size] ?? ART_SIZE_CLASS.normal)} aria-hidden>
+      {RING_SIZES.map((ring) => (
+        <span key={ring} className={cn("absolute rounded-full border border-white/90", ring)} />
+      ))}
+      <span className="absolute left-4 top-4 h-2.5 w-2.5 rounded-full bg-accent-blue/40" />
+      <span className="absolute bottom-5 right-6 h-3.5 w-3.5 rounded-full bg-accent-yellow/70" />
+      <span className="absolute bottom-4 left-6 h-2 w-8 rounded-full bg-accent-purple/30" />
+      <span
+        className={cn(
+          "relative grid place-items-center bg-white text-accent-deep shadow-[0_14px_30px_-12px_rgba(36,144,239,0.55)] transition-transform duration-300 group-hover:scale-110",
+          ICON_SIZE_CLASS[size] ?? ICON_SIZE_CLASS.normal,
+        )}
+      >
+        {renderIcon(card.icon, ICON_GLYPH_CLASS[size] ?? ICON_GLYPH_CLASS.normal)}
+      </span>
+      <span className="absolute right-4 top-4 grid h-6 w-6 place-items-center rounded-full bg-white text-[11px] font-bold text-ok shadow-sm">✓</span>
+    </div>
+  );
+}
+
 function PromoCard({ card }: { card: Card }) {
-  const isWide = card.size === "wide";
-  const isTall = card.size === "tall";
+  const size = card.size ?? "normal";
+  const isWide = size === "wide";
 
   return (
     <li
       data-gsap-reveal
       className={cn(
-        "flex gap-5 rounded-3xl border border-black/5 p-7 shadow-[0_18px_44px_-30px_rgba(60,60,140,0.45)] transition-transform duration-300 hover:-translate-y-1",
+        "group flex gap-5 rounded-3xl border border-black/5 p-5 shadow-[0_18px_44px_-30px_rgba(60,60,140,0.45)] transition-transform duration-300 hover:-translate-y-1",
         TONE_CLASS[card.tone ?? "lavender"] ?? TONE_CLASS.lavender,
-        isWide ? "flex-row items-center" : "flex-col",
-        isTall && "justify-between",
-        SIZE_CLASS[card.size ?? "normal"] ?? SIZE_CLASS.normal,
+        isWide ? "flex-col sm:flex-row sm:items-center" : "flex-col",
+        SIZE_CLASS[size] ?? SIZE_CLASS.normal,
       )}
     >
-      <span
-        className={cn(
-          "grid shrink-0 place-items-center rounded-2xl bg-white/70 text-accent-deep",
-          isTall ? "h-24 w-24 self-center" : isWide ? "h-20 w-20" : "h-14 w-14",
-        )}
-      >
-        {renderIcon(card.icon, isTall ? "h-11 w-11" : isWide ? "h-9 w-9" : "h-6 w-6")}
-      </span>
-      <div>
+      <PromoArt card={card} size={size} />
+      <div className={cn(!isWide && "px-1 pb-1")}>
         <h3 className="text-lg font-extrabold leading-snug text-accent-deep">{card.title}</h3>
         {card.description && <p className="mt-2 text-sm leading-relaxed text-ink-soft">{card.description}</p>}
       </div>
