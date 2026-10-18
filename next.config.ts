@@ -2,8 +2,6 @@ import type { NextConfig } from 'next'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
-import { redirects } from './redirects'
-
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const DEFAULT_CMS_URL = 'http://localhost:3001'
@@ -21,7 +19,7 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: true,
-  redirects,
+  devIndicators: false,
   turbopack: {
     root: path.resolve(dirname),
   },

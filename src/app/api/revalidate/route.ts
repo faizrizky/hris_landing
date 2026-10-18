@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { array, object, string, type InferType } from 'yup'
 
 const REVALIDATE_SECRET_HEADER = 'x-revalidate-secret'
-const CACHE_PROFILE = 'max'
+/** Segera kedaluwarsa: setelah editor menyimpan di CMS, permintaan berikutnya tidak boleh menerima data lama. */
+const CACHE_PROFILE = { expire: 0 }
 
 const revalidateBodySchema = object({
   paths: array().of(string().required().matches(/^\//)).default([]),
