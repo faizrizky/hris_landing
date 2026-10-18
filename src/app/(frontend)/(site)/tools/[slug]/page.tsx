@@ -1,4 +1,4 @@
-import { PageVisual } from '@/features/site/components/page-visual'
+import { CalculatorVisual } from '@/features/site/visuals/calculator-visual'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -31,11 +31,9 @@ export default async function CalculatorPage({ params }: Args) {
     <>
       <PageIntro
         visual={
-          <PageVisual
+          <CalculatorVisual
             title={calculator.title}
-            rows={CALCULATORS.filter((item) => item.slug !== calculator.slug)
-              .slice(0, 4)
-              .map((item) => ({ title: item.title, detail: item.summary }))}
+            tabs={CALCULATORS.filter((item) => item.slug !== calculator.slug).map((item) => item.title)}
           />
         }
         title={calculator.title} tag={SECTION_TAGS.modules} sentence={calculator.summary} />

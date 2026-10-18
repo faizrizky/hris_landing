@@ -1,4 +1,5 @@
-import { PageVisual } from '@/features/site/components/page-visual'
+import { PhoneVisual } from '@/features/site/visuals/phone-visual'
+import { ShieldCheckBadge } from '@/features/home/components/accessories'
 import { Check } from 'lucide-react'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
@@ -47,8 +48,10 @@ export default async function FeaturePage({ params }: Args) {
     <>
       <PageIntro
         visual={
-          <PageVisual
+          <PhoneVisual
+            tone="sky"
             title={feature.mock.title}
+            accessory={<ShieldCheckBadge />}
             rows={(feature.mock.rows ?? []).map((row) => ({ title: row.label, detail: row.detail, badge: row.status }))}
           />
         }

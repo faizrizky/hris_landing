@@ -1,4 +1,4 @@
-import { PageVisual } from '@/features/site/components/page-visual'
+import { OfferVisual } from '@/features/site/visuals/offer-visual'
 import { PillLink } from '@/features/home/components/pill-link'
 import { Check } from 'lucide-react'
 import { SECTION_TAGS } from '@/features/home/content/tones'
@@ -30,10 +30,7 @@ export default async function PricingPage() {
     <>
       <PageIntro
         visual={
-          <PageVisual
-            title={page.heading}
-            rows={steps.map((step, index) => ({ title: `${index + 1}. ${step.title}`, detail: step.description }))}
-          />
+          <OfferVisual title={page.heading} steps={steps.map((step) => step.title)} />
         }
         title={page.heading}
         tag={SECTION_TAGS.pricing}

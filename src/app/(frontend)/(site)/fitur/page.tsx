@@ -1,4 +1,5 @@
-import { PageVisual } from '@/features/site/components/page-visual'
+import { BoardVisual } from '@/features/site/visuals/board-visual'
+import { BellBadge } from '@/features/home/components/accessories'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
@@ -32,13 +33,10 @@ export default async function FeaturesPage() {
     <>
       <PageIntro
         visual={
-          <PageVisual
-            title="Fitur HRIS"
-            rows={features.slice(0, 4).map((feature) => ({
-              title: feature.name,
-              detail: feature.shortDescription,
-              badge: feature.status === FEATURE_STATUS.AVAILABLE ? undefined : FEATURE_STATUS_LABEL[feature.status],
-            }))}
+          <BoardVisual
+            boardClassName="bg-tint-peach"
+            accessory={<BellBadge />}
+            cards={features.slice(0, 6).map((feature) => ({ title: feature.name, subtitle: feature.status === FEATURE_STATUS.AVAILABLE ? undefined : FEATURE_STATUS_LABEL[feature.status], line: feature.shortDescription }))}
           />
         }
         title="Semua yang dikerjakan aplikasi"

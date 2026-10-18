@@ -1,4 +1,5 @@
-import { PageVisual } from '@/features/site/components/page-visual'
+import { BoardVisual } from '@/features/site/visuals/board-visual'
+import { CheckCircleBadge } from '@/features/home/components/accessories'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
@@ -25,9 +26,10 @@ export default async function SolutionsPage() {
     <>
       <PageIntro
         visual={
-          <PageVisual
-            title="Solusi HRIS"
-            rows={result.data.slice(0, 4).map((solution) => ({ title: solution.name, detail: solution.tagline }))}
+          <BoardVisual
+            boardClassName="bg-tint-lavender"
+            accessory={<CheckCircleBadge />}
+            cards={result.data.slice(0, 6).map((solution) => ({ title: solution.name, line: solution.tagline }))}
           />
         }
         title="Untuk berbagai jenis usaha"

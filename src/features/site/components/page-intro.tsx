@@ -5,8 +5,10 @@ import React, { useRef } from 'react'
 import { PillLink } from '@/features/home/components/pill-link'
 import { SectionTag } from '@/features/home/components/section-tag'
 import type { SectionTagContent } from '@/features/home/content/tones'
+import { useFloat } from '@/features/home/hooks/use-float'
 import { useHeroShowcase } from '@/features/home/hooks/use-hero-showcase'
 import { useParallax } from '@/features/home/hooks/use-parallax'
+import { usePhoneIntro } from '@/features/home/hooks/use-phone-intro'
 
 const VISUAL_PARALLAX_SPEED = 0.1
 
@@ -16,7 +18,7 @@ interface PageIntroProps {
   tag?: SectionTagContent
   action?: { label: string; href: string }
   note?: string
-  /** Mockup isometrik di kanan (PageVisual). Tanpa ini, pembuka hanya teks. */
+  /** Visual di kanan (isometrik, papan kartu, HP, dan lainnya). Tanpa ini, pembuka hanya teks. */
   visual?: React.ReactNode
 }
 
@@ -26,6 +28,8 @@ export const PageIntro: React.FC<PageIntroProps> = ({ title, sentence, tag, acti
 
   useHeroShowcase(rootRef)
   useParallax(rootRef)
+  useFloat(rootRef)
+  usePhoneIntro(rootRef)
 
   return (
     <section

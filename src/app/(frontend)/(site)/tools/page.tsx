@@ -1,4 +1,5 @@
-import { PageVisual } from '@/features/site/components/page-visual'
+import { BoardVisual } from '@/features/site/visuals/board-visual'
+import { ShieldCheckBadge } from '@/features/home/components/accessories'
 import { SECTION_TAGS } from '@/features/home/content/tones'
 import { PageSection } from '@/features/site/components/page-section'
 import { AccentCard } from '@/features/site/components/accent-card'
@@ -18,9 +19,10 @@ export default function ToolsPage() {
     <>
       <PageIntro
         visual={
-          <PageVisual
-            title="Kalkulator HR"
-            rows={CALCULATORS.slice(0, 4).map((calculator) => ({ title: calculator.title, detail: calculator.summary }))}
+          <BoardVisual
+            boardClassName="bg-tint-sky"
+            accessory={<ShieldCheckBadge />}
+            cards={CALCULATORS.slice(0, 6).map((calculator) => ({ title: calculator.title, line: calculator.summary }))}
           />
         }
         title="Kalkulator HR gratis"

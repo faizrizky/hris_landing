@@ -1,4 +1,4 @@
-import { PageVisual } from '@/features/site/components/page-visual'
+import { ShieldVisual } from '@/features/site/visuals/shield-visual'
 import { PageIntro } from '@/features/site/components/page-intro'
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
@@ -53,7 +53,7 @@ export default async function CmsPage({ params }: Args) {
     <>
       {isDraft && <LivePreviewListener />}
       <PageIntro
-        visual={<PageVisual title={page.title} rows={[{ title: page.title, detail: 'HRIS' }]} />}
+        visual={<ShieldVisual />}
         title={page.title}
       />
       <article className="container pb-20">
