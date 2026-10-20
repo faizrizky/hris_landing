@@ -64,6 +64,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
     number,
     select,
     toggle,
+    image,
     tags,
     partnersField,
     featuresField,
@@ -101,6 +102,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
       tone: select("Colour", "Warna", TONES),
       accessory: select("Badge", "Lencana", ACCESSORIES),
       title: text("Title", "Judul"),
+      screen: image("App screen (phone only)", "Layar aplikasi (khusus HP)"),
       rowsSource: select("Rows come from", "Isi baris dari", ROWS_SOURCES),
       rows: list(
         "Rows (manual)",
@@ -150,6 +152,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
             payslipTitle: text("Payslip title", "Judul slip gaji"),
             payslipDetail: text("Payslip detail", "Keterangan slip gaji"),
             phoneChips: textList("Phone chips", "Chip di HP", 3),
+            phoneScreen: image("App screen in the phone", "Layar aplikasi di HP"),
           },
         },
         trustPoints: list(
@@ -190,6 +193,7 @@ export function sectionComponents(f: StudioFields): Record<string, ComponentConf
           ["faceScan", "Face clock-in (animated scan)", "Absen wajah (pemindaian beranimasi)"],
           ["approval", "Approvals (checks in order)", "Approval (centang berurutan)"],
         ]),
+        screenImage: image("App screenshot (replaces the animated screen)", "Layar aplikasi (menggantikan layar beranimasi)"),
         tag: tag(),
         header: header(),
         buttons: buttons(1),

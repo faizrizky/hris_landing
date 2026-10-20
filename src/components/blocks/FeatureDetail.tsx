@@ -16,6 +16,7 @@ import {
 import { CalendarBadge, CategoryBadge, ChartBadge } from "@/features/site/visuals/badge-sets";
 import { PanelVisual } from "@/features/site/visuals/panel-visual";
 import { PhoneVisual } from "@/features/site/visuals/phone-visual";
+import { asMedia } from "@/lib/cms/media";
 import type { Feature } from "@/types/cms";
 
 /** Teks tetap halaman detail fitur. Isi utamanya (judul, manfaat, blok, FAQ) dari dokumen fitur di CMS. */
@@ -29,6 +30,13 @@ export const FEATURE_DETAIL_TEXT = {
 } as const;
 
 type Mock = Feature["mock"];
+
+/** Layar aplikasi dari CMS menjadi isi HP; kosong bila belum diunggah. */
+const toPhoneScreen = (field: Mock["screen"]) => {
+  const media = asMedia(field);
+
+  return media?.url ? { src: media.url, alt: media.alt || "Layar aplikasi HRIS" } : null;
+};
 
 export function FeatureHeroSection({
   title,
@@ -55,6 +63,7 @@ export function FeatureHeroSection({
           tone="sky"
           title={mock.title}
           accessory={<CategoryBadge category={category as FeatureCategoryId} />}
+          screen={toPhoneScreen(mock.screen)}
           rows={(mock.rows ?? []).map((row) => ({ title: row.label, detail: row.detail, badge: row.status }))}
         />
       }

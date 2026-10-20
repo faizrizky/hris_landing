@@ -1,6 +1,8 @@
 import { Check } from 'lucide-react'
 import React from 'react'
 
+import { asMedia, type MediaField } from '@/lib/cms/media'
+
 import { getAccentByIndex, getInitials, type AccentColor } from '../content/tones'
 import { StatusPill } from './status-pill'
 
@@ -33,6 +35,7 @@ export interface HeroMockup {
   payslipTitle?: string | null
   payslipDetail?: string | null
   phoneChips?: { id?: string | null; text: string }[] | null
+  phoneScreen?: MediaField
 }
 
 interface HeroShowcaseProps {
@@ -43,6 +46,7 @@ interface HeroShowcaseProps {
 export const HeroShowcase: React.FC<HeroShowcaseProps> = ({ mockup }) => {
   const approvals = mockup.approvals ?? []
   const phoneChips = mockup.phoneChips ?? []
+  const phoneScreen = asMedia(mockup.phoneScreen)
 
   const floatingCards = [
     { id: 'attendance', accent: 'teal', title: mockup.attendanceTitle, subtitle: mockup.attendanceDetail },
@@ -91,8 +95,13 @@ export const HeroShowcase: React.FC<HeroShowcaseProps> = ({ mockup }) => {
         <div
           data-iso-layer
           style={getLayerStyle(LAYER_Z_PX.phone)}
-          className={`${LAYER_CLASS} hidden h-[290px] w-[150px] rounded-[1.6rem] border-[6px] border-phone-lavender bg-white p-3 text-center shadow-[0_30px_50px_-20px_rgba(60,60,160,0.45)] md:absolute md:left-[400px] md:top-[-18px] md:block`}
+          className={`${LAYER_CLASS} hidden h-[290px] w-[150px] rounded-[1.6rem] border-[6px] border-phone-lavender bg-white text-center shadow-[0_30px_50px_-20px_rgba(60,60,160,0.45)] md:absolute md:left-[400px] md:top-[-18px] md:block ${phoneScreen ? 'overflow-hidden' : 'p-3'}`}
         >
+          {phoneScreen ? (
+            // eslint-disable-next-line @next/next/no-img-element -- tangkapan layar dari CMS, ukurannya tetap
+            <img src={phoneScreen.url ?? ''} alt={phoneScreen.alt || 'Layar aplikasi HRIS'} className="h-full w-full object-cover object-top" />
+          ) : (
+          <>
           <p className="mt-4 text-[10px] font-bold">{mockup.attendanceTitle}</p>
           <p className="text-[8px] text-ink-muted">{mockup.attendanceFigure}</p>
           <div className="mx-auto mt-4 grid h-20 w-20 place-items-center rounded-full border-4 border-accent-teal">
@@ -105,6 +114,8 @@ export const HeroShowcase: React.FC<HeroShowcaseProps> = ({ mockup }) => {
               </li>
             ))}
           </ul>
+          </>
+          )}
         </div>
 
         {floatingCards.map((card) => (

@@ -263,6 +263,10 @@ export interface HeroBlock {
           id?: string | null;
         }[]
       | null;
+    /**
+     * Tangkapan layar aplikasi yang ditampilkan di HP pada mockup. Kosongkan untuk tampilan bawaan.
+     */
+    phoneScreen?: (number | null) | Media;
   };
   /**
    * Empat keunggulan di bawah hero.
@@ -298,6 +302,10 @@ export interface HeroBlock {
         )
       | null;
     title?: string | null;
+    /**
+     * Tangkapan layar aplikasi di dalam HP. Kosongkan untuk HP berisi daftar di bawah.
+     */
+    screen?: (number | null) | Media;
     rowsSource?: ('manual' | 'features' | 'solutions' | 'calculators') | null;
     rows?:
       | {
@@ -314,6 +322,59 @@ export interface HeroBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * The name shown in the media library. The file extension stays the same; a name already used gets -1, -2…
+   */
+  displayName?: string | null;
+  /**
+   * Alternative text for accessibility & SEO. Leave empty for decorative images.
+   */
+  alt?: string | null;
+  fileSizeMb?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "FeatureBandBlock".
  */
 export interface FeatureBandBlock {
@@ -322,6 +383,10 @@ export interface FeatureBandBlock {
    */
   anchor?: string | null;
   screen: 'faceScan' | 'approval';
+  /**
+   * Tangkapan layar aplikasi. Jika diisi, menggantikan layar beranimasi di atas.
+   */
+  screenImage?: (number | null) | Media;
   /**
    * Label kecil di atas judul, mis. FITUR. Kosongkan untuk menyembunyikan.
    */
@@ -524,6 +589,10 @@ export interface Feature {
     | null;
   mock: {
     title: string;
+    /**
+     * Tangkapan layar aplikasi di HP pada bagian atas halaman. Kosongkan untuk memakai daftar di bawah.
+     */
+    screen?: (number | null) | Media;
     rows?:
       | {
           label: string;
@@ -552,59 +621,6 @@ export interface Feature {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  /**
-   * The name shown in the media library. The file extension stays the same; a name already used gets -1, -2…
-   */
-  displayName?: string | null;
-  /**
-   * Alternative text for accessibility & SEO. Leave empty for decorative images.
-   */
-  alt?: string | null;
-  fileSizeMb?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    card?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    hero?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -953,6 +969,10 @@ export interface SectionBlock {
         )
       | null;
     title?: string | null;
+    /**
+     * Tangkapan layar aplikasi di dalam HP. Kosongkan untuk HP berisi daftar di bawah.
+     */
+    screen?: (number | null) | Media;
     rowsSource?: ('manual' | 'features' | 'solutions' | 'calculators') | null;
     rows?:
       | {
@@ -1068,6 +1088,10 @@ export interface ContactFormBlock {
         )
       | null;
     title?: string | null;
+    /**
+     * Tangkapan layar aplikasi di dalam HP. Kosongkan untuk HP berisi daftar di bawah.
+     */
+    screen?: (number | null) | Media;
     rowsSource?: ('manual' | 'features' | 'solutions' | 'calculators') | null;
     rows?:
       | {
@@ -1759,6 +1783,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
               text?: T;
               id?: T;
             };
+        phoneScreen?: T;
       };
   trustPoints?:
     | T
@@ -1774,6 +1799,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
         tone?: T;
         accessory?: T;
         title?: T;
+        screen?: T;
         rowsSource?: T;
         rows?:
           | T
@@ -1794,6 +1820,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
 export interface FeatureBandBlockSelect<T extends boolean = true> {
   anchor?: T;
   screen?: T;
+  screenImage?: T;
   tag?: T;
   header?:
     | T
@@ -2090,6 +2117,7 @@ export interface SectionBlockSelect<T extends boolean = true> {
         tone?: T;
         accessory?: T;
         title?: T;
+        screen?: T;
         rowsSource?: T;
         rows?:
           | T
@@ -2167,6 +2195,7 @@ export interface ContactFormBlockSelect<T extends boolean = true> {
         tone?: T;
         accessory?: T;
         title?: T;
+        screen?: T;
         rowsSource?: T;
         rows?:
           | T
@@ -2584,6 +2613,7 @@ export interface FeaturesSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
+        screen?: T;
         rows?:
           | T
           | {

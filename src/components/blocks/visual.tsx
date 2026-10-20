@@ -25,6 +25,7 @@ import { ShieldVisual } from "@/features/site/visuals/shield-visual";
 import { TiltedCardsVisual } from "@/features/site/visuals/tilted-cards-visual";
 import { CALCULATORS } from "@/features/tools/registry";
 import { appIcon } from "@/components/app-icon";
+import { asMedia, type MediaField } from "@/lib/cms/media";
 
 import type { BlockContext } from "./types";
 
@@ -38,6 +39,7 @@ export type VisualBlockData = {
   title?: string | null;
   rowsSource?: "manual" | "features" | "solutions" | "calculators" | null;
   rows?: { title: string; detail?: string | null; badge?: string | null; id?: string | null }[] | null;
+  screen?: MediaField;
 } | null | undefined;
 
 const BOARD_CLASS: Record<Tone, string> = {
@@ -65,6 +67,12 @@ const ACCESSORIES: Record<string, () => React.ReactNode> = {
 export const accessoryNode = (key: string | null | undefined) => (ACCESSORIES[key ?? "shield"] ?? ACCESSORIES.shield)();
 
 const MAX_AUTO_ROWS = 6;
+
+const toPhoneScreen = (field: MediaField) => {
+  const media = asMedia(field);
+
+  return media ? { src: media.url as string, alt: media.alt || "Layar aplikasi HRIS" } : null;
+};
 
 /** Baris isi visual: manual dari CMS, atau otomatis dari fitur, solusi, atau daftar kalkulator. */
 export function resolveVisualRows(visual: NonNullable<VisualBlockData>, ctx: BlockContext): PageVisualRow[] {
@@ -112,7 +120,7 @@ export function VisualFromBlock({ visual, ctx }: { visual: VisualBlockData; ctx:
         />
       );
     case "phone":
-      return <PhoneVisual tone={tone === "lavender" ? "lavender" : "sky"} title={title} accessory={accessory} rows={rows} />;
+      return <PhoneVisual tone={tone === "lavender" ? "lavender" : "sky"} title={title} accessory={accessory} rows={rows} screen={toPhoneScreen(visual.screen)} />;
     case "offer":
       return <OfferVisual title={title} steps={rows.map((row) => row.title)} />;
     case "tilted":

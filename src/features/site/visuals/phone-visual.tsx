@@ -17,20 +17,31 @@ export interface PhoneRow {
   badge?: string
 }
 
+/** Tangkapan layar aplikasi yang mengisi HP, menggantikan daftar baris. */
+export interface PhoneScreen {
+  src: string
+  alt: string
+}
+
 interface PhoneVisualProps {
   tone: 'sky' | 'lavender'
   title: string
   rows: PhoneRow[]
   /** Objek melayang di samping HP. */
   accessory: React.ReactNode
+  screen?: PhoneScreen | null
 }
 
 /** HP dengan daftar bercentang yang terpotong di bawah, dan objek melayang di sampingnya. */
-export const PhoneVisual: React.FC<PhoneVisualProps> = ({ tone, title, rows, accessory }) => (
+export const PhoneVisual: React.FC<PhoneVisualProps> = ({ tone, title, rows, accessory, screen }) => (
   <div aria-hidden className={cn('relative mx-auto w-full max-w-[420px] overflow-hidden', PHONE_CROP_HEIGHT_CLASS)}>
     <div data-parallax="0.12" className="absolute left-1/2 top-6 -translate-x-1/2">
       <div data-phone className="relative">
         <PhoneFrame tone={tone}>
+          {screen ? (
+            // eslint-disable-next-line @next/next/no-img-element -- tangkapan layar dari CMS, ukurannya tetap
+            <img src={screen.src} alt={screen.alt} loading="lazy" className="h-full w-full object-cover object-top" />
+          ) : (
           <div className="flex h-full flex-col text-ink">
             <div className={cn('px-5 pb-6 pt-10 text-white', tone === 'sky' ? 'bg-accent-blue' : 'bg-phone-lavender')}>
               <p className="truncate text-lg font-bold">{title}</p>
@@ -61,6 +72,7 @@ export const PhoneVisual: React.FC<PhoneVisualProps> = ({ tone, title, rows, acc
               })}
             </ul>
           </div>
+          )}
         </PhoneFrame>
         <div data-pop className="absolute -right-8 top-24 md:-right-14">
           <div data-float>{accessory}</div>

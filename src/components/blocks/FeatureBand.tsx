@@ -4,6 +4,7 @@ import { PhoneFrame } from "@/features/home/components/phone-frame";
 import { FeatureBand } from "@/features/home/components/feature-band";
 import { tagFor } from "@/features/home/content/tones";
 import { ChartBadge } from "@/features/site/visuals/badge-sets";
+import { asMedia } from "@/lib/cms/media";
 import type { Page } from "@/types/cms";
 
 import { firstButton, tintClass } from "./shared";
@@ -15,6 +16,7 @@ type Block = Extract<Page["layout"][number], { blockType: "featureBand" }>;
 /** Pita warna dengan HP (layar absen wajah atau layar approval) dan teks di sampingnya. */
 export function FeatureBandBlock({ block }: { block: Block; ctx: BlockContext }) {
   const isFace = block.screen === "faceScan";
+  const screenImage = asMedia(block.screenImage);
 
   return (
     <FeatureBand
@@ -27,7 +29,10 @@ export function FeatureBandBlock({ block }: { block: Block; ctx: BlockContext })
       accessory={accessoryNode(block.accessory) ?? <ChartBadge />}
     >
       <PhoneFrame tone={isFace ? "sky" : "lavender"}>
-        {isFace ? (
+        {screenImage ? (
+          // eslint-disable-next-line @next/next/no-img-element -- tangkapan layar dari CMS, ukurannya tetap
+          <img src={screenImage.url ?? ""} alt={screenImage.alt || "Layar aplikasi HRIS"} loading="lazy" className="h-full w-full object-cover object-top" />
+        ) : isFace ? (
           <FaceClockScreen
             title={block.screenTitle}
             date={block.screenSubtitle}

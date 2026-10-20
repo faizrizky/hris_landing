@@ -30,7 +30,7 @@ function useSection(id: string): AnyProps {
 export function createFeatureConfig(context: StudioContext & { backPath: string }): Config {
   const { lang, locale, cmsUrl, embedded, backPath } = context;
   const f = createFields(context);
-  const { s, L, text, textarea, plain, list } = f;
+  const { s, L, text, textarea, plain, list, image } = f;
 
   const Hero = ({ puck, ...props }: AnyProps & { puck: { metadata: unknown } }) => {
     const { feature } = meta(puck) as FeatureStudioMetadata;
@@ -40,7 +40,7 @@ export function createFeatureConfig(context: StudioContext & { backPath: string 
         description={props.heroDescription as string}
         availability={feature.availability}
         category={feature.category}
-        mock={{ title: props.mockTitle as string, rows: (props.mockRows as never) ?? [] }}
+        mock={{ title: props.mockTitle as string, rows: (props.mockRows as never) ?? [], screen: props.mockScreen as never }}
       />
     );
   };
@@ -71,6 +71,7 @@ export function createFeatureConfig(context: StudioContext & { backPath: string 
         heroTitle: text("Page title (H1)", "Judul halaman (H1)"),
         heroDescription: textarea("Description", "Deskripsi"),
         mockTitle: text("Phone panel title", "Judul panel HP"),
+        mockScreen: image("App screen in the phone", "Layar aplikasi di HP"),
         mockRows: list(
           "Phone panel rows",
           "Baris panel HP",
