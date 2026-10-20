@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
   images: {
     qualities: [100],
     remotePatterns: [
+      // File media di produksi disimpan di Vercel Blob.
+      { hostname: '*.public.blob.vercel-storage.com', protocol: 'https' },
       {
         hostname: cmsUrl.hostname,
         port: cmsUrl.port,
