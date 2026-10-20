@@ -7,6 +7,8 @@ import { getInitials } from '@/features/home/content/tones'
 import { cn } from '@/utilities/ui'
 
 const PHONE_CROP_HEIGHT_CLASS = 'h-[330px] md:h-[400px]'
+/** Tangkapan layar asli tampil utuh (tidak terpotong), supaya semua baris di layarnya terlihat. */
+const PHONE_FULL_HEIGHT_CLASS = 'h-[530px]'
 const MAX_PHONE_ROWS = 5
 const ROW_ICONS: readonly IconComponent[] = [appIcon('clock'), appIcon('leave'), appIcon('document'), appIcon('payslip'), appIcon('shield')]
 const ROW_ICON_TINTS = ['bg-accent-teal', 'bg-accent-orange', 'bg-accent-purple', 'bg-accent-blue', 'bg-accent-yellow'] as const
@@ -34,7 +36,7 @@ interface PhoneVisualProps {
 
 /** HP dengan daftar bercentang yang terpotong di bawah, dan objek melayang di sampingnya. */
 export const PhoneVisual: React.FC<PhoneVisualProps> = ({ tone, title, rows, accessory, screen }) => (
-  <div aria-hidden className={cn('relative mx-auto w-full max-w-[420px] overflow-hidden', PHONE_CROP_HEIGHT_CLASS)}>
+  <div aria-hidden className={cn('relative mx-auto w-full max-w-[420px] overflow-hidden', screen ? PHONE_FULL_HEIGHT_CLASS : PHONE_CROP_HEIGHT_CLASS)}>
     <div data-parallax="0.12" className="absolute left-1/2 top-6 -translate-x-1/2">
       <div data-phone className="relative">
         <PhoneFrame tone={tone} isScreenshot={Boolean(screen)}>
