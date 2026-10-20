@@ -1,224 +1,396 @@
 @import 'tailwindcss';
-@import 'tw-animate-css';
 
-@config '../../../tailwind.config.mjs';
-
-@custom-variant dark (&:is([data-theme='dark'] *));
-@custom-variant sm (@media (width >= theme(--breakpoint-sm)));
-@custom-variant md (@media (width >= theme(--breakpoint-md)));
-@custom-variant lg (@media (width >= theme(--breakpoint-lg)));
-@custom-variant xl (@media (width >= theme(--breakpoint-xl)));
-@custom-variant 2xl (@media (width >= theme(--breakpoint-2xl)));
-
-@layer base {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-weight: unset;
-    font-size: unset;
-  }
-}
-
-@plugin "@tailwindcss/typography";
-
-@source inline("lg:col-span-4");
-@source inline("lg:col-span-6");
-@source inline("lg:col-span-8");
-@source inline("lg:col-span-12");
-@source inline("border-border");
-@source inline("bg-card");
-@source inline("border-error");
-@source inline("bg-error/30");
-@source inline("border-success");
-@source inline("bg-success/30");
-@source inline("border-warning");
-@source inline("bg-warning/30");
+/*
+ * Sistem desain HRIS: putih bersih, satu aksen biru, pita warna lembut sebagai pemisah bagian.
+ * Permukaan dibedakan lewat selisih warna dan garis tipis, bukan bayangan, gradien, atau label pil.
+ * Skala tipografi hanya lima langkah.
+ */
 
 @theme {
-  --breakpoint-sm: 40rem;
-  --breakpoint-md: 48rem;
-  --breakpoint-lg: 64rem;
-  --breakpoint-xl: 80rem;
-  --breakpoint-2xl: 86rem;
-  --font-mono: var(--font-geist-mono);
-  --font-sans: var(--font-geist-sans);
-}
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 
-@layer utilities {
-  .container {
-    width: 100%;
-    margin-inline: auto;
-    padding-inline: 1rem;
-  }
-
-  @variant sm {
-    .container {
-      max-width: var(--breakpoint-sm);
-    }
-  }
-
-  @variant md {
-    .container {
-      max-width: var(--breakpoint-md);
-      padding-inline: 2rem;
-    }
-  }
-
-  @variant lg {
-    .container {
-      max-width: var(--breakpoint-lg);
-    }
-  }
-
-  @variant xl {
-    .container {
-      max-width: var(--breakpoint-xl);
-    }
-  }
-
-  @variant 2xl {
-    .container {
-      max-width: var(--breakpoint-2xl);
-    }
-  }
+  --color-paper: #ffffff;
+  --color-paper-2: #eef8ff;
+  --color-ink: #111114;
+  --color-ink-soft: #5b5b66;
+  --color-ink-muted: #5b5b66;
+  --color-brand: #2490ef;
+  --color-accent: #2490ef;
+  --color-accent-deep: #1668b8;
+  --color-night: #060608;
+  --color-night-2: #161618;
+  --color-night-shape: #161618;
+  --color-tint: #cddff2;
+  --color-tint-sky: #eef8ff;
+  --color-tint-lavender: #ecebff;
+  --color-tint-peach: #fff4ee;
+  --color-tint-cyan: #e3f8f6;
+  --color-accent-teal: #25d0c4;
+  --color-accent-orange: #f2733b;
+  --color-accent-purple: #7b7bf0;
+  --color-accent-blue: #2490ef;
+  --color-accent-yellow: #f6c445;
+  --color-phone-sky: #cddff2;
+  --color-phone-lavender: #9d9df2;
+  --color-card-yellow: #fdf0c8;
+  --color-card-cyan: #d6f4f2;
+  --color-card-pink: #fadbd0;
+  --color-line: #e4e6ee;
+  --color-ok: #1aa89d;
+  --color-wait: #b7791f;
 }
 
 :root {
-  --background: oklch(100% 0 0deg);
-  --foreground: oklch(14.5% 0 0deg);
-  --card: oklch(96.5% 0.005 265deg);
-  --card-foreground: oklch(14.5% 0 0deg);
-  --popover: oklch(100% 0 0deg);
-  --popover-foreground: oklch(14.5% 0 0deg);
-  --primary: oklch(20.5% 0 0deg);
-  --primary-foreground: oklch(98.5% 0 0deg);
-  --secondary: oklch(97% 0 0deg);
-  --secondary-foreground: oklch(20.5% 0 0deg);
-  --muted: oklch(97% 0 0deg);
-  --muted-foreground: oklch(55.6% 0 0deg);
-  --accent: oklch(97% 0 0deg);
-  --accent-foreground: oklch(20.5% 0 0deg);
-  --destructive: oklch(57.7% 0.245 27.325deg);
-  --destructive-foreground: oklch(57.7% 0.245 27.325deg);
-  --border: oklch(92.2% 0 0deg);
-  --input: oklch(92.2% 0 0deg);
-  --ring: oklch(70.8% 0 0deg);
-  --chart-1: oklch(64.6% 0.222 41.116deg);
-  --chart-2: oklch(60% 0.118 184.704deg);
-  --chart-3: oklch(39.8% 0.07 227.392deg);
-  --chart-4: oklch(82.8% 0.189 84.429deg);
-  --chart-5: oklch(76.9% 0.188 70.08deg);
-  --radius: 0.625rem;
-  --sidebar: oklch(98.5% 0 0deg);
-  --sidebar-foreground: oklch(14.5% 0 0deg);
-  --sidebar-primary: oklch(20.5% 0 0deg);
-  --sidebar-primary-foreground: oklch(98.5% 0 0deg);
-  --sidebar-accent: oklch(97% 0 0deg);
-  --sidebar-accent-foreground: oklch(20.5% 0 0deg);
-  --sidebar-border: oklch(92.2% 0 0deg);
-  --sidebar-ring: oklch(70.8% 0 0deg);
-  --success: oklch(78% 0.08 200deg);
-  --warning: oklch(89% 0.1 75deg);
-  --error: oklch(75% 0.15 25deg);
+  --margin: clamp(1rem, 2.4vw, 2.5rem);
+  --gutter: clamp(0.75rem, 1.4vw, 1.5rem);
+  --section: clamp(4.5rem, 9vw, 9rem);
+  --max-width: 80rem;
+
+  /* Lima langkah ukuran huruf. Tidak ada ukuran lain di halaman. */
+  --step-body: 1.0625rem;
+  --step-statement: clamp(1.15rem, 1.02rem + 0.5vw, 1.35rem);
+  --step-head: clamp(1.6rem, 1.15rem + 1.5vw, 2.4rem);
+  --step-big: clamp(1.9rem, 1.4rem + 1.8vw, 2.75rem);
+  --step-display: clamp(2.6rem, 1.5rem + 3.6vw, 5rem);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+  --t-press: 140ms;
+  --t-hover: 180ms;
+  --t-ui: 260ms;
 }
 
-[data-theme='dark'] {
-  --background: oklch(14.5% 0 0deg);
-  --foreground: oklch(98.5% 0 0deg);
-  --card: oklch(17% 0 0deg);
-  --card-foreground: oklch(98.5% 0 0deg);
-  --popover: oklch(14.5% 0 0deg);
-  --popover-foreground: oklch(98.5% 0 0deg);
-  --primary: oklch(98.5% 0 0deg);
-  --primary-foreground: oklch(20.5% 0 0deg);
-  --secondary: oklch(26.9% 0 0deg);
-  --secondary-foreground: oklch(98.5% 0 0deg);
-  --muted: oklch(26.9% 0 0deg);
-  --muted-foreground: oklch(70.8% 0 0deg);
-  --accent: oklch(26.9% 0 0deg);
-  --accent-foreground: oklch(98.5% 0 0deg);
-  --destructive: oklch(39.6% 0.141 25.723deg);
-  --destructive-foreground: oklch(63.7% 0.237 25.331deg);
-  --border: oklch(26.9% 0 0deg);
-  --input: oklch(26.9% 0 0deg);
-  --ring: oklch(43.9% 0 0deg);
-  --chart-1: oklch(48.8% 0.243 264.376deg);
-  --chart-2: oklch(69.6% 0.17 162.48deg);
-  --chart-3: oklch(76.9% 0.188 70.08deg);
-  --chart-4: oklch(62.7% 0.265 303.9deg);
-  --chart-5: oklch(64.5% 0.246 16.439deg);
-  --sidebar: oklch(20.5% 0 0deg);
-  --sidebar-foreground: oklch(98.5% 0 0deg);
-  --sidebar-primary: oklch(48.8% 0.243 264.376deg);
-  --sidebar-primary-foreground: oklch(98.5% 0 0deg);
-  --sidebar-accent: oklch(26.9% 0 0deg);
-  --sidebar-accent-foreground: oklch(98.5% 0 0deg);
-  --sidebar-border: oklch(26.9% 0 0deg);
-  --sidebar-ring: oklch(43.9% 0 0deg);
-  --success: oklch(28% 0.1 200deg);
-  --warning: oklch(35% 0.08 70deg);
-  --error: oklch(45% 0.1 25deg);
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-error: var(--error);
-}
-
+/* Reset berada di @layer base agar utilitas Tailwind (layer utilities) tetap bisa menimpanya. */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
-  opacity: 0;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: light;
+  background: var(--color-paper);
 }
 
-html[data-theme='dark'],
-html[data-theme='light'] {
-  opacity: initial;
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--step-body);
+  line-height: 1.55;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+ul,
+ol,
+dl,
+dd {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: inherit;
+  font-size: inherit;
+  text-wrap: balance;
+  hyphens: none;
+}
+
+ul[class],
+ol[class] {
+  padding: 0;
+  list-style: none;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--color-tint);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+:target {
+  scroll-margin-top: 6rem;
+}
+}
+
+/* Kelas komponen berada di @layer components, jadi bisa disesuaikan dengan utilitas per pemakaian. */
+@layer components {
+/* ---------- tipografi ---------- */
+.t-body {
+  font-size: var(--step-body);
+  line-height: 1.55;
+}
+.t-statement {
+  font-size: var(--step-statement);
+  line-height: 1.35;
+}
+.t-head {
+  font-size: var(--step-head);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+.t-big {
+  font-size: var(--step-big);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 800;
+}
+.t-display {
+  font-size: var(--step-display);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+.nums {
+  font-variant-numeric: tabular-nums;
+}
+p {
+  text-wrap: pretty;
+}
+
+/* ---------- tata letak ---------- */
+.container {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  max-width: 80rem;
+}
+@media (min-width: 48rem) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+.wrap {
+  padding-inline: var(--margin);
+  max-width: calc(var(--max-width) + var(--margin) * 2);
+  margin-inline: auto;
+}
+.band {
+  background: var(--band, var(--color-tint-sky));
+}
+.band-sky {
+  --band: var(--color-tint-sky);
+}
+.band-lavender {
+  --band: var(--color-tint-lavender);
+}
+.band-peach {
+  --band: var(--color-tint-peach);
+}
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+.section {
+  padding-block: calc(var(--section) / 2);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- kontrol ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-size: var(--step-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    transform var(--t-press) var(--ease-out),
+    background-color var(--t-hover) ease,
+    color var(--t-hover) ease;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: var(--color-accent-deep);
+    color: #fff;
+  }
+}
+
+.btn-on-dark {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-on-dark:hover {
+    background: var(--color-tint);
+  }
+}
+
+.link {
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 0.07em;
+  transition: text-decoration-color var(--t-hover) ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    text-decoration-color: currentColor;
+  }
+}
+.link-plain {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 0.07em;
+}
+
+.field {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.8rem 1rem;
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  font-size: max(1rem, var(--step-body));
+}
+.field::placeholder {
+  color: var(--color-ink-soft);
+}
+
+/* ---------- teks hukum dari CMS ---------- */
+.legal-text {
+  max-width: 62ch;
+}
+.legal-text h2 {
+  margin-top: 3rem;
+  font-size: var(--step-statement);
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+.legal-text h2:first-child {
+  margin-top: 0;
+}
+.legal-text p {
+  margin-top: 0.8rem;
+}
+.legal-text ul,
+.legal-text ol {
+  margin: 0.8rem 0 0 1.25rem;
+  padding: 0;
+}
+.legal-text li + li {
+  margin-top: 0.35rem;
+}
+.legal-text a {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+}
+
+/* Beranda punya penutup sendiri, jadi ajakan di footer tidak diulang. */
+main:has(.home-cta) + footer .footer-invitation {
+  display: none;
+}
+
+/* ---------- gerak (konten tetap terlihat tanpa JavaScript) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 900ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- fragmen antarmuka produk (data-ui) memakai garis dan radius produk sendiri ---------- */
+[data-ui] {
+  --ui-radius: 10px;
+  --ui-line: #e4e6ee;
+  border-radius: var(--ui-radius);
+}
+
+
+/* ---------- bingkai elemen editor visual ---------- */
+.hris-el {
+  padding: 12px 0;
+}
+
+.hris-el__inner {
+  display: flex;
+  flex-direction: column;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+
+.hris-col .hris-el {
+  padding: 0;
+}
+
+.hris-col .hris-el__inner {
+  max-width: none;
+  margin: 0;
+  padding: 0;
 }

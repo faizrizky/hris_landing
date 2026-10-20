@@ -1,0 +1,1261 @@
+/*
+ * HRIS Studio — Puck's own layout (same structure as the Puck demo) in the
+ * HRIS theme: sky-blue→navy rail, sky-blue workspace, frosted white panels
+ * joined edge to edge, blue accent (same as the CMS admin). Puck is recoloured through its design tokens; the only
+ * selectors on Puck internals are the `[class*=…]` rules below (gradient and
+ * blur, which tokens can't express). This file is also copied into the
+ * canvas iframe, where none of these classes exist and the site renders as-is.
+ */
+
+:root {
+  --hris-rail: linear-gradient(180deg, #38bdf8 0%, #1f7ae0 45%, #0b2e7a 100%);
+  --hris-accent-gradient: linear-gradient(135deg, #38bdf8 0%, #1f7ae0 100%);
+
+  /* Puck's accent scale → HRIS blue. */
+  --puck-color-azure-01: #06294f;
+  --puck-color-azure-02: #0b3a6e;
+  --puck-color-azure-03: #1455a3;
+  --puck-color-azure-04: #1f7ae0;
+  --puck-color-azure-05: #3b8ee8;
+  --puck-color-azure-06: #5ea3ee;
+  --puck-color-azure-07: #84baf3;
+  --puck-color-azure-08: #aacff7;
+  --puck-color-azure-09: #cde3fa;
+  --puck-color-azure-10: #e3f0fd;
+  --puck-color-azure-11: #f0f7fe;
+  --puck-color-azure-12: #f7fbff;
+
+  /* Frosted panels over the pastel workspace. */
+  --puck-color-surface: rgb(255 255 255 / 0.66);
+  --puck-color-surface-subtle: rgb(255 255 255 / 0.45);
+  --puck-color-surface-muted: rgb(248 248 255 / 0.5);
+  --puck-color-border: rgb(255 255 255 / 0.75);
+  --puck-canvas-color-bg: transparent;
+  --puck-header-color-bg: rgb(255 255 255 / 0.5);
+  --puck-sidebar-left-color-bg: rgb(255 255 255 / 0.42);
+  --puck-sidebar-right-color-bg: rgb(255 255 255 / 0.55);
+
+  /* Plugin rail (left): deep violet with white icons, like the reference sidebar. */
+  --puck-pluginbar-color-bg: #1f7ae0;
+  --puck-pluginbar-color-text: rgb(255 255 255 / 0.78);
+  --puck-pluginbar-color-text-hover: #fff;
+  --puck-pluginbar-color-text-selected: #fff;
+  --puck-pluginbar-color-bg-hover: rgb(255 255 255 / 0.12);
+
+  /* Form fields (right panel): solid white inputs with a visible light-blue
+     border, rounded like the CMS; labels in navy. Panels keep the glass look,
+     fields must not (the glass border is invisible on white). */
+  --hris-field-border: #d3e2f3;
+  --hris-field-border-hover: #9cc5ef;
+  --hris-field-radius: 12px;
+  --puck-field-color-bg: #fff;
+  --puck-field-color-border: var(--hris-field-border);
+  --puck-field-color-border-hover: var(--hris-field-border-hover);
+  --puck-field-color-border-focus: rgb(31 122 224 / 0.35);
+  --puck-field-radius: var(--hris-field-radius);
+  --puck-field-space-y: 10px;
+  --puck-field-space-x: 14px;
+  --puck-field-font-size: 14px;
+  --puck-field-label-color-text: #0f2742;
+  --puck-field-label-color-icon: #7a93b0;
+  --puck-field-label-font-size: 13px;
+  --puck-field-label-font-weight: 600;
+  --puck-field-label-space-y: 8px;
+  --puck-field-color-surface: #f5f9ff;
+}
+
+.studio-body {
+  margin: 0;
+  min-height: 100vh;
+  color: #0f2742;
+  font-family: var(--puck-font-family, Inter, ui-sans-serif, system-ui, sans-serif);
+  background:
+    radial-gradient(40rem 34rem at 85% 5%, rgb(125 211 252 / 0.45), transparent 62%),
+    radial-gradient(36rem 36rem at 100% 75%, rgb(56 189 248 / 0.3), transparent 60%),
+    radial-gradient(34rem 30rem at 20% 0%, rgb(224 242 254 / 0.9), transparent 62%),
+    linear-gradient(135deg, #e7f5fe 0%, #d6edfb 50%, #c4e6f9 100%);
+  background-attachment: fixed;
+}
+
+html:has(.studio-body) {
+  color-scheme: light;
+}
+
+.studio-body [class*="_PuckLayout-nav_"] {
+  background-image: var(--hris-rail);
+  border-color: transparent;
+}
+
+/* ── Embedded in the CMS admin ─────────────────────────────────────────
+   The admin already provides the purple sidebar, the page title and the
+   backdrop, so the editor drops its own: transparent page, light rail,
+   header without title or bar. */
+
+html:has(.studio-embedded),
+.studio-body:has(.studio-embedded) {
+  background: transparent;
+}
+
+.studio-embedded {
+  --puck-header-color-bg: transparent;
+  --puck-pluginbar-color-bg: rgb(255 255 255 / 0.4);
+  --puck-pluginbar-color-text: #56708f;
+  --puck-pluginbar-color-text-hover: #0f2742;
+  --puck-pluginbar-color-text-selected: #1f7ae0;
+  --puck-pluginbar-color-bg-hover: rgb(31 122 224 / 0.08);
+}
+
+.studio-embedded [class*="_PuckLayout-nav_"] {
+  background-image: none;
+  border-color: var(--puck-color-border);
+}
+
+.studio-embedded [class*="_PuckHeader_"] {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.studio-embedded [class*="_PuckHeader-inner_"] {
+  border-inline-start: 0;
+}
+
+/* The admin already shows the page title above the editor. */
+.studio-embedded [class*="_PuckHeader-title_"] {
+  visibility: hidden;
+}
+
+/* Deliberately no backdrop-filter anywhere in the editor chrome: on narrow
+   screens the sidebars overlay the preview iframe, and Chrome stops painting
+   an iframe under a blurred layer (blank white canvas). */
+@media (max-width: 1023px) {
+  /* Panels overlay the preview here, so they need a solid fill instead. */
+  :root {
+    --puck-header-color-bg: rgb(247 251 255 / 0.96);
+    --puck-sidebar-left-color-bg: #f3f9ff;
+    --puck-sidebar-right-color-bg: #f7fbff;
+  }
+}
+
+/* Publish (Puck primary button) uses the accent gradient. */
+.studio-body [class*="_Button--primary_"] {
+  background-image: var(--hris-accent-gradient);
+  border-color: transparent;
+  box-shadow: 0 8px 20px -10px rgb(31 122 224 / 0.8);
+}
+
+/* ── Header actions ────────────────────────────────────────────────────── */
+
+.studio-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.studio-select select {
+  height: 34px;
+  padding: 0 26px 0 10px;
+  border: 1px solid var(--puck-color-grey-09, #dcdcdc);
+  border-radius: 6px;
+  background: #fff
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='m1 1 4 4 4-4' stroke='%23767676' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat right 10px center;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.studio-select select:focus-visible {
+  outline: 2px solid var(--puck-color-azure-05, #3479be);
+  outline-offset: 1px;
+}
+
+/* Narrow editor (e.g. embedded next to the CMS sidebar): icon-only buttons. */
+@media (max-width: 1320px) {
+  .studio-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}
+
+.studio-spinner {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  border: 2px solid rgb(31 122 224 / 0.2);
+  border-top-color: #1f7ae0;
+  border-radius: 50%;
+  animation: studio-spin 0.7s linear infinite;
+}
+
+@keyframes studio-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-spinner {
+    animation-duration: 1.6s;
+  }
+}
+
+/* Publish button while saving. */
+.studio-busy {
+  display: contents;
+}
+
+.studio-busy > * {
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+/* Publish button with nothing to publish: greyed out; the wrapper keeps a box
+   so its tooltip (title) still shows on hover. */
+.studio-locked {
+  display: inline-flex;
+  cursor: not-allowed;
+}
+
+.studio-locked > * {
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+/* ── Shared small controls ─────────────────────────────────────────────── */
+
+.studio-segment {
+  display: inline-flex;
+  width: 100%;
+  padding: 2px;
+  border-radius: 6px;
+  background: var(--puck-color-grey-11, #f5f5f5);
+}
+
+.studio-segment a {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 4px;
+  color: var(--puck-color-grey-04, #5a5a5a);
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.studio-segment a.is-active {
+  background: #fff;
+  color: var(--puck-color-azure-04, #0158ad);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+}
+
+.studio-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.studio-btn--ghost {
+  color: var(--puck-color-grey-02, #292929);
+  background: #fff;
+  border: 1px solid var(--hris-field-border);
+}
+
+.studio-btn--ghost:hover:not(:disabled) {
+  background: var(--puck-color-grey-11, #f5f5f5);
+}
+
+.studio-btn--primary {
+  border: 0;
+  color: #fff;
+  background: var(--puck-color-azure-04, #0158ad);
+}
+
+.studio-btn--primary:hover:not(:disabled) {
+  background: var(--puck-color-azure-03, #014292);
+}
+
+.studio-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.studio-input {
+  width: 100%;
+  height: 40px;
+  padding: 0 14px;
+  box-sizing: border-box;
+  border: 1px solid var(--hris-field-border);
+  border-radius: var(--hris-field-radius);
+  background: #fff;
+  color: inherit;
+  font: inherit;
+  font-size: 14px;
+}
+
+.studio-input:hover {
+  border-color: var(--hris-field-border-hover);
+}
+
+.studio-input:focus {
+  border-color: var(--hris-field-border-hover);
+  outline: 3px solid rgb(31 122 224 / 0.18);
+  outline-offset: 0;
+}
+
+select.studio-input {
+  padding-right: 38px;
+  appearance: none;
+  cursor: pointer;
+  background: #fff
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237a93b0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+    no-repeat right 14px center / 16px;
+}
+
+.studio-muted,
+.studio-note {
+  color: var(--puck-color-grey-05, #767676);
+}
+
+.studio-note {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.studio-link {
+  color: var(--puck-color-azure-04, #0158ad);
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.studio-link:hover {
+  text-decoration: underline;
+}
+
+.studio-error {
+  margin: 0;
+  font-size: 12px;
+  color: #b42318;
+}
+
+.studio-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Image field ───────────────────────────────────────────────────────── */
+
+.studio-media {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.studio-media__preview {
+  display: grid;
+  place-items: center;
+  width: 88px;
+  height: 64px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid var(--hris-field-border);
+  border-radius: var(--hris-field-radius);
+  background: repeating-conic-gradient(#efefef 0% 25%, #fff 0% 50%) 50% / 12px 12px;
+  font-size: 11px;
+  color: var(--puck-color-grey-05, #767676);
+  text-align: center;
+}
+
+.studio-media__preview img,
+.studio-media__preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.studio-media__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.studio-media__library {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  padding: 8px;
+  border: 1px solid var(--hris-field-border);
+  border-radius: var(--hris-field-radius);
+  background: var(--puck-color-grey-12, #fafafa);
+}
+
+.studio-media__toolbar {
+  display: flex;
+  gap: 6px;
+}
+
+.studio-media__toolbar .studio-btn {
+  height: 36px;
+}
+
+.studio-media__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  max-height: 260px;
+  overflow: auto;
+}
+
+.studio-media__item {
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background: repeating-conic-gradient(#efefef 0% 25%, #fff 0% 50%) 50% / 10px 10px;
+  cursor: pointer;
+}
+
+.studio-media__item img,
+.studio-media__item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.studio-media__item:hover,
+.studio-media__item.is-active {
+  border-color: var(--puck-color-azure-04, #0158ad);
+}
+
+/* ── Tags field ────────────────────────────────────────────────────────── */
+
+.studio-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px;
+  border: 1px solid var(--hris-field-border);
+  border-radius: var(--hris-field-radius);
+  background: #fff;
+}
+
+.studio-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 4px 2px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  background: var(--puck-color-azure-10, #e7eef7);
+  color: var(--puck-color-azure-03, #014292);
+}
+
+.studio-tag button {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.studio-tags__input {
+  flex: 1;
+  min-width: 90px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+}
+
+/* ── Relation field (partners / certifications) ────────────────────────
+   Same look as the CMS form: a dashed box like the media dropzone holding
+   blue pills, with square icon buttons on the right. */
+
+.studio-relation {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 8px;
+  padding: 8px;
+  list-style: none;
+  border: 1.5px dashed rgb(31 122 224 / 0.35);
+  border-radius: 18px;
+  background: rgb(255 255 255 / 0.55);
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.studio-relation:hover,
+.studio-relation:focus-within {
+  border-color: #1f7ae0;
+  background: rgb(232 244 255 / 0.85);
+  box-shadow: 0 0 0 4px rgb(31 122 224 / 0.1);
+}
+
+.studio-relation:empty {
+  display: none;
+}
+
+.studio-relation__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 4px 4px 4px 6px;
+  border: 1px solid rgb(31 122 224 / 0.22);
+  border-radius: 999px;
+  background: rgb(31 122 224 / 0.08);
+  color: #0f2742;
+  font-size: 14px;
+  font-weight: 500;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.studio-relation__item:hover {
+  border-color: rgb(31 122 224 / 0.4);
+  background: rgb(31 122 224 / 0.14);
+}
+
+.studio-relation__item img {
+  flex: none;
+  width: 36px;
+  height: 22px;
+  padding: 2px;
+  box-sizing: border-box;
+  object-fit: contain;
+  border-radius: 999px;
+  background: #0b0f24;
+}
+
+.studio-relation__item span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ↑ ↓ × : the CMS upload field's icon buttons. */
+.studio-relation__item button {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #d3e2f3;
+  border-radius: 10px;
+  background: #fff;
+  color: #1f7ae0;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s,
+    transform 0.15s;
+}
+
+.studio-relation__item button:hover:not(:disabled) {
+  border-color: #1f7ae0;
+  background: #eef5fe;
+  transform: translateY(-1px);
+}
+
+.studio-relation__item button:last-child:hover:not(:disabled) {
+  border-color: #f0b3ae;
+  background: #fdecec;
+  color: #d93036;
+}
+
+.studio-relation__item button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.studio-relation + select.studio-input {
+  min-width: 0;
+  max-width: 100%;
+  text-overflow: ellipsis;
+}
+
+/* ── Login / not found ─────────────────────────────────────────────────── */
+
+.studio-center {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.studio-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: min(420px, 100%);
+  padding: 28px;
+  box-sizing: border-box;
+  border: 1px solid rgb(255 255 255 / 0.8);
+  border-radius: 14px;
+  background: rgb(255 255 255 / 0.7);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 18px 50px -18px rgb(76 90 180 / 0.3);
+}
+
+.studio-card h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.studio-card p {
+  margin: 0 0 4px;
+  line-height: 1.55;
+}
+
+.studio-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.studio-brand__mark {
+  display: block;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* ── Loading skeleton (StudioSkeleton) ─────────────────────────────────── */
+
+.studio-sk {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 0 16px 16px;
+  box-sizing: border-box;
+}
+
+.studio-sk.studio-standalone {
+  background: linear-gradient(135deg, #e7f5fe 0%, #d6edfb 50%, #c4e6f9 100%);
+}
+
+.studio-sk__bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 4px;
+}
+
+.studio-sk__spacer {
+  flex: 1;
+}
+
+.studio-sk__body {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 260px minmax(0, 1fr) 280px;
+  gap: 16px;
+  min-height: 0;
+}
+
+.studio-sk__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.studio-sk__field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.studio-sk__canvas {
+  display: flex;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgb(31 122 224 / 0.04);
+}
+
+.studio-sk__block {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 10px;
+  background: rgb(31 122 224 / 0.08);
+}
+
+.studio-sk__block::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.75), transparent);
+  animation: studio-sk-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes studio-sk-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.studio-sk__block--icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+.studio-sk__block--pill {
+  width: 104px;
+  height: 34px;
+  border-radius: 999px;
+}
+.studio-sk__block--accent {
+  background: rgb(31 122 224 / 0.22);
+}
+.studio-sk__block--item {
+  height: 40px;
+  border-radius: 12px;
+}
+.studio-sk__block--label {
+  width: 40%;
+  height: 12px;
+  border-radius: 6px;
+}
+.studio-sk__block--input {
+  height: 42px;
+  border-radius: 12px;
+}
+.studio-sk__block--frame {
+  flex: 1;
+  border-radius: 12px;
+}
+
+@media (max-width: 1023px) {
+  .studio-sk__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .studio-sk__panel {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-sk__block::after {
+    animation: none;
+  }
+}
+
+/* ── Header controls in the HRIS theme (secondary buttons, icons, select) ─ */
+
+.studio-body [class*="_Button--secondary_"] {
+  border: 1px solid rgb(31 122 224 / 0.2);
+  border-radius: 12px;
+  background: #fff;
+  color: #0f2742;
+  box-shadow: 0 1px 2px rgb(6 41 79 / 0.06);
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.studio-body [class*="_Button--secondary_"]:hover {
+  border-color: rgb(31 122 224 / 0.4);
+  background: #eef6fd;
+}
+
+.studio-body [class*="_Button--primary_"] {
+  border-radius: 12px;
+}
+
+.studio-body [class*="_PuckHeader_"] [class*="_IconButton_"] {
+  border-radius: 10px;
+  color: #56708f;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.studio-body [class*="_PuckHeader_"] [class*="_IconButton_"]:not([class*="--disabled"]):hover {
+  background: #eef6fd;
+  color: #0f2742;
+}
+
+.studio-body [class*="_PuckHeader_"] [class*="_IconButton--disabled"] {
+  color: #b6c6d8;
+}
+
+.studio-select select {
+  border: 1px solid rgb(31 122 224 / 0.2);
+  border-radius: 12px;
+  color: #0f2742;
+  box-shadow: 0 1px 2px rgb(6 41 79 / 0.06);
+}
+
+.studio-select select:hover {
+  border-color: rgb(31 122 224 / 0.4);
+}
+
+.studio-relation__create {
+  display: inline-block;
+  margin-top: 8px;
+  color: #1f7ae0;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.studio-relation__create:hover {
+  text-decoration: underline;
+}
+
+.studio-link-custom {
+  margin-top: 8px;
+}
+
+/* Grouped fields (Section heading, Featured card…): a soft card with its
+   title as a header, instead of a bare border. */
+.studio-body [class*="_ObjectField_"] {
+  border-color: var(--hris-field-border);
+  border-radius: 14px;
+}
+
+.studio-body [class*="_ObjectField-fieldset_"] {
+  padding: 14px;
+}
+
+.studio-body [class*="_Input-label_"] {
+  letter-spacing: 0.01em;
+}
+
+/* List rows (Buttons, Cards…) match the field cards. */
+.studio-body [class*="_ArrayField_"] {
+  border-color: var(--hris-field-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* ── Right panel: every top-level field is a card ─────────────────────── */
+
+.studio-body [class*="_PuckFields_"] {
+  padding-inline: 12px;
+}
+
+.studio-body [class*="_PuckFields-field_"] {
+  margin: 0 0 12px;
+  padding: 14px;
+  border: 1px solid var(--hris-field-border);
+  border-radius: 16px;
+  background: var(--puck-field-color-surface);
+  box-shadow: 0 6px 18px -16px rgb(15 39 66 / 0.45);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+  animation: studio-card-in 0.32s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+.studio-body [class*="_PuckFields-field_"]:hover {
+  border-color: var(--hris-field-border-hover);
+  box-shadow: 0 10px 24px -18px rgb(31 122 224 / 0.55);
+}
+
+/* Fields appear one after the other when a block is selected. */
+.studio-body [class*="_PuckFields-field_"]:nth-child(2) {
+  animation-delay: 30ms;
+}
+.studio-body [class*="_PuckFields-field_"]:nth-child(3) {
+  animation-delay: 60ms;
+}
+.studio-body [class*="_PuckFields-field_"]:nth-child(4) {
+  animation-delay: 90ms;
+}
+.studio-body [class*="_PuckFields-field_"]:nth-child(n + 5) {
+  animation-delay: 120ms;
+}
+
+@keyframes studio-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* A group inside a card: no second frame around it. */
+.studio-body [class*="_PuckFields-field_"] > * > [class*="_Input_"] > [class*="_ObjectField_"],
+.studio-body [class*="_PuckFields-field_"] [class*="_Input_"] > [class*="_ObjectField_"]:first-of-type {
+  border: 0;
+  background: transparent;
+}
+
+.studio-body [class*="_PuckFields-field_"] [class*="_ObjectField_"] > [class*="_ObjectField-fieldset_"] {
+  padding: 4px 0 0;
+}
+
+/* Card title = fold toggle. */
+.studio-card-title {
+  cursor: pointer;
+  user-select: none;
+  border-radius: 8px;
+}
+
+.studio-card-title:focus-visible {
+  outline: 3px solid rgb(31 122 224 / 0.25);
+  outline-offset: 2px;
+}
+
+.studio-card-toggle {
+  width: 16px;
+  height: 16px;
+  margin-inline-start: auto;
+  flex: none;
+  background: #7a93b0;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  transition:
+    transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.2s ease;
+}
+
+.studio-card-title:hover .studio-card-toggle {
+  background: #1f7ae0;
+}
+
+[data-collapsed] .studio-card-toggle {
+  transform: rotate(-90deg);
+}
+
+/* Folded: only the title stays. */
+[data-collapsed] .studio-card-title {
+  padding-bottom: 0;
+}
+
+[data-collapsed] .studio-card-title ~ * {
+  display: none !important;
+}
+
+/* ── Micro-interactions ───────────────────────────────────────────────── */
+
+/* List rows (buttons, cards…): new rows slide in, rows respond to hover. */
+.studio-body [class*="_ArrayFieldItem_"] {
+  animation: studio-card-in 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  transition: background-color 0.2s ease;
+}
+
+.studio-body [class*="_ArrayFieldItem-summary_"] {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.studio-body [class*="_ArrayFieldItem-summary_"]:hover {
+  background: #eef5fe;
+  color: #1f7ae0;
+}
+
+.studio-body [class*="_ArrayField-addButton_"],
+.studio-body [class*="_IconButton_"],
+.studio-btn,
+.studio-body [class*="_Button_"] {
+  transition:
+    transform 0.16s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
+}
+
+.studio-body [class*="_ArrayField-addButton_"]:active,
+.studio-body [class*="_IconButton_"]:active,
+.studio-btn:active:not(:disabled),
+.studio-body [class*="_Button_"]:active {
+  transform: scale(0.96);
+}
+
+/* Left panel: components to drag and the outline. */
+.studio-body [class*="_DrawerItem-draggable_"] {
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.studio-body [class*="_DrawerItem-draggable_"]:hover {
+  transform: translateX(3px);
+  border-color: var(--hris-field-border-hover);
+  box-shadow: 0 8px 18px -14px rgb(31 122 224 / 0.6);
+}
+
+.studio-body [class*="_DrawerItem-draggable_"]:active {
+  transform: scale(0.98);
+}
+
+.studio-body [class*="_ComponentList-content_"],
+.studio-body [class*="_LayerTree_"] {
+  animation: studio-card-in 0.26s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+.studio-body [class*="_ComponentList-titleIcon_"] {
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-body [class*="_PuckFields-field_"],
+  .studio-body [class*="_ArrayFieldItem_"],
+  .studio-body [class*="_ComponentList-content_"],
+  .studio-body [class*="_LayerTree_"] {
+    animation: none;
+  }
+}
+
+/* Toggling the left / right panels (header buttons): the columns
+   themselves glide — the panel slides in/out at the edge while the page
+   canvas shrinks/grows with it, both ways and for either panel.
+
+   Puck's own column sizes can't be animated (\`auto\`, \`minmax()\`, and a
+   hidden panel is \`display: none\` at once), so the columns are driven here
+   with plain lengths: 0 when a panel is closed, its width when open. */
+@media (min-width: 638px) {
+  .studio-body [class*="_PuckLayout-inner_"] {
+    --hris-sidebar-w: 260px;
+    --hris-left: 0px;
+    --hris-right: 0px;
+    grid-template-columns: var(--puck-pluginbar-width) var(--hris-left) minmax(0, 1fr) var(--hris-right) !important;
+    transition:
+      grid-template-columns 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+      grid-template-rows var(--puck-duration-medium) var(--puck-ease-exit) !important;
+  }
+
+  .studio-body [class*="_PuckLayout--leftSideBarVisible_"] [class*="_PuckLayout-inner_"] {
+    --hris-left: var(--puck-user-sidebar-left-width, var(--hris-sidebar-w));
+  }
+
+  .studio-body [class*="_PuckLayout--rightSideBarVisible_"] [class*="_PuckLayout-inner_"] {
+    --hris-right: var(--puck-user-sidebar-right-width, var(--hris-sidebar-w));
+  }
+
+  /* Dragging a panel's edge to resize it: follow the pointer directly. */
+  .studio-body:has([class*="_Sidebar-resizeHandle_"]:active) [class*="_PuckLayout-inner_"] {
+    transition: none !important;
+  }
+
+  /* Panels stay rendered while their column closes (clipped by it), and are
+     hidden from focus/screen readers once it has. */
+  .studio-body [class*="_Sidebar--left_"],
+  .studio-body [class*="_Sidebar--right_"] {
+    display: flex !important;
+    min-width: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    visibility: hidden;
+    transition: visibility 0s linear 0.42s;
+  }
+
+  .studio-body [class*="_Sidebar--left_"][class*="_Sidebar--isVisible_"],
+  .studio-body [class*="_Sidebar--right_"][class*="_Sidebar--isVisible_"] {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  /* Content keeps its full width and is revealed, not squeezed. */
+  .studio-body [class*="_Sidebar--left_"] > * {
+    min-width: var(--puck-user-sidebar-left-width, var(--hris-sidebar-w));
+  }
+
+  .studio-body [class*="_Sidebar--right_"] > * {
+    width: var(--puck-user-sidebar-right-width, var(--hris-sidebar-w));
+    min-width: var(--puck-user-sidebar-right-width, var(--hris-sidebar-w));
+    /* Never wider than the panel: a long option (e.g. a partner name in a
+       <select>) would otherwise stretch it and clip the fields on the left. */
+    max-width: var(--puck-user-sidebar-right-width, var(--hris-sidebar-w));
+  }
+
+  /* Right panel content is anchored to the right edge while it slides. */
+  .studio-body [class*="_Sidebar--right_"] {
+    align-items: flex-end;
+  }
+
+  .studio-body [class*="_Sidebar--isVisible_"] > * {
+    animation: studio-panel-fade 0.42s ease backwards;
+  }
+}
+
+@media (min-width: 1198px) {
+  .studio-body [class*="_PuckLayout-inner_"] {
+    --hris-sidebar-w: 290px;
+  }
+}
+
+@media (min-width: 1598px) {
+  .studio-body [class*="_PuckLayout-inner_"] {
+    --hris-sidebar-w: 320px;
+  }
+}
+
+@keyframes studio-panel-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Header icon buttons (panel toggles…): a small press. */
+.studio-body [class*="_PuckHeader_"] button {
+  transition:
+    transform 0.16s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.studio-body [class*="_PuckHeader_"] button:active {
+  transform: scale(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-body [class*="_Sidebar--isVisible_"] > * {
+    animation: none;
+  }
+
+  .studio-body [class*="_PuckLayout-inner_"] {
+    transition: none;
+  }
+}
+
+/* ── Save / publish toast: same card as the CMS's toasts (bottom right) ─ */
+
+.studio-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 50;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: min(356px, calc(100vw - 48px));
+  box-sizing: border-box;
+  padding: 16px 20px;
+  /* The CMS form's toast: pale blue glass card, dark blue text. */
+  border: 1px solid #b9dbf7;
+  border-radius: 14px;
+  background: rgb(230 243 254 / 0.96);
+  color: #0f3a66;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  box-shadow: 0 12px 32px -12px rgb(30 90 160 / 0.35);
+  animation: studio-toast-in 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@keyframes studio-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+}
+
+.studio-toast__icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.studio-toast.is-success .studio-toast__icon {
+  background: #1f7ae0;
+  color: #fff;
+}
+
+.studio-toast.is-error {
+  border-color: #f5c2bf;
+  background: #fff5f5;
+  color: #9f1b1b;
+}
+
+.studio-toast.is-error .studio-toast__icon {
+  background: #d93036;
+  color: #fff;
+}
+
+.studio-toast__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.studio-toast__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.studio-toast__stage {
+  margin-top: -2px;
+  color: #56708f;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.studio-toast__pct {
+  color: #1f7ae0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.studio-toast__bar {
+  display: block;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e3ecf6;
+}
+
+.studio-toast__bar > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #38bdf8, #1f7ae0);
+  transition: width 0.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-toast {
+    animation: none;
+  }
+}
