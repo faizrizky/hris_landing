@@ -37,7 +37,7 @@ export const PhoneVisual: React.FC<PhoneVisualProps> = ({ tone, title, rows, acc
   <div aria-hidden className={cn('relative mx-auto w-full max-w-[420px] overflow-hidden', PHONE_CROP_HEIGHT_CLASS)}>
     <div data-parallax="0.12" className="absolute left-1/2 top-6 -translate-x-1/2">
       <div data-phone className="relative">
-        <PhoneFrame tone={tone}>
+        <PhoneFrame tone={tone} isScreenshot={Boolean(screen)}>
           {screen ? (
             // eslint-disable-next-line @next/next/no-img-element -- tangkapan layar dari CMS, ukurannya tetap
             <img src={screen.src} alt={screen.alt} loading="lazy" className="h-full w-full object-cover object-top" />

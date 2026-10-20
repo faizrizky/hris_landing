@@ -2,9 +2,25 @@ import type { Media } from "@/types/cms";
 
 export type MediaField = number | Media | null | undefined;
 
+const CMS_MEDIA_PATH = "/api/media/file/";
+
+/**
+ * File media dilayani lewat jalur landing sendiri (next.config meneruskannya ke CMS), bukan alamat CMS langsung.
+ * Dengan begitu gambar tetap muncul saat situs dibuka dari alamat IP atau HP, tempat "localhost" CMS tidak terjangkau.
+ */
+function toSiteMediaUrl(url: string): string {
+  try {
+    const { pathname, search } = new URL(url);
+
+    return pathname.startsWith(CMS_MEDIA_PATH) ? `${pathname}${search}` : url;
+  } catch {
+    return url;
+  }
+}
+
 /** A populated media document, or null when it's missing / not populated. */
 export function asMedia(field: MediaField): Media | null {
-  return field && typeof field === "object" && field.url ? field : null;
+  return field && typeof field === "object" && field.url ? { ...field, url: toSiteMediaUrl(field.url) } : null;
 }
 
 export function mediaUrl(field: MediaField): string | undefined {

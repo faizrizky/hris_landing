@@ -28,7 +28,7 @@ export function FeatureBandBlock({ block }: { block: Block; ctx: BlockContext })
       tintClassName={tintClass(block.tint ?? (isFace ? "sky" : "lavender")) || "bg-tint-sky"}
       accessory={accessoryNode(block.accessory) ?? <ChartBadge />}
     >
-      <PhoneFrame tone={isFace ? "sky" : "lavender"}>
+      <PhoneFrame tone={isFace ? "sky" : "lavender"} isScreenshot={Boolean(screenImage)}>
         {screenImage ? (
           // eslint-disable-next-line @next/next/no-img-element -- tangkapan layar dari CMS, ukurannya tetap
           <img src={screenImage.url ?? ""} alt={screenImage.alt || "Layar aplikasi HRIS"} loading="lazy" className="h-full w-full object-cover object-top" />
