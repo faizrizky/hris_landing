@@ -1,8 +1,9 @@
 "use client";
 
-import { CalendarCheck, CloudDownload, Headset, MessageCircle, Rocket, ShieldCheck, SlidersHorizontal, Sparkles, Users, Wrench } from "lucide-react";
+import { CloudDownload, Headset, MessageCircle, Rocket, SlidersHorizontal, Sparkles, Wrench } from "lucide-react";
 import { useRef } from "react";
 
+import { AppIcon } from "@/components/app-icon";
 import { useRevealOnScroll } from "@/features/home/hooks/use-reveal-on-scroll";
 import type { Page } from "@/types/cms";
 import { cn } from "@/utilities/ui";
@@ -21,10 +22,10 @@ const ICON_RENDERERS = {
   wrench: (className: string) => <Wrench aria-hidden className={className} strokeWidth={ICON_STROKE_WIDTH} />,
   settings: (className: string) => <SlidersHorizontal aria-hidden className={className} strokeWidth={ICON_STROKE_WIDTH} />,
   rocket: (className: string) => <Rocket aria-hidden className={className} strokeWidth={ICON_STROKE_WIDTH} />,
-  users: (className: string) => <Users aria-hidden className={className} strokeWidth={ICON_STROKE_WIDTH} />,
+  users: (className: string) => <AppIcon name="user" className={className} />,
   message: (className: string) => <MessageCircle aria-hidden className={className} strokeWidth={ICON_STROKE_WIDTH} />,
-  calendar: (className: string) => <CalendarCheck aria-hidden className={className} strokeWidth={ICON_STROKE_WIDTH} />,
-  shield: (className: string) => <ShieldCheck aria-hidden className={className} strokeWidth={ICON_STROKE_WIDTH} />,
+  calendar: (className: string) => <AppIcon name="calendar" className={className} />,
+  shield: (className: string) => <AppIcon name="shield" className={className} />,
   sparkles: (className: string) => <Sparkles aria-hidden className={className} strokeWidth={ICON_STROKE_WIDTH} />,
 } as const;
 

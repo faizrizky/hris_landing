@@ -1,6 +1,7 @@
-import { Check, Clock } from 'lucide-react'
+import { Check } from 'lucide-react'
 import React from 'react'
 
+import { AppIcon } from '@/components/app-icon'
 import { PillLink } from '@/features/home/components/pill-link'
 import type { Page } from '@/types/cms'
 import { cn } from '@/utilities/ui'
@@ -49,7 +50,7 @@ export const PlanCard: React.FC<PlanCardProps> = ({ plan, maxFeatures }) => {
         {shownFeatures.map((feature, index) => (
           <li key={feature.id ?? index} className={cn('flex items-start gap-2.5', feature.isSoon && 'text-ink-muted')}>
             {feature.isSoon ? (
-              <Clock aria-hidden className="mt-0.5 h-4 w-4 shrink-0 text-accent-yellow" />
+              <AppIcon name="clock" className="mt-0.5 h-4 w-4 shrink-0 text-accent-yellow" />
             ) : (
               <span className="mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-accent-teal/25">
                 <Check aria-hidden className="h-2.5 w-2.5" strokeWidth={3} />

@@ -1,0 +1,96 @@
+import React from 'react'
+
+/**
+ * Ikon bawaan aplikasi HRIS, disalin dari hris-mobile/src/constants/icons.ts supaya landing memakai gambar yang sama
+ * dengan aplikasi: kanvas 24, garis 1,9, ujung dan sambungan membulat.
+ */
+export const APP_ICON_PATHS = {
+  attendanceRate: "M12 21a9 9 0 100-18 9 9 0 000 18zM8.2 12.2l2.6 2.6 5-5",
+  leave:
+    "M6 4.5h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2v-12a2 2 0 012-2zM8 2.5v4M16 2.5v4M4 10h16M9 15l2 2 3.6-3.6",
+  overtime:
+    "M12 21.5a8.5 8.5 0 100-17 8.5 8.5 0 000 17zM12 9.2V13h3.2M9.6 2.5h4.8",
+  late: "M12 21a9 9 0 100-18 9 9 0 000 18zM12 8v4.4M12 16h.01",
+  clock: "M12 21a9 9 0 100-18 9 9 0 000 18zM12 7.4V12l3.3 2",
+  payslip:
+    "M3 7.5h18a1 1 0 011 1v7a1 1 0 01-1 1H3a1 1 0 01-1-1v-7a1 1 0 011-1zM12 15a3 3 0 100-6 3 3 0 000 6M5.5 12h.01M18.5 12h.01",
+  appraisal:
+    "M12 3.4l2.6 5.3 5.9.9-4.3 4.1 1 5.9L12 16.8l-5.2 2.8 1-5.9-4.3-4.1 5.9-.9z",
+  tax: "M19 5L5 19M7.6 9.7a2.6 2.6 0 100-5.2 2.6 2.6 0 000 5.2zM17.9 19.6a2.6 2.6 0 100-5.2 2.6 2.6 0 000 5.2z",
+  approval:
+    "M9 3.5h6v3H9zM7 5H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1M8.6 13.2l2 2 4.2-4.2",
+  location:
+    "M12 21s7-5.4 7-11a7 7 0 10-14 0c0 5.6 7 11 7 11zM12 12.5a2.6 2.6 0 100-5.2 2.6 2.6 0 000 5.2z",
+  plus: "M12 5v14M5 12h14",
+  user: "M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8",
+  document: "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM14 2v6h6",
+  bell: "M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0",
+  shield: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z",
+  info: "M12 21a9 9 0 100-18 9 9 0 000 18zM12 11v5M12 7.8h.01",
+  upload:
+    "M12 15.5V4.5M7.5 9L12 4.5 16.5 9M4.5 15v3a2 2 0 002 2h11a2 2 0 002-2v-3",
+  fileCheck:
+    "M14 3.5H7a2 2 0 00-2 2v13a2 2 0 002 2h10a2 2 0 002-2V8.5zM14 3.5v5h5M9 14.5l2 2 4-4",
+  close: "M6 6l12 12M18 6L6 18",
+  plane:
+    "M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z",
+  train:
+    "M8 3h8a3 3 0 013 3v8a3 3 0 01-3 3H8a3 3 0 01-3-3V6a3 3 0 013-3zM5 10h14M8.5 13.5h.01M15.5 13.5h.01M8 21l2-4M16 21l-2-4",
+  car: "M5 17h14v-4.2l-1.9-4.9a2 2 0 00-1.9-1.3H8.8a2 2 0 00-1.9 1.3L5 12.8zM5 12.8h14M7 17v2.5M17 17v2.5M8 14.8h.01M16 14.8h.01",
+  dots: "M12 21a9 9 0 100-18 9 9 0 000 18zM8 12h.01M12 12h.01M16 12h.01",
+  briefcase:
+    "M4 7.5h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1v-10a1 1 0 011-1zM9 7.5V5.5a1 1 0 011-1h4a1 1 0 011 1v2M3 13h18",
+  lock: "M6 11h12a1 1 0 011 1v7a1 1 0 01-1 1H6a1 1 0 01-1-1v-7a1 1 0 011-1zM8 11V8a4 4 0 018 0v3",
+  phone:
+    "M21 16.5v3a2 2 0 01-2.2 2A19.8 19.8 0 013 5.4 2 2 0 015 3.2h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L9 11.1a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.8 2z",
+  faceId:
+    "M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2M9 10v1.2M15 10v1.2M9.5 15c.7.7 1.5 1 2.5 1s1.8-.3 2.5-1",
+  mobile:
+    "M8 2.5h8a2 2 0 012 2v15a2 2 0 01-2 2H8a2 2 0 01-2-2v-15a2 2 0 012-2zM11 18.5h2",
+  desktop:
+    "M4 5h16a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1zM8 21h8M12 17v4",
+  calendar:
+    "M7 3v3M17 3v3M4 8.6h16M6 5h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7a2 2 0 012-2z",
+} as const
+
+export type AppIconName = keyof typeof APP_ICON_PATHS
+
+const APP_ICON_VIEWBOX = 24
+const APP_ICON_STROKE_WIDTH = 1.9
+
+export interface IconProps {
+  className?: string
+  size?: number | string
+  strokeWidth?: number
+}
+
+/** Bentuk komponen ikon yang diterima lencana dan visual: ikon aplikasi dan lucide sama-sama cocok. */
+export type IconComponent = React.ComponentType<IconProps>
+
+export const AppIcon: React.FC<IconProps & { name: AppIconName }> = ({ name, className, size = APP_ICON_VIEWBOX, strokeWidth = APP_ICON_STROKE_WIDTH }) => (
+  <svg
+    aria-hidden
+    width={size}
+    height={size}
+    viewBox={`0 0 ${APP_ICON_VIEWBOX} ${APP_ICON_VIEWBOX}`}
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d={APP_ICON_PATHS[name]} />
+  </svg>
+)
+
+const ICON_COMPONENTS = {} as Record<AppIconName, IconComponent>
+
+/** Komponen ikon aplikasi untuk tempat yang meminta `icon: IconComponent` (lencana, daftar ikon). */
+export const appIcon = (name: AppIconName): IconComponent => {
+  ICON_COMPONENTS[name] ??= function BoundAppIcon(props: IconProps) {
+    return <AppIcon name={name} {...props} />
+  }
+
+  return ICON_COMPONENTS[name]
+}

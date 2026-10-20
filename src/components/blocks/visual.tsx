@@ -24,7 +24,7 @@ import { PhoneVisual } from "@/features/site/visuals/phone-visual";
 import { ShieldVisual } from "@/features/site/visuals/shield-visual";
 import { TiltedCardsVisual } from "@/features/site/visuals/tilted-cards-visual";
 import { CALCULATORS } from "@/features/tools/registry";
-import { FileText, Lock, Star, Clock } from "lucide-react";
+import { appIcon } from "@/components/app-icon";
 
 import type { BlockContext } from "./types";
 
@@ -56,10 +56,10 @@ const ACCESSORIES: Record<string, () => React.ReactNode> = {
   chat: () => <ChatBadge />,
   chart: () => <ChartBadge />,
   calendar: () => <CalendarBadge />,
-  clock: () => <GlyphBadge icon={Clock} accent="orange" shape="square" />,
-  document: () => <GlyphBadge icon={FileText} accent="blue" shape="square" />,
-  lock: () => <GlyphBadge icon={Lock} accent="purple" shape="hexagon" />,
-  star: () => <GlyphBadge icon={Star} accent="yellow" shape="circle" />,
+  clock: () => <GlyphBadge icon={appIcon('clock')} accent="orange" shape="square" />,
+  document: () => <GlyphBadge icon={appIcon('document')} accent="blue" shape="square" />,
+  lock: () => <GlyphBadge icon={appIcon('lock')} accent="purple" shape="hexagon" />,
+  star: () => <GlyphBadge icon={appIcon('appraisal')} accent="yellow" shape="circle" />,
 };
 
 export const accessoryNode = (key: string | null | undefined) => (ACCESSORIES[key ?? "shield"] ?? ACCESSORIES.shield)();

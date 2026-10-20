@@ -1,5 +1,6 @@
-import { CalendarDays, Clock, FileText, ShieldCheck, Wallet, type LucideIcon } from 'lucide-react'
 import React from 'react'
+
+import { appIcon, type IconComponent } from '@/components/app-icon'
 
 import { PhoneFrame } from '@/features/home/components/phone-frame'
 import { getInitials } from '@/features/home/content/tones'
@@ -7,7 +8,7 @@ import { cn } from '@/utilities/ui'
 
 const PHONE_CROP_HEIGHT_CLASS = 'h-[330px] md:h-[400px]'
 const MAX_PHONE_ROWS = 5
-const ROW_ICONS: readonly LucideIcon[] = [Clock, CalendarDays, FileText, Wallet, ShieldCheck]
+const ROW_ICONS: readonly IconComponent[] = [appIcon('clock'), appIcon('leave'), appIcon('document'), appIcon('payslip'), appIcon('shield')]
 const ROW_ICON_TINTS = ['bg-accent-teal', 'bg-accent-orange', 'bg-accent-purple', 'bg-accent-blue', 'bg-accent-yellow'] as const
 
 export interface PhoneRow {

@@ -1,8 +1,10 @@
 'use client'
 
-import { CalendarDays, Lightbulb, RotateCcw, SlidersHorizontal, Wallet } from 'lucide-react'
+import { Lightbulb, RotateCcw, SlidersHorizontal } from 'lucide-react'
 import React, { useMemo, useState } from 'react'
 import { ValidationError, number, object, string, type AnySchema } from 'yup'
+
+import { appIcon } from '@/components/app-icon'
 
 import { CalculatorFieldInput } from './calculator-field-input'
 import { CalculatorResult } from './calculator-result'
@@ -45,8 +47,8 @@ const groupBySection = (fields: readonly CalculatorField[]) =>
   }, [])
 
 const SECTION_ICON = {
-  [FIELD_KIND.MONEY]: Wallet,
-  [FIELD_KIND.NUMBER]: CalendarDays,
+  [FIELD_KIND.MONEY]: appIcon('payslip'),
+  [FIELD_KIND.NUMBER]: appIcon('calendar'),
   [FIELD_KIND.SELECT]: SlidersHorizontal,
 } as const
 

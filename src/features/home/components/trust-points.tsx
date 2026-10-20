@@ -1,9 +1,10 @@
-import { BadgeCheck, Database, ScanFace, WifiOff, type LucideIcon } from 'lucide-react'
+import { Database, WifiOff } from 'lucide-react'
 import React from 'react'
 
+import { appIcon, type IconComponent } from '@/components/app-icon'
 import { cn } from '@/utilities/ui'
 
-const TRUST_ICONS: readonly LucideIcon[] = [ScanFace, WifiOff, Database, BadgeCheck]
+const TRUST_ICONS: readonly IconComponent[] = [appIcon('faceId'), WifiOff, Database, appIcon('approval')]
 
 const TRUST_ICON_TINT_CLASSES = [
   'bg-accent-teal/20 text-ink',

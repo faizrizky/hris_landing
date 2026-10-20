@@ -1,6 +1,6 @@
-import type { LucideIcon } from 'lucide-react'
 import React, { useId } from 'react'
 
+import type { IconComponent } from '@/components/app-icon'
 import type { AccentColor } from '@/features/home/content/tones'
 import { cn } from '@/utilities/ui'
 
@@ -27,7 +27,7 @@ const ACCENT_FILL_CLASS: Record<AccentColor, string> = {
 }
 
 interface GlyphBadgeProps {
-  icon: LucideIcon
+  icon: IconComponent
   accent: AccentColor
   shape: BadgeShape
   className?: string
